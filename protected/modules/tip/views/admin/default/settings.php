@@ -22,8 +22,9 @@ Yii::app()->clientScript->registerScript('tabs', '$("#tabs").tabs({});');
 	<ul>
 		<li><a href="#tabs-1"><?php echo Yii::t('settings', 'План подписки'); ?></a></li>
 		<li><a href="#tabs-2"><?php echo Yii::t('settings', 'TRACK RECORD'); ?></a></li>
-		<li><a href="#tabs-3"><?php echo Yii::t('settings', 'Общие настройки'); ?></a></li>
-		<li><a href="#tabs-4"><?php echo Yii::t('settings', 'Настройки контактов'); ?></a></li>
+		<li><a href="#tabs-3"><?php echo Yii::t('settings', 'Опросы'); ?></a></li>
+		<li><a href="#tabs-4"><?php echo Yii::t('settings', 'Общие настройки'); ?></a></li>
+		<li><a href="#tabs-5"><?php echo Yii::t('settings', 'Настройки контактов'); ?></a></li>
 	</ul>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -136,8 +137,24 @@ Yii::app()->clientScript->registerScript('tabs', '$("#tabs").tabs({});');
 		<?php echo $form->error($model,'TRACK_RECORD_MEMBERS'); ?>
 
 	</div>
-	
-	<div id="tabs-3">
+
+    <div id="tabs-3">
+
+        <?php echo $form->labelEx($model,'POLLS_TITLE'); ?>
+        <?php echo $form->textField($model,'POLLS_TITLE'); ?>
+        <?php echo $form->error($model,'POLLS_TITLE'); ?>
+
+        <?php echo $form->labelEx($model,'POLLS_TEXT'); ?>
+        <?php echo $form->textArea($model,'POLLS_TEXT'); ?>
+        <?php echo $form->error($model,'POLLS_TEXT'); ?>
+
+        <?php echo $form->labelEx($model,'POLLS_CODE'); ?>
+        <?php echo $form->textArea($model,'POLLS_CODE'); ?>
+        <?php echo $form->error($model,'POLLS_CODE'); ?>
+
+    </div>
+
+	<div id="tabs-4">
 
 		<?php echo $form->labelEx($model,'SITENAME'); ?>
 		<?php echo $form->textField($model,'SITENAME'); ?>
@@ -169,7 +186,7 @@ Yii::app()->clientScript->registerScript('tabs', '$("#tabs").tabs({});');
 
 	</div>
 	
-	<div id="tabs-4">
+	<div id="tabs-5">
 
 		<?php echo $form->labelEx($model,'CONTACT_TITLE'); ?>
 		<?php echo $form->textField($model,'CONTACT_TITLE'); ?>

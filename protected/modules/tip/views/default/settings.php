@@ -156,7 +156,7 @@ Yii::app()->clientScript->registerScript('tabs', '$(function(){$( "#tabs" ).tabs
 		</div>
 		
 	</div>
-	
+
 	<div id="tabs-3">
 	
 		<div class="row">
