@@ -149,7 +149,10 @@ class Banner extends CActiveRecord
                 'class'     => 'ext.imageBehavior.imageBehavior',
                 'filePath'  => 'webroot.uploads.banners',
                 'fileField' => 'image',
-            )
+            ),
+            'EavARBehavior' => array(
+                'class' => 'application.modules.eav.behaviors.EavARBehavior',
+            ),
         );
     }
 }
