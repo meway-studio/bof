@@ -1175,10 +1175,16 @@ class DefaultController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
 	public function actionCreateNb(){
-		
+		$inRunningTip = Yii::app()->request->getQuery('in_running', false);
 		Yii::app()->clientScript->registerMetaTag(Yii::app()->config->get('META_K_ADD_TIP'), 'keywords');
 		Yii::app()->clientScript->registerMetaTag(Yii::app()->config->get('META_D_ADD_TIP'), 'description');
-		$this->pageTitle = Yii::t('tips', 'Добавить совет без ставок');
+
+        if ($inRunningTip) {
+            $this->pageTitle = Yii::t('tips', 'Добавить совет по ходу игры');
+        } else {
+            $this->pageTitle = Yii::t('tips', 'Добавить совет без ставок');
+        }
+
 		
 		$model = new NbTips('create');
 
@@ -1192,7 +1198,7 @@ class DefaultController extends Controller
 			
 				// prepare date with time
 				$model->dateWithTime();
-				
+				$model->in_running = $inRunningTip ? 1 : 0;
 				$model->save();
 				
 				Yii::app()->user->setFlash('updateSuccess', Yii::t('tips', 'Совет успешно добавлен'));

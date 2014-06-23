@@ -26,6 +26,7 @@
 			<?php if(Yii::app()->user->isTipster): ?>
 			<li><?php echo CHtml::link(CHtml::tag('i', array('style'=>'background: url('.Yii::app()->theme->baseUrl.'/css/images/icon_3.png) top center no-repeat;'), '').Yii::t('main', 'Создать совет'), array('/tip/default/create'));?></li>
 			<li><?php echo CHtml::link(CHtml::tag('i', array('style'=>'background: url('.Yii::app()->theme->baseUrl.'/css/images/icon_3.png) top center no-repeat;'), '').Yii::t('main', 'Создать ставки на совет'), array('/tip/default/createNb'));?></li>
+			<li><?php echo CHtml::link(CHtml::tag('i', array('style'=>'background: url('.Yii::app()->theme->baseUrl.'/css/images/icon_3.png) top center no-repeat;'), '').Yii::t('main', 'Создать совет по ходу игры'), array('/tip/default/createNb/in_running/1'));?></li>
 			<li><?php echo CHtml::link(CHtml::tag('i', array('style'=>'background: url('.Yii::app()->theme->baseUrl.'/css/images/icon_3.png) top center no-repeat;'), '').Yii::t('main', 'Черновики'), array('/tip/default/drafts'));?></li>
 			<?php endif; ?>
 			<!--li><?php echo CHtml::link(CHtml::tag('i', array('style'=>'background: url('.Yii::app()->theme->baseUrl.'/css/images/icon_3.png) top center no-repeat;'), '').Yii::t('main', 'Настройки'), array('/user/default/update'));?></li-->
