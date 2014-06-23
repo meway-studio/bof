@@ -18,7 +18,7 @@ if (!Yii::app()->session['location'] && ($location = Yii::app()->geoip->lookupLo
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <!-- location <?php
 // with IP in google.com
-$location = Yii::app()->geoip->lookupLocation('209.85.135.104');
+$location = Yii::app()->geoip->lookupLocation();
 CVarDumper::dump($location);
 ?> -->
 <head>
