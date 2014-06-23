@@ -232,6 +232,7 @@ $config = array(
                 'logout'                                             => '/user/default/logout',
                 'add-tip'                                            => '/tip/default/create',
                 'add-nb-tip'                                         => '/tip/default/createNb',
+                'add-in-running-tip'                                 => '/tip/default/createNb/in_running/1',
                 'change-password'                                    => '/user/default/password',
                 'profile'                                            => '/user/default/update',
                 'guideline'                                          => '/guidline/default/index',

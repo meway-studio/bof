@@ -7,10 +7,12 @@ Yii::import('ext.chosen.chosen');
 Yii::import('ext.redactor.redactor');
 Yii::import('ext.msDropdown.msDropdown');
 Yii::import('ext.blueimp.FileUploadWidget');
+
+$inRunningTip = Yii::app()->request->getQuery('in_running', false);
 ?>
 
 	<br/>
-	<div class="tip_form_block_header"><?php echo Yii::t('themes', '<b>Добавить</b> без ставок на совет'); ?></div>
+	<div class="tip_form_block_header"><?php echo $inRunningTip ? Yii::t('themes', '<b>Добавить</b> совет по ходу игры') : Yii::t('themes', '<b>Добавить</b> без ставок на совет'); ?></div>
 	<div class="form">
 
 	<?php $form=$this->beginWidget('CActiveForm', array(

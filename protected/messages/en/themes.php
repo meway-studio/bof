@@ -223,4 +223,5 @@ LOOKING FOR ME?",
 	"Пилотный выпуск видео советов BetonFootball" => "Pilot release video tips BetonFootball",
 	"<b>Добавить</b> совет" => "<b>Add</b> Tip",
 	"Введите Ваш Email" => "Email",
+    "<b>Добавить</b> совет по ходу игры" => "<b>Add</b> In running Tip",
 );

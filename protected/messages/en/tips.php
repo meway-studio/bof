@@ -225,4 +225,5 @@ return array(
 	"Поинт" => "Points",
 	"&euro;&nbsp;{price}" => "&euro;&nbsp;{price}",
 	"Советы list" => "All tips from",
+    "Добавить совет по ходу игры" => "Add tip \"in running\"",
 );
