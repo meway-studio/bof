@@ -313,6 +313,15 @@ $config = array(
                                 'meta_d',
                             ),
                         ),
+                        'Banner'            => array(
+                            'translate' => array(
+                                'title',
+                                'image',
+                                'show',
+                                'url',
+                                'active',
+                            ),
+                        ),
                         'GuidlineContent' => array(
                             'translate' => array(
                                 'content'

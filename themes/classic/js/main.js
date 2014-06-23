@@ -41,6 +41,13 @@ $(document).ready(function(){
 		
 		return false;
 	});
+
+	var banner = $('.banner');
+	if (banner.length) {
+		setTimeout(function(){
+			banner.fadeIn(1000);
+		}, 6000);
+	}
 });
 
 $(document).scroll(function(){
