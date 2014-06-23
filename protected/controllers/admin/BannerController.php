@@ -33,7 +33,7 @@ class BannerController extends Controller
         return array(
             array(
                 'allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => '*',
+                'actions' => array( 'admin', 'create', 'delete', 'update' ),
                 'roles'   => array( 'admin' ),
             ),
             array(
