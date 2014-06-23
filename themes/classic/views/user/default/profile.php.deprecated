@@ -1,0 +1,78 @@
+<div class="my-account">
+	<div class="site-width">
+		<div class="page-title">
+			<span class="title"><span>My</span>Account</span>
+			<span class="text">Betonfootball is designed for you, the user. Therefore if you have any questions regarding anything on our site or you need help using any of our services, don't hesitate to contact us using the support form below and we will reply as soon as possible.</span>
+		</div>
+		<div class="personal">
+			<div class="avatar">
+				<img src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/menu/no_avatar.png">
+				<span>
+					<img src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/menu/upload.png">
+					<a href="#">Upload Photo</a>
+				</span>
+			</div>
+			<div class="information">
+				<span>Personal Information</span>
+				<form>
+					<span class="name"><input size="38" value="Name"></span>
+					<span class="mail"><input size="38" value="E-Mail"></span>
+				</form>
+				<form>
+					<span class="phone"><input  size="38" value="Telephone"></span>
+					<span class="password"><input size="38" value="Password"></span>
+				</form>
+				<a href="#">Update</a>
+			</div>
+		</div>
+		<div class="review">
+			<form>
+				<span>Write a Review</span>
+				<textarea>Cloppenberg is not such a bad team as result shows, they have good squard with some good names, some of them just start playing recently after injuries and that should give them some boost when they back in form. At home they have just 0-3-3, but they show with win against Flensburg on road that they can play against every team. Havelse is not same team like last season with very shaky results where they show that also can beat anyone, but also lost against anyone.</textarea>
+				<div class="submit">
+					<a href="#">Submit</a>
+					<span>Review, 12th October 2013</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php
+	
+	Yii::import('application.modules.tip.widgets.PreviousTips.PreviousTips');
+	Yii::import('application.modules.tip.widgets.PlansSubscriptions.PlansSubscriptions');
+	Yii::import('application.modules.tip.widgets.TrackRecord.TrackRecord');
+	Yii::import('application.modules.tip.widgets.Testimonials.Testimonials');
+?>
+
+<?php
+	$this->widget('PreviousTips', array(
+		'limit'   => 3,
+		'active'  => false,
+		'tipster' => 12,
+		'view'    => 'active',
+	));
+?>
+
+<?php
+	$this->widget('PreviousTips', array(
+		'limit'   => 7,
+		'active'  => false,
+		'tipster' => 11,
+		'view'    => 'last',
+	));
+?>
+
+<?php
+	$this->widget('PlansSubscriptions');
+?>
+
+
+<?php
+	$this->widget('TrackRecord');
+?>
+
+
+<?php
+	$this->widget('Testimonials');
+?>

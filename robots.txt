@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: *.swf
+Disallow: /login
+Disallow: /signup
+Disallow: /user
+Sitemap: http://www.betonfootball.eu/sitemap.xml
+Host: www.betonfootball.eu
