@@ -1,10 +1,22 @@
 <?php
-
 Yii::import( 'application.modules.tip.widgets.PreviousTips.*' );
 Yii::import( 'application.modules.tip.widgets.PlansSubscriptions.PlansSubscriptions' );
 Yii::import( 'application.modules.tip.widgets.TrackRecord.TrackRecord' );
 Yii::import( 'application.modules.user.widgets.reviews.reviewsWidget' );
 ?>
+
+<?php
+$banner = Banner::model()->bySort()->active()->find(
+    "t.show IN ('ALL', :show)",
+    array( ':show' => Yii::app()->user->isGuest ? Banner::SHOW_GUEST : Banner::SHOW_AUTHORIZED )
+);
+?>
+
+<?php if ($banner): ?>
+    <div class="site-width banner">
+        <a href="<?php echo $banner->url ?>" target="_blank"><img src="<?php echo $banner->getImageUrl("1180x120") ?>"/></a>
+    </div>
+<?php endif ?>
 
 <?php
 $this->widget(

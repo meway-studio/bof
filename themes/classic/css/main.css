@@ -3662,3 +3662,7 @@ ul.yiiPager li.next, ul.yiiPager li.previous {
 .plans-count .rub {
 	line-height: 13px;
 }
+.banner {
+	text-align: center;
+	margin: 40px auto 20px;
+}

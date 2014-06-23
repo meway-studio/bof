@@ -251,6 +251,10 @@ $config = array(
                 */
 
                 'admin'                                              => '/tip/admin/default/admin',
+                'admin/banner'                                       => 'admin/banner/admin',
+                'admin/banner/<controller:\w+>'                      => 'admin/banner/<controller>',
+                'admin/banner/<controller:\w+>/<action:\w+>'         => 'admin/banner/<controller>/<action>',
+                'admin/banner/<controller:\w+>/<action:\w+>/*'       => 'admin/banner/<controller>/<action>',
                 'admin/<module:\w+>'                                 => '<module>/admin/default',
                 'admin/<module:\w+>/<controller:\w+>'                => '<module>/admin/<controller>',
                 'admin/<module:\w+>/<controller:\w+>/<action:\w+>'   => '<module>/admin/<controller>/<action>',
@@ -258,13 +262,13 @@ $config = array(
             ),
         ),
         'db'           => array(
-			'connectionString' => 'mysql:host=localhost;dbname=test',
-			'emulatePrepare'   => true,
-			'username'         => 'test',
-			'password'         => 'test',
-			'charset'          => 'utf8',
-			'tablePrefix'      => 'me_',
-		),
+            'connectionString' => 'mysql:host=localhost;dbname=test',
+            'emulatePrepare'   => true,
+            'username'         => 'test',
+            'password'         => 'test',
+            'charset'          => 'utf8',
+            'tablePrefix'      => 'me_',
+        ),
         'cache'        => array(
             'class' => 'system.caching.CDummyCache',
         ),
@@ -291,10 +295,10 @@ $config = array(
         'eav'          => array(
             'class'  => 'application.modules.eav.components.EavComponent',
             'config' => array(
-                'translate'  => array(
+                'translate' => array(
                     'languages' => array( 'ru' ),
                 ),
-                'entities'   => array(
+                'entities'  => array(
                     'model' => array(
                         'Tips'            => array(
                             'translate' => array(
@@ -314,7 +318,7 @@ $config = array(
                                 'content'
                             ),
                         ),
-                        'Config' => array(
+                        'Config'          => array(
                             'translate' => array(
                                 'value',
                             ),
