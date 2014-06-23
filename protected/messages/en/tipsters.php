@@ -1,0 +1,20 @@
+<?php
+return array(
+	"ID" => "ID",
+	"Meta Description" => "Meta Description",
+	"Meta Keywords" => "Meta Keywords",
+	"Активных советов" => "Active tips",
+	"Банк" => "Bank",
+	"Выиграл" => "Won",
+	"Коментарий" => "Comment",
+	"Побед" => "Wins",
+	"Пользователь" => "User",
+	"Потерял" => "Lost",
+	"Профиль" => "Profile",
+	"Разряд" => "Rank",
+	"Редактор" => "Editor",
+	"Советов" => "Tips",
+	"Статей" => "Articles",
+	"Статистика" => "Statistics",
+	"Шансы" => "Odds",
+);

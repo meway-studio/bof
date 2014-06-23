@@ -1,6 +1,8 @@
-assets/*
-!assets/.gitignore
-protected/runtime/*
+/.idea
+/*.sql
 !protected/runtime/.gitignore
 protected/data/*.db
-themes/classic/views/
+protected/config/local.*.php
+protected/vendor/*
+protected/composer.lock
+/protected/runtime/*.log
