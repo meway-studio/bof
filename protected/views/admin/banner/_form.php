@@ -16,7 +16,7 @@ $form = $this->beginWidget(
 <?php echo $form->errorSummary( $model ); ?>
 <?php echo $form->textFieldRow( $model, 'title', array( 'class' => 'span5', 'maxlength' => 255 ) ); ?>
 <p>
-    <?php echo CHtml::image( $model->getImageUrl( '1180x120' ) ); ?>
+    <?php echo CHtml::image( $model->getImageUrl( '1180x180' ) ); ?>
     <?php echo $form->fileFieldRow(
         $model,
         'image',

@@ -14,7 +14,7 @@ $banner = Banner::model()->bySort()->active()->find(
 
 <?php if ($banner): ?>
     <div class="site-width banner">
-        <a href="<?php echo $banner->url ?>" target="_blank"><img src="<?php echo $banner->getImageUrl("1180x120") ?>"/></a>
+        <a href="<?php echo $banner->url ?>" target="_blank"><img src="<?php echo $banner->getImageUrl("1180x180") ?>"/></a>
     </div>
 <?php endif ?>
 
