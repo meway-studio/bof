@@ -118,7 +118,7 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
                            'visible' => Yii::app()->user->isGuest
                     ),
                     array( 'label'   => Yii::t( 'themes', 'Баннеры' ),
-                           'url'     => array( 'admin/banner' ),
+                           'url'     => array( 'admin/banner/admin' ),
                            'visible' => Yii::app()->user->isAdmin
                     ),
                     //array('label'=>'Operations',   'url'=>array('/admin/pages/default')),
