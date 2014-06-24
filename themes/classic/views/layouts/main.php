@@ -16,11 +16,6 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<!-- location <?php
-// with IP in google.com
-$location = Yii::app()->geoip->lookupLocation();
-CVarDumper::dump( $location );
-?> -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="language" content="en"/>
@@ -40,8 +35,7 @@ CVarDumper::dump( $location );
 
 <div id="header">
     <div class="site-width">
-        <a class="logo" href="/<?php echo Yii::app()->language ?>"><img src="<?php echo Yii::app(
-            )->theme->baseUrl; ?>/css/images/logo.png"/></a>
+        <a class="logo" href="/<?php echo Yii::app()->language ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/logo.png"/></a>
         <div class="header_fifa"><img src="/images/header_fifa.png"/></div>
         <div class="info">
             <div class="line"></div>
