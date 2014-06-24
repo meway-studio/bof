@@ -15,6 +15,7 @@ class m140623_122003_table_banner extends CDbMigration
                 url varchar(255) DEFAULT NULL,
                 sort int(11) NOT NULL DEFAULT 0,
                 active tinyint(1) NOT NULL DEFAULT 1,
+                lang varchar(4) DEFAULT NULL,
                 PRIMARY KEY (id)
             )
             ENGINE = INNODB

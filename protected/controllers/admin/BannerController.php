@@ -159,7 +159,7 @@ class BannerController extends Controller
         $this->render(
             'admin',
             array(
-                'model' => $model,
+                'model' => $model->language(),
             )
         );
     }
