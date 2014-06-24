@@ -222,6 +222,7 @@ $config = array(
                 'cart'                                               => '/tip/default/cart',
                 'single-table'                                       => '/tip/default/SingleTable',
                 'no-bet-tips'                                        => '/tip/default/NoBetTips',
+                'in-running-tips'                                    => '/tip/default/NoBetTips/in_running/1',
                 'all-tips'                                           => '/tip/default/list',
                 'active-tips'                                        => '/tip/default/list/active/1',
                 'last-tips'                                          => '/tip/default/list/active/0',

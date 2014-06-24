@@ -1120,6 +1120,10 @@ p.grey_text {
 	border: 1px solid #aab2bd;
 	border-radius: 20px 0 0 20px;
 }
+.last-tips .title .top.right, .active-tips .title .top.right {
+	border-radius: 0 20px 20px 0;
+	margin-left: -30px;
+}
 
 .last-tips .title .top:hover {
 	color: #656d78;

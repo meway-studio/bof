@@ -229,4 +229,5 @@ return array(
     "Добавить совет по ходу игры" => "Add tip \"in running\"",
     "Советы по" => "In-running",
     "по ходу игры" => "Tips",
+    "Советы по ходу матча" => "In Running tips",
 );
