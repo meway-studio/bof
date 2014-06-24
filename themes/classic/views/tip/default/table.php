@@ -2,7 +2,7 @@
 	<div class="last-tips">
 		<div class="title">
 			<span class="bold"><?php echo Yii::t('tips', 'Все активные');?></span>
-			<span> <?php echo Yii::t('tips', 'Советы');?></span>
+			<span> <?php echo Yii::t('tips', 'Все активные Советы');?></span>
 			<?php //echo CHtml::link(Yii::t('tips', 'View all last tips'),array('/tip/default/list','active'=>0),array('class'=>'top'));?>
 		</div>
 		<table cellpadding="5" cellspacing="0">
