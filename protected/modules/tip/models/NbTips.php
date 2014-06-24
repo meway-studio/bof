@@ -126,10 +126,18 @@ class NbTips extends CActiveRecord
                 'condition' => 't.event_date+(120*60) < UNIX_TIMESTAMP()',
                 'order'     => 't.event_date DESC',
             ),
-            'inRunning'       => array(
-                'condition' => 't.in_running = 1',
-            ),
         );
+    }
+
+    public function inRunning( $inRunning = true )
+    {
+        $this->getDbCriteria()->mergeWith(
+            array(
+                'condition' => 't.in_running = :in_running',
+                'params'    => array( ':in_running' => $inRunning ? 1 : 0 ),
+            )
+        );
+        return $this;
     }
 
     public function byTipster( $id )

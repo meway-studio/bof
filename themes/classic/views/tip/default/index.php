@@ -14,7 +14,7 @@ $banner = Banner::model()->bySort()->active()->language()->find(
 
 <?php if ($banner): ?>
     <div class="site-width banner">
-        <a href="<?php echo $banner->url ?>" target="_blank"><img src="<?php echo $banner->getImageUrl("1180x180") ?>"/></a>
+        <a href="<?php echo $banner->url ?>" target="_blank"><img src="<?php echo $banner->getImageUrl( "1180x180" ) ?>"/></a>
     </div>
 <?php endif ?>
 
@@ -24,6 +24,18 @@ $this->widget(
     array(
         'limit'  => 5,
         'active' => NoBetTips::ACTIVE_TRUE,
+    )
+);
+?>
+
+<?php
+$this->widget(
+    'NoBetTips',
+    array(
+        'limit'     => 5,
+        'active'    => NoBetTips::ACTIVE_TRUE,
+        'inRunning' => true,
+        'view'      => 'inrunning',
     )
 );
 ?>
