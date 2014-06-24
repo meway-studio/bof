@@ -226,4 +226,6 @@ return array(
 	"&euro;&nbsp;{price}" => "&euro;&nbsp;{price}",
 	"Советы list" => "All tips from",
     "Добавить совет по ходу игры" => "Add tip \"in running\"",
+    "Советы по" => "Tips",
+    "по ходу игры" => "in running",
 );

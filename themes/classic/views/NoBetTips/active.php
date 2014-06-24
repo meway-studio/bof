@@ -1,6 +1,6 @@
 ﻿<div class="site-width">
 	<div class="active-tips">
-		
+
 		<div class="title">
 			<span class="bold"><?php echo Yii::t('tips', 'Советы без');?></span>
 			<span> <?php echo Yii::t('tips', 'ставок') ;?></span>
