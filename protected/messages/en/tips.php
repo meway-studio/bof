@@ -45,6 +45,7 @@ return array(
 	"Восстановить пароль" => "Recover password",
 	"Все" => "All",
 	"Все активные" => "All active",
+	"Все активные Советы" => "Tips",
 	"Все активные советы" => "All active tips",
 	"Все последний совет" => "All the latest tips",
 	"Все советы" => "All tips",
