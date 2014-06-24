@@ -59,8 +59,7 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
 
             <div class="block">
                 <?php
-                Yii::import( 'application.modules.user.widgets.weatherBox.weatherBox' );
-                $this->widget( 'weatherBox' );
+                $this->widget( 'application.modules.user.widgets.weatherBox.weatherBox' );
                 ?>
             </div>
 

@@ -127,7 +127,7 @@ class weatherBox extends CWidget
     {
         $assets_path = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'assets';
 
-        $this->assets_path = Yii::app()->assetManager->publish( $assets_path, false, -1, true );
+        $this->assets_path = Yii::app()->assetManager->publish( $assets_path, false, -1, false );
     }
 
     protected function setIcon( $code = null )
