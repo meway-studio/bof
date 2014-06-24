@@ -10,6 +10,11 @@
  * @property string $image
  * @property string $show
  * @property string $url
+ * @property string $lang
+ * @method Banner language()
+ * @method Banner new()
+ * @method Banner bySort()
+ * @method Banner active()
  */
 class Banner extends CActiveRecord
 {
@@ -38,14 +43,18 @@ class Banner extends CActiveRecord
     public function scopes()
     {
         return array(
-            'new'    => array(
+            'new'      => array(
                 'order' => 'create_date DESC',
             ),
-            'bySort' => array(
+            'bySort'   => array(
                 'order' => 'sort DESC',
             ),
-            'active' => array(
+            'active'   => array(
                 'condition' => 't.active = 1'
+            ),
+            'language' => array(
+                'condition' => '(lang = :lang OR lang IS NULL)',
+                'params'    => array( ':lang' => Yii::app()->language ),
             ),
         );
     }
@@ -70,7 +79,7 @@ class Banner extends CActiveRecord
                     Yii::t( 'banner', 'Авторизованным' ) => self::SHOW_AUTHORIZED,
                 )
             ),
-            array( 'create_date, update_date, sort, active', 'safe' ),
+            array( 'create_date, update_date, sort, active, lang', 'safe' ),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array( 'id, create_date, update_date, title, image, show, url, sort, active', 'safe', 'on' => 'search' ),
@@ -154,5 +163,13 @@ class Banner extends CActiveRecord
                 'class' => 'application.modules.eav.behaviors.EavARBehavior',
             ),
         );
+    }
+
+    public function beforeSave()
+    {
+        if (!$this->lang) {
+            $this->lang = Yii::app()->language;
+        }
+        return parent::beforeSave();
     }
 }

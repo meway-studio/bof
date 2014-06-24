@@ -46,7 +46,7 @@ $(document).ready(function(){
 	if (banner.length) {
 		setTimeout(function(){
 			banner.fadeIn(1000);
-		}, 6000);
+		}, 2500);
 	}
 });
 

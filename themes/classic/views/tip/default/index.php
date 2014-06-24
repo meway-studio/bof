@@ -6,7 +6,7 @@ Yii::import( 'application.modules.user.widgets.reviews.reviewsWidget' );
 ?>
 
 <?php
-$banner = Banner::model()->bySort()->active()->find(
+$banner = Banner::model()->bySort()->active()->language()->find(
     "t.show IN ('ALL', :show)",
     array( ':show' => Yii::app()->user->isGuest ? Banner::SHOW_GUEST : Banner::SHOW_AUTHORIZED )
 );
