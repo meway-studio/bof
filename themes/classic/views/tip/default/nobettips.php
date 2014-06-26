@@ -7,8 +7,7 @@
                 <span class="bold"><?php echo Yii::t( 'tips', 'Советы по' ); ?></span>
                 <span> <?php echo Yii::t( 'tips', 'по ходу игры' ); ?></span>
             <?php else: ?>
-                <span class="bold"><?php echo Yii::t( 'tips', 'Без ставок' ) ?></span>
-                <span> <?php echo Yii::t( 'tips', 'Советов' ); ?></span>
+                <span><?php echo Yii::t( 'tips', 'Советы без ставок и по ходу игры' ) ?></span>
             <?php endif ?>
         </div>
 

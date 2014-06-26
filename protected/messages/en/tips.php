@@ -229,5 +229,10 @@ return array(
     "Добавить совет по ходу игры" => "Add tip \"in running\"",
     "Советы по" => "In-running",
     "по ходу игры" => "Tips",
-    "Советы по ходу матча" => "In Running tips",
+    "Советы по ходу матча" => "No bet tips",
+    "Советы без ставок и по ходу игры" => "No bet and In-running <b>Tips</b>",
+    "Советы без ставок и по ходу матча" => "No bet and In-running tips",
+    "Все Советы" => "All the Tips",
+    "Активные Советы" => "Active the Tips",
+    "Все советы на весь период" => "All the tips for the whole period",
 );

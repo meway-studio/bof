@@ -2,12 +2,11 @@
 	<div class="active-tips">
 		
 		<div class="title">
-			<span> <?php echo Yii::t('tips', 'Советы list') ;?></span>
-			<span class="bold">
+			<span>
 				<?php if($active==null):?>
-					<?php echo $user!=null ? $user->FullName : Yii::t('tips', 'Все');?>
+					<?php echo $user!=null ? $user->FullName : Yii::t('tips', 'Все советы на весь период');?>
 				<?php else:?>
-					<?php echo $active==1 ? Yii::t('tips', 'Активные') : Yii::t('tips', 'Прошедшие') ;?>
+					<?php echo $active==1 ? Yii::t('tips', 'Активные Советы') : Yii::t('tips', 'Все Советы') ;?>
 				<?php endif;?>
 			</span>
 		</div>

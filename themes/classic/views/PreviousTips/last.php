@@ -19,8 +19,8 @@
                 );
             }
             echo CHtml::link(
-                Yii::t( 'tips', 'Советы по ходу матча' ),
-                Yii::app()->createUrl( '/tip/default/NoBetTips/in_running/1' ),
+                Yii::t( 'tips', 'Советы без ставок и по ходу матча' ),
+                Yii::app()->createUrl( '/tip/default/NoBetTips' ),
                 array( 'class' => 'top right' )
             );
             ?>
