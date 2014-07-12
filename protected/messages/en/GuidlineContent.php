@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"12 золотых правил" => "12 golden rules",
 	"Cоздать" => "Create",
 	"ID" => "ID",

@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Facebook" => "Facebook",
 	"ID" => "ID",
 	"Skype" => "Skype",

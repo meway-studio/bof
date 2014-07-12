@@ -39,7 +39,9 @@ class MailCommand extends ConsoleCommand
 		$task->status = MailTask::STATUS_PROCESS;
 		
 		$task->save();
-		
+
+        $defaultLang = Yii::app()->language;
+
 		foreach($task->recipient(array('limit'=>1)) AS $item){
 			
 			$status = false;
@@ -51,14 +53,20 @@ class MailCommand extends ConsoleCommand
 				echo $item->email."\n";
 				$user = $item->email;
 			}
-			
+
+            if ($user->language) {
+                Yii::app()->language = $user->language;
+            }
+
 			try{
 				$status = $this->sendMail($task, $user);
 			} catch (Exception $e) {
 				
 				@file_put_contents('/var/www/mailerrors/mail_error_'.$item->id.'.txt', print_r($e,1));
 			}
-			
+
+            Yii::app()->language = $defaultLang;
+
 			if($status==true)
 				$task->success++;
 			else
@@ -90,12 +98,18 @@ class MailCommand extends ConsoleCommand
 		
 		if(count($users)==0)
 			Yii::app()->end("\nFast subscribers not found\n");
-		
+
+        $defaultLang = Yii::app()->language;
+
 		foreach($users AS $user){
 			
 			// Составить список типсов, которые пользователь еще не получал
 			$userTips   = array();
 			$sendedTips = array();
+
+            if ($user->language) {
+                Yii::app()->language = $user->language;
+            }
 			
 			// Список типсов, которые уже были отправлены пользователю
 			foreach(FastMail::model()->findAllByAttributes(array('user_id'=>$user->id)) AS $st)
@@ -127,6 +141,7 @@ class MailCommand extends ConsoleCommand
 			}else{
 				echo "\tUser ".$user->email." has already received a letter all tips at the moment\n";
 			}
+            Yii::app()->language = $defaultLang;
 		}
 
 		Yii::app()->end("\nMission accomplished\n");
@@ -158,7 +173,8 @@ class MailCommand extends ConsoleCommand
 				echo "\nStart didgest. Finded ".count($users)." users.\n";
 			else
 				echo "\nSubscribers not found\n";
-			
+
+            $defaultLang = Yii::app()->language;
 			foreach($users AS $model){
 				
 				// Отмечаем дату последней рассылки
@@ -176,8 +192,14 @@ class MailCommand extends ConsoleCommand
 					echo "\nUser {$model->email} is not subscriber and count free tips is zero\n";
 					continue;
 				}
-				
+
+                if ($model->language) {
+                    Yii::app()->language = $model->language;
+                }
+
 				$this->sendmailWidget($model);
+
+                Yii::app()->language = $defaultLang;
 			}
 			
 		}else{

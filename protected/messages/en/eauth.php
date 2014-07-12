@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Invalid response format." => "Wrong answer format",
 	"Invalid response http code: {code}." => "Wrong forman code: {code}",
 	"Unable to complete the authentication because the required data was not received." => "Unable to complete authentication, since the necessary data were not obtained",

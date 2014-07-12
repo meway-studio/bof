@@ -830,6 +830,26 @@ p.grey_text {
 	background-color: #fff;
 	border-radius: 0px 3px 3px 0px;
 }
+.personal .information form .language {
+	background-color: #fff;
+}
+.personal .information form .language input[type="radio"]:checked + label {
+	border: 1px solid #ccc;
+}
+
+.personal .information form .language .langradio {
+	display: none;
+}
+.personal .information form .language label {
+	font-size: 16px;
+	cursor: pointer;
+	padding: 5px 15px;
+	line-height: 35px;
+}
+.personal .information form .lang-title {
+	margin-bottom: 10px;
+	font-size: 18px;
+}
 
 .personal .information form .phone {
 	background: url(images/menu/phon.png) 10px center no-repeat;
@@ -1120,6 +1140,7 @@ p.grey_text {
 	border: 1px solid #aab2bd;
 	border-radius: 20px 0 0 20px;
 }
+
 .last-tips .title .top.right, .active-tips .title .top.right {
 	border-radius: 0 20px 20px 0;
 	margin-left: -30px;

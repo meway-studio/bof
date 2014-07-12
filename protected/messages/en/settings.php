@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Email #1" => "Email # 1",
 	"Email #2" => "Email # 2",
 	"MoneyBookers account" => "MoneyBookers account",

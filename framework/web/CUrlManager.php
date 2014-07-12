@@ -4,7 +4,7 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.yiiframework.com/
- * @copyright Copyright &copy; 2008-2011 Yii Software LLC
+ * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
@@ -265,7 +265,10 @@ class CUrlManager extends CApplicationComponent
 		if(is_array($route) && isset($route['class']))
 			return $route;
 		else
-			return new $this->urlRuleClass($route,$pattern);
+		{
+			$urlRuleClass=Yii::import($this->urlRuleClass,true);
+			return new $urlRuleClass($route,$pattern);
+		}
 	}
 
 	/**
@@ -349,11 +352,12 @@ class CUrlManager extends CApplicationComponent
 		}
 	}
 
-	/**
-	 * Parses the user request.
-	 * @param CHttpRequest $request the request application component
-	 * @return string the route (controllerID/actionID) and perhaps GET parameters in path format.
-	 */
+    /**
+     * Parses the user request.
+     * @param CHttpRequest $request the request application component
+     * @throws CHttpException
+     * @return string the route (controllerID/actionID) and perhaps GET parameters in path format.
+     */
 	public function parseUrl($request)
 	{
 		if($this->getUrlFormat()===self::PATH_FORMAT)

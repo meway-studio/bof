@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Дата добавления" => "Date",
 	"Дата обновления" => "Date of renovation",

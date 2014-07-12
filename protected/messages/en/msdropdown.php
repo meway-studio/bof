@@ -1,4 +1,3 @@
-<?php
-return array(
+<?php return array(
 	"Модель не является экземпляром класса CModel" => "The model is not an instance of CModel",
 );

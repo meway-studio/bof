@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Выделен" => "Isolated",
 	"Дата обновления" => "Date of update",

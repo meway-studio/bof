@@ -1,4 +1,4 @@
-﻿<div class="site-width">
+<div class="site-width">
 	<div class="active-tips">
 
 		<div class="title">

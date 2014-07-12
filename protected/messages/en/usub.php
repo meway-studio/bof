@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Автор" => "Author",
 	"Дата окончания подписки" => "Subscription expiration date",
