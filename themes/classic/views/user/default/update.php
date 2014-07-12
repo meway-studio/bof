@@ -90,7 +90,7 @@
                         $model,
                         'language',
                         array(
-                            'en' => Yii::t( 'user', '<b class="flag en"></b> Английский' ),
+                            'en' => Yii::t( 'user', '<b class="flag us"></b> Английский' ),
                             'ru' => Yii::t( 'user', '<b class="flag ru"></b> Русский' ),
                         ),
                         array(
