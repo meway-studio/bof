@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Язык" => "Language",
 	" дней" => "Days",
 	"&euro; Eвро" => "&euro; Euro",
@@ -62,7 +61,6 @@ return array(
 	"Добавить совет. Даааа!" => "Add tip. Yeahhhh!",
 	"Дорогой, Гость!" => "Dear Guest!",
 	"Доход" => "Profit",
-	"Доход" => "Profit",
 	"Доход:" => "Yield (Roi):",
 	"Единиц" => "Units",
 	"Если у вас есть бизнес-вопросы или другие вопросы, пожалуйста, заполните форму, чтобы связаться с нами. Спасибо." => "If you have any questions or business proposal, please, feel free to contact us. We will be happy to answer you as soon as possible.",
@@ -94,8 +92,7 @@ return array(
 	"Купить" => "Buy now",
 	"Купить совет" => "Buy this tip",
 	"Лучшая цена:" => "Best odds:",
-	"МЕНЯ ИЩЕТЕ?" => "ARE YOU
-LOOKING FOR ME?",
+	"МЕНЯ ИЩЕТЕ?" => "ARE YOULOOKING FOR ME?",
 	"МЫ КОМАНДА ПРОФЕССИОНАЛОВ, КОТОРЫЕ ЧУВСТВУЮТ СТРАСТЬ К ФУТБОЛУ, КАК И ТЫ!" => "WE’RE A TEAM OF PROFESSIONALS WHO FEEL PASSION ABOUT FOOTBALL JUST LIKE YOU!",
 	"МЫ НЕ ТОЛЬКО БОЛЕЛЬЩИКИ, НАБЛЮДАЮЩИЕ ЗА СВОИМИ ЛЮБИМЫМИ КОМАНДАМИ, НО И ТЕ, КТО ОЧАРОВАНЫ КРАСОТОЙ ВЛАДЕНИИ МЯЧОМ, ТАКТИКОЙ, СТАТИСТИКОЙ, АТМОСФЕРОЙ КОНКУРЕНЦИИ ВО ВРЕМЯ ИГРЫ С ДРУГИМИ КОМАНДАМИ - КАК И ТЫ!" => "WE’RE NOT ONLY FANS WATCHING OUR FAVORITE TEAMS BUT ALSO THOSE WHO ARE ENCHANTED BY THE BEAUTY OF BALL POSSESSION, TACTICS, STATISTICS, COMPETITION AND ATMOSPHERE DURING OTHER TEAMS’ PERFORMANCE — JUST LIKE YOU!",
 	"Месяц" => "Month",
@@ -223,6 +220,9 @@ LOOKING FOR ME?",
 	"Пилотный выпуск видео советов BetonFootball" => "Pilot release video tips BetonFootball",
 	"<b>Добавить</b> совет" => "<b>Add</b> Tip",
 	"Введите Ваш Email" => "Email",
-    "<b>Добавить</b> совет по ходу игры" => "<b>Add</b> In running Tip",
-    "Баннеры" => "Banners",
+	"<b>Добавить</b> совет по ходу игры" => "<b>Add</b> In running Tip",
+	"Баннеры" => "Banners",
+	"Еще" => "More",
+	"Импорт/Экспорт переводов" => "Import/Export translation",
+	"Страницы" => "Pages",
 );

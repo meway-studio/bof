@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Create Date" => "Дата создания",
 	"Expiration Date" => "Дата окончания",
 	"ID" => "ID",

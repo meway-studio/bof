@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Meta Description" => "Meta Description",
 	"Meta Keywords" => "Meta Keywords",

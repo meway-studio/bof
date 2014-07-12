@@ -234,10 +234,9 @@ class UserCommand extends ConsoleCommand
 	}
 	
 	protected function sendmailSignup($model){
-
 		// сформировать письмо
 		// @todo: Исправить путь
-		$body = $this->renderFile('/var/www/themes/classic/views/user/mail/signup.php', array('model'=>$model), true);
+		$body = $this->renderFile('/var/www/themes/classic/views/user/mail/'.Yii::app()->language.'/signup.php', array('model'=>$model), true);
 		
 		// отправить
 		$ymessage           = new YiiMailMessage;
@@ -252,7 +251,7 @@ class UserCommand extends ConsoleCommand
 	protected function sendmailWidget($model){
 
 		// сформировать письмо
-		$body = $this->renderFile('/var/www/themes/classic/views/user/mail/widget.php', array('model'=>$model), true);
+		$body = $this->renderFile('/var/www/themes/classic/views/user/mail/'.Yii::app()->language.'/widget.php', array('model'=>$model), true);
 		
 		// отправить
 		$ymessage           = new YiiMailMessage;

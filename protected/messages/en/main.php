@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Выход" => "Exit",
 	"История покупок" => "Purchase history",
 	"Корзина" => "Shopping cart",

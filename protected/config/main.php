@@ -1,11 +1,4 @@
 <?php
-
-if (defined( 'Yii_DEBUG' )) {
-    $_SERVER[ 'REMOTE_ADDR' ] = "46.188.2.4";
-}
-
-Yii::setPathOfAlias( 'bootstrap', dirname( __FILE__ ) . '/../extensions/bootstrap' );
-
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -18,11 +11,15 @@ $config = array(
     'sourceLanguage'    => 'quenya',
     'defaultController' => 'tip',
     'theme'             => 'classic',
+    'aliases'           => array(
+        'bootstrap' => 'ext.bootstrap',
+    ),
     // preloading 'log' component
     'preload'           => array(
         'log',
         'config',
         'eav',
+        'catalog',
     ),
     // autoloading model and component classes
     'import'            => array(
@@ -32,6 +29,8 @@ $config = array(
         'application.modules.tip.models.*',
         'application.modules.eav.components.*',
         'application.modules.eav.models.*',
+        'application.modules.catalog.components.*',
+        'application.modules.catalog.models.*',
         'application.components.*',
         'ext.mail.YiiMailMessage',
         'ext.config.*',
@@ -64,7 +63,9 @@ $config = array(
     ),
     // application components
     'components'        => array(
-
+        'messages'     => array(
+            'class' => 'PhpMessageSource',
+        ),
         'robokassa'    => array(
             'class'          => 'Robokassa',
             'sMerchantLogin' => 'BetonFootball',
@@ -245,21 +246,27 @@ $config = array(
                 'robokassa'                                          => '/tip/default/Robokassa',
                 'sitemap.xml'                                        => '/site/SiteMap',
                 'sitemap'                                            => '/site/UserSiteMap',
-                /*
-                '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-                */
-
                 'admin'                                              => '/tip/admin/default/admin',
                 'admin/banner'                                       => 'admin/banner/admin',
                 'admin/banner/<controller:\w+>'                      => 'admin/banner/<controller>',
                 'admin/banner/<controller:\w+>/<action:\w+>'         => 'admin/banner/<controller>/<action>',
                 'admin/banner/<controller:\w+>/<action:\w+>/*'       => 'admin/banner/<controller>/<action>',
+                'admin/messages'                                     => 'admin/messages',
+                'admin/messages/messages.csv'                        => 'admin/messages/download',
+                'admin/messages/<controller:\w+>'                    => 'admin/messages/<controller>',
+                'admin/messages/<controller:\w+>/<action:\w+>'       => 'admin/messages/<controller>/<action>',
+                'admin/messages/<controller:\w+>/<action:\w+>/*'     => 'admin/messages/<controller>/<action>',
                 'admin/<module:\w+>'                                 => '<module>/admin/default',
                 'admin/<module:\w+>/<controller:\w+>'                => '<module>/admin/<controller>',
                 'admin/<module:\w+>/<controller:\w+>/<action:\w+>'   => '<module>/admin/<controller>/<action>',
                 'admin/<module:\w+>/<controller:\w+>/<action:\w+>/*' => '<module>/admin/<controller>/<action>',
+                'catalog'                                            => 'catalog/category/view/name/optics',
+                array(
+                    'class' => 'application.modules.catalog.components.CatalogCategoryUrlRule'
+                ),
+                /*'<controller:\w+>/<id:\d+>'                          => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'             => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'                      => '<controller>/<action>',*/
             ),
         ),
         'db'           => array(
@@ -271,7 +278,7 @@ $config = array(
             'tablePrefix'      => 'me_',
         ),
         'cache'        => array(
-            'class' => 'system.caching.CDummyCache',
+            'class' => 'system.caching.CFileCache',
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
@@ -328,6 +335,35 @@ $config = array(
                 ),
             ),
         ),
+        'catalog'      => array(
+            'class'  => 'application.modules.catalog.components.CatalogComponent',
+            'config' => array(
+                'catalog' => array(
+                    'admin' => array(
+                        'for' => array(
+                            'page' => array(
+                                'viewDir' => 'page'
+                            ),
+                        ),
+                    ),
+                    'for' => array(
+                        'page' => array(
+                            'viewDir' => 'page'
+                        ),
+                    ),
+                ),
+            ),
+            /*'element' => array(
+                'behaviors' => array(
+                    'CatalogElementEventsBehavior' => array(
+                        'class'    => 'application.modules.catalog.behaviors.CatalogElementEventsBehavior',
+                        'catalogs' => array(
+                            'events'
+                        ),
+                    ),
+                ),
+            ),*/
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
@@ -338,6 +374,9 @@ $config = array(
     ),
 );
 
+if (defined( 'Yii_DEBUG' )) {
+    $_SERVER[ 'REMOTE_ADDR' ] = "46.188.2.4";
+}
 /* Include local config */
 if (file_exists( $localConfig = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'local.main.php' )) {
     $config = CMap::mergeArray( $config, require($localConfig) );

@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Email" => "Почтовый ящик",
 	"Error, please try later!" => "Ошибка, пожалуйста, попробуйте позже",
 	"Guest" => "Гость",

@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Добавить отзыв" => "Add a review",
 	"Administrator" => "Administrator",
 	"Betonfootball предназначен для пользователя. Поэтому если у вас есть какие-то вопросы, касающиеся работы нашего сайта или вам нужна помощь, в пользование нашими услугами, не стесняйтесь обращаться к нам, используя форму обратной связи, и мы ответим очень быстро." => "Betonfootball is designed for you, dear user. Therefore if you have any questions regarding anything on our site or you need help using any of our services, don't hesitate to contact us using the support form below and we will reply as soon as possible.",
@@ -115,5 +114,4 @@ return array(
 	"да" => "Yes",
 	"нет" => "No",
 	"Если Вы добавите Ваше Имя, мы будем знать, как обращаться к вам должным образом. Если Вы добавите Ваш адрес электронной почты, мы всегда сможем предоставить Вам самую свежую информацию, и отправить важные новости и прогнозы. Если добавите Ваш номер телефона, мы сможем оповещать Вас с помощью смс. Все ответы на интересующие Вас вопросы Вы всегда сможете получить, воспользовавшись формой обратной связи в разделе контакты." => "If you add your name we will know how to refer to you properly. If you add your e-mail address, we will always be able to provide you with most recent information and send you important news and predictions. If you add your phone number, we will be able to inform you when new prediction appears on the site. And if you give feedback on BOF team work, you will have a bonus.",
-
 );

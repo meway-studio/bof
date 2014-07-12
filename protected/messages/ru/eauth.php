@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"Invalid response format." => "Неверный формат ответа",
 	"Invalid response http code: {code}." => "Неверный формаn кода: {code}",
 	"Unable to complete the authentication because the required data was not received." => "Не удается завершить проверку подлинности, так как необходимые данные не были получены",

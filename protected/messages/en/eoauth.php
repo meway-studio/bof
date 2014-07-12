@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"OAuth версия {v} не поддерживается" => "OAuth version {v} is not supported",
 	"Истекло время, ваше {ts}, наше {n}" => "Time has expired, your {ts}, our {n}",
 	"Массивы не поддерживаются в заголовках" => "Arrays are not supported in the headlines",

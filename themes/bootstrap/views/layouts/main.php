@@ -69,57 +69,87 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
             array(
                 'class' => 'bootstrap.widgets.TbMenu',
                 'items' => array(
-                    array( 'label'   => Yii::t( 'themes', 'Советы' ),
-                           'url'     => array( '/tip/admin/default/admin' ),
-                           'visible' => Yii::app()->user->isManager
+                    array(
+                        'label'   => Yii::t( 'themes', 'Советы' ),
+                        'url'     => array( '/tip/admin/default/admin' ),
+                        'visible' => Yii::app()->user->isManager
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Покупки' ),
-                           'url'     => array( '/tip/admin/default/purchase' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Покупки' ),
+                        'url'     => array( '/tip/admin/default/purchase' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Пользователи' ),
-                           'url'     => array( '/user/admin/default/admin' ),
-                           'visible' => Yii::app()->user->isManager
+                    array(
+                        'label'   => Yii::t( 'themes', 'Пользователи' ),
+                        'url'     => array( '/user/admin/default/admin' ),
+                        'visible' => Yii::app()->user->isManager
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Связь' ),
-                           'url'     => array( '/guidline/admin/default/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Связь' ),
+                        'url'     => array( '/guidline/admin/default/admin' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Правила' ),
-                           'url'     => array( '/guidline/admin/content/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Правила' ),
+                        'url'     => array( '/guidline/admin/content/admin' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'FAQ' ),
-                           'url'     => array( '/guidline/admin/faq/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'FAQ' ),
+                        'url'     => array( '/guidline/admin/faq/admin' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Отзывы' ),
-                           'url'     => array( '/user/admin/reviews/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Отзывы' ),
+                        'url'     => array( '/user/admin/reviews/admin' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Рассылка' ),
-                           'url'     => array( '/tip/admin/mail/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Рассылка' ),
+                        'url'     => array( '/tip/admin/mail/admin' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Настройки' ),
-                           'url'     => array( '/tip/admin/default/settings' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Настройки' ),
+                        'url'     => array( '/tip/admin/default/settings' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'СЕО' ),
-                           'url'     => array( '/tip/admin/default/meta' ),
-                           'visible' => Yii::app()->user->isManager
+                    array(
+                        'label'   => Yii::t( 'themes', 'СЕО' ),
+                        'url'     => array( '/tip/admin/default/meta' ),
+                        'visible' => Yii::app()->user->isManager
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Кальк.' ),
-                           'url'     => array( '/tip/admin/default/statistics' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Кальк.' ),
+                        'url'     => array( '/tip/admin/default/statistics' ),
+                        'visible' => Yii::app()->user->isAdmin
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Войти' ),
-                           'url'     => array( '/site/login' ),
-                           'visible' => Yii::app()->user->isGuest
+                    array(
+                        'label'   => Yii::t( 'themes', 'Войти' ),
+                        'url'     => array( '/site/login' ),
+                        'visible' => Yii::app()->user->isGuest
                     ),
-                    array( 'label'   => Yii::t( 'themes', 'Баннеры' ),
-                           'url'     => array( '/admin/banner/admin' ),
-                           'visible' => Yii::app()->user->isAdmin
+                    array(
+                        'label'   => Yii::t( 'themes', 'Еще' ),
+                        'url'     => array( '/catalog/admin/category' ),
+                        'visible' => Yii::app()->user->isAdmin,
+                        'items'   => array(
+                            array(
+                                'label'   => Yii::t( 'themes', 'Баннеры' ),
+                                'url'     => array( '/admin/banner/admin' ),
+                                'visible' => Yii::app()->user->isAdmin
+                            ),
+                            array(
+                                'label'   => Yii::t( 'themes', 'Импорт/Экспорт переводов' ),
+                                'url'     => array( '/admin/messages', array( 'name' => 'pages' ) ),
+                                'visible' => Yii::app()->user->isAdmin
+                            ),
+                            array(
+                                'label'   => Yii::t( 'themes', 'Страницы' ),
+                                'url'     => array( '/catalog/admin/category', array( 'name' => 'pages' ) ),
+                                'visible' => Yii::app()->user->isAdmin
+                            ),
+                        ),
                     ),
                     //array('label'=>'Operations',   'url'=>array('/admin/pages/default')),
                 ),
@@ -137,9 +167,10 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
                             array( 'label' => Yii::t( 'themes', 'Профиль' ), 'url' => array( '/user/default/update' ) ),
                             array( 'label' => Yii::t( 'themes', 'На сайт' ), 'url' => '/' ),
                             '---',
-                            array( 'label'   => Yii::t( 'themes', 'Выйти' ),
-                                   'url'     => array( '/user/default/logout' ),
-                                   'visible' => !Yii::app()->user->isGuest
+                            array(
+                                'label'   => Yii::t( 'themes', 'Выйти' ),
+                                'url'     => array( '/user/default/logout' ),
+                                'visible' => !Yii::app()->user->isGuest
                             ),
                         )
                     ),

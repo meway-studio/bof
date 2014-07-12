@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Id Страны" => "Id Страны",
 	"Id региона" => "Id региона",

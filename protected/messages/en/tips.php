@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"{c1} & {c2} Совет и Предварительный просмотр {ed} от {fn} - {leag} Футблольных ставок" => "{c1} & {c2} Preview and prediction {ed} of {fn} - {leag} bet on football",
 	"{profit} единица" => "{profit} units",
 	"К истории покупок" => "Go to purchase history",
@@ -226,13 +225,14 @@ return array(
 	"Поинт" => "Points",
 	"&euro;&nbsp;{price}" => "&euro;&nbsp;{price}",
 	"Советы list" => "All tips from",
-    "Добавить совет по ходу игры" => "Add tip \"in running\"",
-    "Советы по" => "In-running",
-    "по ходу игры" => "Tips",
-    "Советы по ходу матча" => "No bet tips",
-    "Советы без ставок и по ходу игры" => "No bet and In-running <b>Tips</b>",
-    "Советы без ставок и по ходу матча" => "No bet and In-running tips",
-    "Все Советы" => "All the Tips",
-    "Активные Советы" => "Active the Tips",
-    "Все советы на весь период" => "All the tips for the whole period",
+	"Добавить совет по ходу игры" => "Add tip \"in running\"",
+	"Советы по" => "In-running",
+	"по ходу игры" => "Tips",
+	"Советы по ходу матча" => "No bet tips",
+	"Советы без ставок и по ходу игры" => "No bet and In-running <b>Tips</b>",
+	"Советы без ставок и по ходу матча" => "No bet and In-running tips",
+	"Все Советы" => "All the Tips",
+	"Активные Советы" => "Active the Tips",
+	"Все советы на весь период" => "All the tips for the whole period",
+	"{n} won|{n} won|{n} won|{n} won" => "",
 );

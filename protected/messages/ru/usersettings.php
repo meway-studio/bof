@@ -1,5 +1,4 @@
-<?php
-return array(
+<?php return array(
 	"ID" => "ID",
 	"Весь интернет" => "Весь интернет",
 	"Да" => "Да",
