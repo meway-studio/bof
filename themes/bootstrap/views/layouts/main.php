@@ -115,16 +115,6 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
                         'visible' => Yii::app()->user->isAdmin
                     ),
                     array(
-                        'label'   => Yii::t( 'themes', 'СЕО' ),
-                        'url'     => array( '/tip/admin/default/meta' ),
-                        'visible' => Yii::app()->user->isManager
-                    ),
-                    array(
-                        'label'   => Yii::t( 'themes', 'Кальк.' ),
-                        'url'     => array( '/tip/admin/default/statistics' ),
-                        'visible' => Yii::app()->user->isAdmin
-                    ),
-                    array(
                         'label'   => Yii::t( 'themes', 'Войти' ),
                         'url'     => array( '/site/login' ),
                         'visible' => Yii::app()->user->isGuest
@@ -147,6 +137,16 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
                             array(
                                 'label'   => Yii::t( 'themes', 'Страницы' ),
                                 'url'     => array( '/catalog/admin/category', array( 'name' => 'pages' ) ),
+                                'visible' => Yii::app()->user->isAdmin
+                            ),
+                            array(
+                                'label'   => Yii::t( 'themes', 'СЕО' ),
+                                'url'     => array( '/tip/admin/default/meta' ),
+                                'visible' => Yii::app()->user->isManager
+                            ),
+                            array(
+                                'label'   => Yii::t( 'themes', 'Кальк.' ),
+                                'url'     => array( '/tip/admin/default/statistics' ),
                                 'visible' => Yii::app()->user->isAdmin
                             ),
                         ),

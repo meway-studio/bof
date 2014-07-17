@@ -8,9 +8,32 @@ foreach ($category->ancestors()->findAll() as $ancestor) {
 }
 $this->breadcrumbs[ $element->category->title ] = $element->category->getUrl();
 $this->breadcrumbs[ ] = $element->title;
+$this->pageTitle = $element->title;
 ?>
+
+<div class="guidline-slide"></div>
 <div class="site-width">
-    <h2><?= $element->title ?></h2>
-    <p><?= $element->short_description ?></p>
-    <p><?= $element->full_description ?></p>
+<div class="guidline-us">
+	<div class="guidline-left">
+		<div class="title">
+			<span class="bold"><?php echo $element->category->title; ?></span>
+		</div>
+
+		<div class="guidline-menu">
+			<?php $this->widget('application.modules.guidline.widgets.GuidlineMenu'); ?>
+		</div>
+
+	</div>
+	<div class="questions">
+
+		<div class="question">
+			<h3><?= $element->title ?></h3>
+		</div>
+
+		<p>
+			<?= $element->full_description ?>
+		</p>
+		
+	</div>
+</div>
 </div>

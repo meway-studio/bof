@@ -331,6 +331,23 @@ $config = array(
                                 'value',
                             ),
                         ),
+                        'CatalogElement'  => array(
+                            'translate' => array(
+                                'name',
+                                'title',
+                                'article',
+                                'short_description',
+                                'full_description',
+                                'meta_title',
+                                'meta_keywords',
+                                'meta_description',
+                            ),
+                        ),
+                        'CatalogCategory'  => array(
+                            'translate' => array(
+                                'title',
+                            ),
+                        ),
                     ),
                 ),
             ),
