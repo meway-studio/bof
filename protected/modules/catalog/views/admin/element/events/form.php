@@ -119,7 +119,7 @@ $form = $this->beginWidget(
             'language'  => Yii::app()->language,
             'attribute' => 'short_description',
             'settings'  => array(
-                //'imageUpload' => Yii::app()->createUrl( '/tip/default/redactor' ),
+                'imageUpload' => Yii::app()->createUrl( '/tip/default/redactor' ),
                 'minHeight' => 150,
             ),
             'plugins'   => array(

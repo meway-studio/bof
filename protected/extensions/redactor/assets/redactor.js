@@ -5398,7 +5398,7 @@
 				this.insert_link_node = false;
 
 				var sel = this.getSelection();
-				var url = '', text = '', target = '';
+				var url = '', text = '', target = '', link_class = '', title = '', tabindex = '';
 
 				var elem = this.getParent();
 				var par = $(elem).parent().get(0);
@@ -5412,6 +5412,13 @@
 					url = elem.href;
 					text = $(elem).text();
 					target = elem.target;
+					link_class = $(elem).attr('class');
+					title = $(elem).attr('title');
+					tabindex = $(elem).attr('tabindex');
+
+					$('#redactor_link_class').val(link_class);
+					$('#redactor_link_title').val(title);
+					$('#redactor_link_tabindex').val(tabindex);
 
 					this.insert_link_node = elem;
 				}
@@ -5478,8 +5485,7 @@
 		linkProcess: function()
 		{
 			var tab_selected = $('#redactor_tab_selected').val();
-			var link = '', text = '', target = '', targetBlank = '';
-
+			var link = '', text = '', target = '', targetBlank = '', link_class = '', title = '', tabindex = '';
 			// url
 			if (tab_selected === '1')
 			{
@@ -5515,8 +5521,23 @@
 				text = $('#redactor_link_anchor_text').val();
 			}
 
+			var j_link_class = $('#redactor_link_class');
+			if (j_link_class.val().length) {
+				link_class = ' class="' + j_link_class.val() + '"';
+			}
+
+			var j_link_title = $('#redactor_link_title');
+			if (j_link_title.val().length) {
+				title = ' title="' + j_link_title.val() + '"';
+			}
+
+			var j_link_tabindex = $('#redactor_link_tabindex');
+			if (j_link_tabindex.val().length) {
+				tabindex = ' tabindex="' + j_link_tabindex.val() + '"';
+			}
+
 			text = text.replace(/<|>/g, '');
-			this.linkInsert('<a href="' + link + '"' + target + '>' + text + '</a>', $.trim(text), link, targetBlank);
+			this.linkInsert('<a href="' + link + '"' + target + link_class + title + tabindex + '>' + text + '</a>', $.trim(text), link, targetBlank);
 
 		},
 		linkInsert: function (a, text, link, target)
@@ -6295,6 +6316,14 @@
 							+ '<input type="text" class="redactor_input redactor_link_text" id="redactor_link_anchor_text" />'
 						+ '</div>'
 					+ '</form>'
+				+ '</section>'
+				+ '<section>'
+					+ '<label>Class</label>'
+					+ '<input type="text" id="redactor_link_class" class="redactor_input" />'
+					+ '<label>Title</label>'
+					+ '<input type="text" id="redactor_link_title" class="redactor_input" />'
+					+ '<label>Tabindex</label>'
+					+ '<input type="text" id="redactor_link_tabindex" class="redactor_input" />'
 				+ '</section>'
 				+ '<footer>'
 					+ '<button class="redactor_modal_btn redactor_btn_modal_close">' + this.opts.curLang.cancel + '</button>'

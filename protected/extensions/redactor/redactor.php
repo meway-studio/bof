@@ -63,7 +63,7 @@ class Redactor extends CWidget {
 		$plugins     = array();
 		
 		// register redactor files
-		$cs->registerScriptFile($url.'/redactor.min.js');
+		$cs->registerScriptFile($url.'/redactor.js');
 		$cs->registerCssFile($url.'/redactor.css');
 		//$cs->registerCssFile($url.'/redactor-iframe.css');
 
