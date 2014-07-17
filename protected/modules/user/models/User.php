@@ -28,6 +28,8 @@
  * @property string $has_spam
  * @property string $fast_notice
  * @property string $last_mail
+ * @property integer $show_in_statistic
+ * @method User showInStatistic()
  */
 class User extends CActiveRecord
 {
@@ -134,7 +136,12 @@ class User extends CActiveRecord
             // admin_update
             array( 'email, firstname, phone', 'required', 'on' => 'admin_update' ),
             array( 'update_exp_date', 'safe', 'on' => 'admin_update' ),
-            array( 'role, status, has_spam, fast_notice, confirm', 'numerical', 'integerOnly' => true, 'on' => 'admin_update' ),
+            array(
+                'role, status, has_spam, fast_notice, confirm, show_in_statistic',
+                'numerical',
+                'integerOnly' => true,
+                'on'          => 'admin_update'
+            ),
             array( 'email, firstname', 'length', 'max' => 50, 'on' => 'admin_update' ),
             array( 'phone', 'length', 'max' => 20, 'on' => 'admin_update' ),
             array( 'email', 'email', 'on' => 'admin_update' ),
@@ -144,13 +151,13 @@ class User extends CActiveRecord
 
             // The following rule is used by search().
             array(
-                'id, status, confirm, create_date, update_date, create_ip, role, email, hash, password, money, firstname, lastname, middlename, gender, birthday, country_id, city_id, address, photo, about, expiration_date, language',
+                'id, status, confirm, create_date, update_date, create_ip, role, email, hash, password, money, firstname, lastname, middlename, gender, birthday, country_id, city_id, address, photo, about, expiration_date, language, show_in_statistic',
                 'safe',
                 'on' => 'search'
             ),
             // The following rule is used by usersearch().
             array(
-                'id, status, confirm, create_date, update_date, create_ip, role, email, hash, password, money, firstname, lastname, middlename, gender, birthday, country_id, city_id, address, photo, about, language',
+                'id, status, confirm, create_date, update_date, create_ip, role, email, hash, password, money, firstname, lastname, middlename, gender, birthday, country_id, city_id, address, photo, about, language, show_in_statistic',
                 'safe',
                 'on' => 'usersearch'
             ),
@@ -179,25 +186,28 @@ class User extends CActiveRecord
     {
         return array(
 
-            'active'      => array(
+            'active'          => array(
                 'condition' => 't.status = 1',
             ),
-            'tipsterRole' => array(
+            'tipsterRole'     => array(
                 'condition' => 't.role = ' . self::ROLE_TIPSTER,
             ),
-            'spamer'      => array(
+            'spamer'          => array(
                 'condition' => 't.has_spam = 1 AND t.email!=""',
             ),
-            'fast'        => array(
+            'fast'            => array(
                 'condition' => 't.fast_notice = 1',
             ),
-            'free'        => array(
+            'free'            => array(
                 'with'      => array( 'sub' ),
                 'condition' => 'expiration_date <' . date( 'U' ),
             ),
-            'paid'        => array(
+            'paid'            => array(
                 'with'      => array( 'sub' ),
                 'condition' => 'expiration_date >' . date( 'U' ),
+            ),
+            'showInStatistic' => array(
+                'condition' => 't.show_in_statistic = 1',
             ),
         );
     }
@@ -208,35 +218,36 @@ class User extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id'              => Yii::t( 'user', 'ID' ),
-            'status'          => Yii::t( 'user', 'Статус' ),
-            'confirm'         => Yii::t( 'user', 'Акаунт подтвержден' ),
-            'create_date'     => Yii::t( 'user', 'Добавлен' ),
-            'update_date'     => Yii::t( 'user', 'Обновлен' ),
-            'create_ip'       => Yii::t( 'user', 'Ip' ),
-            'role'            => Yii::t( 'user', 'Роль' ),
-            'email'           => Yii::t( 'user', 'Email' ),
-            'phone'           => Yii::t( 'user', 'Телефон' ),
-            'hash'            => Yii::t( 'user', 'Хэш' ),
-            'password'        => Yii::t( 'user', 'Пароль' ),
-            'new_password'    => Yii::t( 'user', 'Новый парорль' ),
-            'old_password'    => Yii::t( 'user', 'Старый пароль' ),
-            'temp_password'   => Yii::t( 'user', 'Новый парорль' ),
-            'money'           => Yii::t( 'user', 'Баланc' ),
-            'firstname'       => Yii::t( 'user', 'Имя' ),
-            'lastname'        => Yii::t( 'user', 'Фамилия' ),
-            'middlename'      => Yii::t( 'user', 'Отчество' ),
-            'gender'          => Yii::t( 'user', 'Пол' ),
-            'birthday'        => Yii::t( 'user', 'Дата рождения' ),
-            'format_birthday' => Yii::t( 'user', 'Дата рождения' ),
-            'country_id'      => Yii::t( 'user', 'Страна' ),
-            'city_id'         => Yii::t( 'user', 'Город' ),
-            'address'         => Yii::t( 'user', 'Адрес' ),
-            'photo'           => Yii::t( 'user', 'Фото' ),
-            'about'           => Yii::t( 'user', 'Обзор' ),
-            'update_exp_date' => Yii::t( 'user', 'Обновлен' ),
-            'has_spam'        => Yii::t( 'user', 'Подписан' ),
-            'fast_notice'     => Yii::t( 'user', 'Уведомления' ),
+            'id'                => Yii::t( 'user', 'ID' ),
+            'status'            => Yii::t( 'user', 'Статус' ),
+            'confirm'           => Yii::t( 'user', 'Акаунт подтвержден' ),
+            'create_date'       => Yii::t( 'user', 'Добавлен' ),
+            'update_date'       => Yii::t( 'user', 'Обновлен' ),
+            'create_ip'         => Yii::t( 'user', 'Ip' ),
+            'role'              => Yii::t( 'user', 'Роль' ),
+            'email'             => Yii::t( 'user', 'Email' ),
+            'phone'             => Yii::t( 'user', 'Телефон' ),
+            'hash'              => Yii::t( 'user', 'Хэш' ),
+            'password'          => Yii::t( 'user', 'Пароль' ),
+            'new_password'      => Yii::t( 'user', 'Новый парорль' ),
+            'old_password'      => Yii::t( 'user', 'Старый пароль' ),
+            'temp_password'     => Yii::t( 'user', 'Новый парорль' ),
+            'money'             => Yii::t( 'user', 'Баланc' ),
+            'firstname'         => Yii::t( 'user', 'Имя' ),
+            'lastname'          => Yii::t( 'user', 'Фамилия' ),
+            'middlename'        => Yii::t( 'user', 'Отчество' ),
+            'gender'            => Yii::t( 'user', 'Пол' ),
+            'birthday'          => Yii::t( 'user', 'Дата рождения' ),
+            'format_birthday'   => Yii::t( 'user', 'Дата рождения' ),
+            'country_id'        => Yii::t( 'user', 'Страна' ),
+            'city_id'           => Yii::t( 'user', 'Город' ),
+            'address'           => Yii::t( 'user', 'Адрес' ),
+            'photo'             => Yii::t( 'user', 'Фото' ),
+            'about'             => Yii::t( 'user', 'Обзор' ),
+            'update_exp_date'   => Yii::t( 'user', 'Обновлен' ),
+            'has_spam'          => Yii::t( 'user', 'Подписан' ),
+            'fast_notice'       => Yii::t( 'user', 'Уведомления' ),
+            'show_in_statistic' => Yii::t( 'user', 'Отображать в статистике' ),
         );
     }
 
@@ -381,6 +392,7 @@ class User extends CActiveRecord
         $criteria->compare( 'address', $this->address, true );
         $criteria->compare( 'photo', $this->photo, true );
         $criteria->compare( 'about', $this->about, true );
+        $criteria->compare( 'show_in_statistic', $this->show_in_statistic );
 
         if (Yii::app()->user->isAdmin) {
             $criteria->compare( 'role', $this->role );

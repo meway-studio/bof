@@ -1457,7 +1457,7 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerMetaTag( Yii::app()->config->get( 'META_D_STATS_ALL_TIME' ), 'description' );
         $this->pageTitle = Yii::t( 'tips', 'Статистика за все время' );
 
-        $model = User::model()->byRole( User::ROLE_TIPSTER )->with( 'tipster' )->findAll();
+        $model = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with( 'tipster' )->findAll();
         $count = count( $model );
         $bof = array(
             'name'        => Yii::t( 'tips', 'Команда BOF' ),
