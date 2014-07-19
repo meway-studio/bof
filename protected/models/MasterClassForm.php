@@ -23,6 +23,7 @@ class MasterClassForm extends CFormModel
             array( 'name, email, type, time', 'required' ),
             // email has to be a valid email address
             array( 'email', 'email' ),
+            array( 'details', 'safe' ),
         );
     }
 
