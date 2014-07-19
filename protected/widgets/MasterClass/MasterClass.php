@@ -19,7 +19,7 @@ class MasterClass extends CWidget
             if ($model->validate()) {
                 $mail = new YiiMailMessage(Yii::t( 'masterclass', 'Заявка на мастер-класс' ));
                 $mail->setBody( $this->render( Yii::app()->language . '/mail', array( 'model' => $model ), true ), 'text/html' );
-                $mail->addTo( $model->email );
+                $mail->addTo( Yii::app()->config->get('MASTERCLASS_EMAIL') );
                 $mail->from = array( Yii::app()->config->get( 'EMAIL_NOREPLY' ) => Yii::app()->name );
                 Yii::app()->mail->send( $mail );
                 Yii::app()->user->setFlash(
