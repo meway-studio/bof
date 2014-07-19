@@ -2618,6 +2618,11 @@ p.grey_text {
 	border-color: #fc6e51;
 }
 
+.contact-form .help .time {
+	background: url(images/contacts/time_ico.png) 20px center no-repeat;
+	background-color: #fff;
+}
+
 .contact-form .help .submit {
 	width: 210px;
 	padding: 10px;
@@ -2961,6 +2966,30 @@ p.grey_text {
 	margin-bottom: 10px;
 	color: #656d78;
 }
+.row-float {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.guidline-us .help form input.type-radio {
+	display: none;
+}
+.guidline-us .help form .type-radio-label {
+	background:url(images/contacts/type_icon.png) no-repeat 15px center #e6e9ed;
+	padding: 5px 100px 5px 40px;
+	display: block;
+	float: left;
+	margin-right: 10px;
+	line-height: 30px;
+	cursor: pointer;
+	border: 1px solid #ccd1d9;
+	color: #aab2bd;
+}
+.guidline-us .help form .type-radio:checked+label {
+	background:url(images/contacts/type_checked_icon.png) no-repeat 15px center #5d9cec;
+	color: #fff;
+	width: auto;
+	border: 1px solid #4a89dc;
+}
 
 .guidline-us .help form textarea {
 	vertical-align: middle;
@@ -3045,6 +3074,7 @@ p.grey_text {
 	background: #8cc152;
 	border: 0;
 	color: #fff;
+	cursor: pointer;
 }
 
 .guidline-us .help .oops {
