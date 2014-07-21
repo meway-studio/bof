@@ -50,7 +50,8 @@ if ($category && !$category->isNewRecord) {
 
 ?>
 <div class="row">
-    <h2><?= $root ? Yii::t( 'CatalogModule.admin.category.main', $root->title ) : Yii::t(
+    <h2><?=
+        $root ? Yii::t( 'CatalogModule.admin.category.main', $root->title ) : Yii::t(
             'CatalogModule.admin.category.main',
             'Каталог'
         ) ?></h2>
@@ -83,14 +84,14 @@ if ($category && !$category->isNewRecord) {
                     'value' => '$data->author->firstname." ".$data->author->lastname',
                 ),
                 array(
-                    'name'  => 'draft',
-                    'value' => '$data->draft ? "Да" : "Нет"',
-                    'filter' => array('Нет', 'Да'),
+                    'name'   => 'draft',
+                    'value'  => '$data->draft ? "Да" : "Нет"',
+                    'filter' => array( 'Нет', 'Да' ),
                 ),
                 array(
-                    'name'  => 'published',
-                    'value' => '$data->published ? "Да" : "Нет"',
-                    'filter' => array('Нет', 'Да'),
+                    'name'   => 'published',
+                    'value'  => '$data->published ? "Да" : "Нет"',
+                    'filter' => array( 'Нет', 'Да' ),
                 ),
                 array(
                     'class'   => 'bootstrap.widgets.TbButtonColumn',

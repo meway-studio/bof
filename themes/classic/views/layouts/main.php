@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
 <div id="header">
     <div class="site-width">
         <a class="logo" href="/<?php echo Yii::app()->language ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/logo.png"/></a>
-        <div class="header_fifa"><img src="/images/header_fifa.png"/></div>
+        <!--div class="header_fifa"><img src="/images/header_fifa.png"/></div-->
         <div class="info">
             <div class="line"></div>
             <div class="block" style="margin-top: 15px;">
