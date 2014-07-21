@@ -90,8 +90,8 @@
                         $model,
                         'language',
                         array(
-                            'en' => Yii::t( 'user', '<b class="flag gb"></b> Английский' ),
-                            'ru' => Yii::t( 'user', '<b class="flag ru"></b> Русский' ),
+                            'en' => Yii::t( 'user', 'язык Английский' ),
+                            'ru' => Yii::t( 'user', 'язык Русский' ),
                         ),
                         array(
                             'class'     => 'langradio',
