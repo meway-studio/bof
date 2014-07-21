@@ -16,4 +16,5 @@
     'Тип встречи'                   => 'Type of meeting',
     'Время встречи'                 => 'Meet time',
     'Спасибо, ваша заявка принята.' => 'Thank you, your application is accepted.',
+    'Отправить'                     => 'Send',
 );
