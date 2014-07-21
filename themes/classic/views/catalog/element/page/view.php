@@ -20,12 +20,12 @@ $this->pageTitle = $element->title;
             </div>
 
             <div class="guidline-menu">
-                <?php foreach ($category->elements as $cat): ?>
-                    <ul>
+                <ul>
+                    <?php foreach ($category->elements as $cat): ?>
                         <li><a href="<?php echo $cat->getUrl() ?>" class="<?php echo
                             Yii::app()->request->requestUri == $cat->url ? 'active' : '' ?>"><?php echo $cat->title ?></a></li>
-                    </ul>
-                <?php endforeach ?>
+                    <?php endforeach ?>
+                </ul>
             </div>
 
         </div>
