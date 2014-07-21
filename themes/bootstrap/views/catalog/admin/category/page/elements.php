@@ -69,11 +69,7 @@ if ($category && !$category->isNewRecord) {
                     'value'       => '$data->id',
                     'htmlOptions' => array( 'style' => 'width:25px;' ),
                 ),
-                array(
-                    'header' => 'Заголовок',
-                    'name'   => 'title',
-                    'value'  => '$data->title',
-                ),
+                'title',
                 array(
                     'header' => 'URL',
                     'name'   => 'name',
