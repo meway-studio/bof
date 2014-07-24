@@ -110,9 +110,8 @@
         </div>
     </div>
 
-    <hr>
-
     <?php if (count( $model2 )): ?>
+        <hr>
         <div class="stats-all-time">
             <div class="title">
                 <span class="bold"><?php echo Yii::t( 'themes', 'Аналитики, покинувшие проект' ); ?></span>
