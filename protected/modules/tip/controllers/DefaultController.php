@@ -1489,11 +1489,6 @@ class DefaultController extends Controller
             $bof[ 'activeCount' ] += isset($item->tipster) ? $item->tipster->activeCount : 0;
         }
 
-        $bof[ 'odds' ] = (round( $bof[ 'odds' ] * 100 / $count )) / 100;
-        //$bof['yield']   = round(Tips::BANK / $bof['profit'] * 100, 2);
-        $bof[ 'yield' ] = round( $bof[ 'profit' ] / $bof[ 'stake' ] * 100, 2 );
-        $bof[ 'winrate' ] = (round( $bof[ 'winrate' ] * 100 / $count )) / 100;
-
         $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
         foreach ($model2 as $item) {
 
@@ -1510,6 +1505,11 @@ class DefaultController extends Controller
             $bof[ 'odds' ] += isset($item->tipster) ? $item->tipster->odds : 0;
             $bof[ 'activeCount' ] += isset($item->tipster) ? $item->tipster->activeCount : 0;
         }
+
+        $bof[ 'odds' ] = (round( $bof[ 'odds' ] * 100 / $count )) / 100;
+        //$bof['yield']   = round(Tips::BANK / $bof['profit'] * 100, 2);
+        $bof[ 'yield' ] = round( $bof[ 'profit' ] / $bof[ 'stake' ] * 100, 2 );
+        $bof[ 'winrate' ] = (round( $bof[ 'winrate' ] * 100 / $count )) / 100;
 
         $this->render( 'tipsters', array( 'model' => $model, 'model2' => $model2, 'bof' => $bof ) );
     }
