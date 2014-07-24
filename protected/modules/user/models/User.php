@@ -30,6 +30,7 @@
  * @property string $last_mail
  * @property integer $show_in_statistic
  * @method User showInStatistic()
+ * @method User showOutStatistic()
  */
 class User extends CActiveRecord
 {
@@ -208,6 +209,9 @@ class User extends CActiveRecord
             ),
             'showInStatistic' => array(
                 'condition' => 't.show_in_statistic = 1',
+            ),
+            'showOutStatistic' => array(
+                'condition' => 't.show_in_statistic = 0',
             ),
         );
     }

@@ -1494,7 +1494,9 @@ class DefaultController extends Controller
         $bof[ 'yield' ] = round( $bof[ 'profit' ] / $bof[ 'stake' ] * 100, 2 );
         $bof[ 'winrate' ] = (round( $bof[ 'winrate' ] * 100 / $count )) / 100;
 
-        $this->render( 'tipsters', array( 'model' => $model, 'bof' => $bof ) );
+        $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
+
+        $this->render( 'tipsters', array( 'model' => $model, 'model2' => $model2, 'bof' => $bof ) );
     }
 
     /**
