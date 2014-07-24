@@ -225,4 +225,5 @@
 	"Еще" => "More",
 	"Импорт/Экспорт переводов" => "Import/Export translation",
 	"Страницы" => "Pages",
+    "Аналитики, покинувшие проект" => "Analysts who have left the project",
 );
