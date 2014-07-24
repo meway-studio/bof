@@ -59,7 +59,7 @@ class Chart extends CWidget {
 		// составить options
 		$options = array(
 			'labels'   => $this->labels,
-			'datasets' => $this->datasets,
+			'datasets' => $this->datasets,//array_walk(, 'intval'),
 		);
 		
 		$this->options = CJavaScript::encode($options);

@@ -227,7 +227,7 @@ class DefaultController extends Controller
             ));
         }
         */
-
+/*
 
         // высчитать правильный профит и елд всем типстерам
         // Получить всех типстеров
@@ -283,11 +283,11 @@ class DefaultController extends Controller
 
             echo $t->FullName . ": " . $stat[ 'profit' ] . "/" . $stat[ 'yield' ] . " (saved: " . (int)$status . ")" . "<br />\n";
         }
-
+*/
 
         //echo date('m');die();
 
-        /*
+        
         // Статистика по месяцам
         $m = 1;
         $y = 2014;
@@ -387,7 +387,7 @@ class DefaultController extends Controller
 
             $pb = $all['bank'];
         }
-        */
+        
     }
 
     public function actionRobokassa()
@@ -1026,7 +1026,7 @@ class DefaultController extends Controller
 
         foreach (array_reverse( $stats ) AS $item) {
             $chart[ 'months' ][ ] = $item->MonthX;
-            $chart[ 'profit' ][ ] = (float)$item->profit;
+            $chart[ 'profit' ][ ] = intval($item->profit);
         }
 
         $dataProvider = new CActiveDataProvider(Tipstats::model()->byTipster( $model->id )->toGrid(
@@ -1103,10 +1103,10 @@ class DefaultController extends Controller
             if (!isset($chart[ 'months' ][ $item->MonthX ])) {
 
                 $chart[ 'months' ][ $item->MonthX ] = $item->MonthX;
-                $chart[ 'profit' ][ $item->MonthX ] = $item->profit;
+                $chart[ 'profit' ][ $item->MonthX ] = intval($item->profit);//$item->profit;
             } else {
 
-                $chart[ 'profit' ][ $item->MonthX ] += $item->profit;
+                $chart[ 'profit' ][ $item->MonthX ] += intval($item->profit);//$item->profit;$item->profit;
             }
         }
 
