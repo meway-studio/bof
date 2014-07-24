@@ -1495,6 +1495,21 @@ class DefaultController extends Controller
         $bof[ 'winrate' ] = (round( $bof[ 'winrate' ] * 100 / $count )) / 100;
 
         $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
+        foreach ($model2 as $item) {
+
+            $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
+                'tipster_id=:ID',
+                array( ':ID' => $item->id )
+            )->queryRow();
+
+            $bof[ 'stake' ] += $allStake[ 'sum' ];
+            $bof[ 'profit' ] += isset($item->tipster) ? $item->tipster->profit : 0;
+            $bof[ 'yield' ] += isset($item->tipster) ? $item->tipster->yield : 0;
+            $bof[ 'tips' ] += isset($item->tipster) ? $item->tipster->tips : 0;
+            $bof[ 'winrate' ] += isset($item->tipster) ? $item->tipster->winrate : 0;
+            $bof[ 'odds' ] += isset($item->tipster) ? $item->tipster->odds : 0;
+            $bof[ 'activeCount' ] += isset($item->tipster) ? $item->tipster->activeCount : 0;
+        }
 
         $this->render( 'tipsters', array( 'model' => $model, 'model2' => $model2, 'bof' => $bof ) );
     }
