@@ -118,4 +118,5 @@
     "Язык на котором я хочу получать письма с сайта"                                                                                                                                                                                                                                                                                                                                                                                          => "Choose the language that you would like to receive emails from us",
     "язык Английский" => "<b class=\"flag gb\"></b> English",
     "язык Русский" => "<b class=\"flag ru\"></b> Russian",
+    "Добро пожаловать в команду BetonFootball!" => "Welcome to the team of BetonFootball!",
 );
