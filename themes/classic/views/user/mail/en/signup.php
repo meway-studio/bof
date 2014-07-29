@@ -10,12 +10,12 @@
 			<tr>
 				<td width="620" style="font-size: 13px;padding: 10px 20px;">
 					<div style="float: left;">BetonFootball: Nothing more, just betting on football</div>
-					<a style="color: #434a54; float: right;" href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/" target="_blank">Go to BetOnFootball</a>
+					<a style="color: #434a54; float: right;" href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>" target="_blank">Go to BetOnFootball</a>
 				</td>
 			</tr>
 			<tr>
 				<td style="background: url(http://www.betonfootball.eu/images/mail/header.png) center left no-repeat; height: 98px;position: relative;">
-					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/" target="_blank" style="width: 250px;height: 70px; display: block; position: absolute; top: 0px; left: 0px;"></a>
+					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>" target="_blank" style="width: 250px;height: 70px; display: block; position: absolute; top: 0px; left: 0px;"></a>
 					<a href="https://www.facebook.com/BetOnFootball" target="_blank" style="width: 32px;height: 32px; display: block; position: absolute; top: 18px; right: 30px;"></a>
 					<a href="https://twitter.com/BetonFootball7" target="_blank" style="width: 32px;height: 32px; display: block; position: absolute; top: 18px; right: 76px;"></a>
 				</td>
@@ -43,7 +43,7 @@
 				<td style="font-size: 13px;padding: 40px 30px;color: #000;">
 					<div style="color: #fff; font-size: 24px;">Plans Subscriptions</div>
 					<div style="color: #aab2bd; font-size: 16px;">Select the subscription plan that best suits you.</div>
-					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/tip/default/subscription">
+					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>tip/default/subscription">
 						<table width="600" style="background: url(http://www.betonfootball.eu/images/mail/tarif.jpg) no-repeat;height: 586px; margin: 0 auto;font-size: 36px;color: #fff;text-align: center;">
 							<tr>
 								<td height="140" style="vertical-align: middle;" ><span>&euro; <?php echo Yii::app()->config->get('SUBSCRIPTION_WEEKEND_PRICE');?></span></td>
@@ -67,8 +67,8 @@
 				<td style="font-size: 13px;padding: 40px 30px;color: #000;">
 					<center>
 						<span style="color: #656d78;margin: 0px 40px 0px 0px;">SHARE</span>
-						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/images/mail/twitter.png" />twitter</a>
-						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/images/mail/facebook.png" />facebook</a>
+						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/twitter.png" />twitter</a>
+						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/facebook.png" />facebook</a>
 						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/guidline/default/contacts'); ?>/images/mail/hello.png" />Say hello</a>&rarr;
 					</center>
 					<div style="margin: 20px 0px; border-bottom: 3px solid #e6e9ed;"></div>
