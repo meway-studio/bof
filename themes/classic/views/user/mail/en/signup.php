@@ -14,7 +14,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="background: url(<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/images/mail/header.png) center left no-repeat; height: 98px;position: relative;">
+				<td style="background: url(http://www.betonfootball.eu/images/mail/header.png) center left no-repeat; height: 98px;position: relative;">
 					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/" target="_blank" style="width: 250px;height: 70px; display: block; position: absolute; top: 0px; left: 0px;"></a>
 					<a href="https://www.facebook.com/BetOnFootball" target="_blank" style="width: 32px;height: 32px; display: block; position: absolute; top: 18px; right: 30px;"></a>
 					<a href="https://twitter.com/BetonFootball7" target="_blank" style="width: 32px;height: 32px; display: block; position: absolute; top: 18px; right: 76px;"></a>
@@ -44,7 +44,7 @@
 					<div style="color: #fff; font-size: 24px;">Plans Subscriptions</div>
 					<div style="color: #aab2bd; font-size: 16px;">Select the subscription plan that best suits you.</div>
 					<a href="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/tip/default/subscription">
-						<table width="600" style="background: url(<?php echo Yii::app()->createAbsoluteUrl('/'); ?>/images/mail/tarif.jpg) no-repeat;height: 586px; margin: 0 auto;font-size: 36px;color: #fff;text-align: center;">
+						<table width="600" style="background: url(http://www.betonfootball.eu/images/mail/tarif.jpg) no-repeat;height: 586px; margin: 0 auto;font-size: 36px;color: #fff;text-align: center;">
 							<tr>
 								<td height="140" style="vertical-align: middle;" ><span>&euro; <?php echo Yii::app()->config->get('SUBSCRIPTION_WEEKEND_PRICE');?></span></td>
 							</tr>
