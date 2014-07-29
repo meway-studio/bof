@@ -671,7 +671,7 @@ class DefaultController extends Controller
     {
         return $this->sendmail(
             $model,
-            Yii::t( 'user', 'Регистрация на сайте BoF' ) . ' ' . Yii::app()->name,
+            Yii::t( 'user', 'Добро пожаловать в команду BetonFootball!' ),
             array( 'model' => $model ),
             'signup'
         );
@@ -732,6 +732,7 @@ class DefaultController extends Controller
     protected function sendmail( $user, $subjext, $body = array(), $view )
     {
         $message = new YiiMailMessage($subjext);
+        $message->view = Yii::app()->language . DIRECTORY_SEPARATOR . $view;
         $message->setBody( $body, 'text/html' );
         $defaultLang = Yii::app()->language;
         if ($user->language) {
