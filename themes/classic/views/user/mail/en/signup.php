@@ -27,13 +27,18 @@
 					<div style="font-size: 34px;font-weight: bold;">Welcome to the team of BetonFootball!</div>
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
-						Hello, <?php echo $model->FullName;?>!<br/><br/>
-						Thank You for register on the site BetonFootball.eu<br/><br/>
+						Hello, <?php echo $model->FullName;?>!
+                        <br/><br/>
+						Thank You for register on the site BetonFootball.eu
+                        <br/><br/>
 						Subscribe any convenient time and get the opportunity to view all the paid and free predictions/previews directly on our website betonfootball.eu, or receive them on your email. You can also buy any tip separately.
 						<br /><br/>
 						We are a team of professional football analysts with the experience of more than 14 years and our main task is to provide you on a regular basis with betting information, so that you can easily earn money.
 						<br /><br/>
 						If you have any questions, feel free to contact us.
+                        <br/><br/><br/>
+                        Kind regards,<br/>
+                        BetonFootball Team!
 					</div>
 				</td>
 			</tr>
