@@ -27,13 +27,18 @@
 					<div style="font-size: 34px;font-weight: bold;">Welcome to the team of BetonFootball!</div>
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
-						Hello, <?php echo $model->FullName;?>!<br/><br/>
-						Thank You for register on the site BetonFootball.eu<br/><br/>
+						Hello, <?php echo $model->FullName;?>!
+                        <br/><br/>
+						Thank You for register on the site BetonFootball.eu
+                        <br/><br/>
 						Subscribe any convenient time and get the opportunity to view all the paid and free predictions/previews directly on our website betonfootball.eu, or receive them on your email. You can also buy any tip separately.
 						<br /><br/>
 						We are a team of professional football analysts with the experience of more than 14 years and our main task is to provide you on a regular basis with betting information, so that you can easily earn money.
 						<br /><br/>
 						If you have any questions, feel free to contact us.
+                        <br/><br/><br/>
+                        Kind regards,<br/>
+                        BetonFootball Team!
 					</div>
 				</td>
 			</tr>
@@ -67,9 +72,9 @@
 				<td style="font-size: 13px;padding: 40px 30px;color: #000;">
 					<center>
 						<span style="color: #656d78;margin: 0px 40px 0px 0px;">SHARE</span>
-						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/twitter.png" />twitter</a>
-						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/facebook.png" />facebook</a>
-						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/guidline/default/contacts'); ?>/images/mail/hello.png" />Say hello</a>&rarr;
+						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/twitter.png" />twitter</a>
+						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/facebook.png" />facebook</a>
+						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/hello.png" />Say hello</a>&rarr;
 					</center>
 					<div style="margin: 20px 0px; border-bottom: 3px solid #e6e9ed;"></div>
 					<div style="text-align: center;color: #aab2bd;">Copyright © 2011-<?php echo date("Y");?> BetonFootball, Inc, All rights reserved.<br/>You are receiving this email because you signed up on betonfootball.eu. We hope you love it!</div>

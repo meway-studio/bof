@@ -27,13 +27,18 @@
 					<div style="font-size: 34px;font-weight: bold;">Добро пожаловать в команду BetonFootball!</div>
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
-						Здравствуйте, <?php echo $model->FullName;?>!<br/><br/>
-						Благодарим Вас за регистрацию на сайте betonfootball.ru<br/><br/>
-						Оформите подписку на любой удобный для Вас срок и получите возможность просматривать платные и бесплатные превью к матчам с прогнозами прямо на сайте betonfootball.ru. Поставив “галку” в личном кабинете “получать каждый новый прогноз, публикуемый на сайте, на мою электронную почту”, Вы всегда будете получать свежие прогнозы с самыми лучшими коэффициентами на эту минуту.
+						Здравствуйте, <?php echo $model->FullName;?>!
+                        <br/><br/>
+						Благодарим Вас за регистрацию на сайте betonfootball.ru (.eu)
+                        <br/><br/>
+						Оформите подписку на любой удобный для Вас срок и получите возможность просматривать платные и бесплатные превью к матчам с прогнозами прямо на сайте betonfootball.ru (.eu). Поставив “галку” в личном кабинете “получать каждый новый прогноз, публикуемый на сайте, на мою электронную почту”, Вы всегда будете получать свежие прогнозы с самыми лучшими коэффициентами на эту минуту.
 						<br /><br/>
-						Команда BetonFootball – это только лучшие европейские аналитики с более чем 14-ти летним опытом в ставках на футбол. Главной задачей команды попрежнему остается на регулярной основе предоставлять Вам превью к матчам и прогнозы, с помощью которых Вы сможете заработать деньги.
+						Команда BetonFootball &#8211; это только лучшие европейские аналитики с более чем 14-ти летним опытом в ставках на футбол. Главной задачей команды попрежнему остается на регулярной основе предоставлять Вам превью к матчам и прогнозы, с помощью которых Вы сможете заработать деньги.
 						<br /><br/>
 						Если у Вас есть какие-либо вопросы, пожалуйста, свяжитесь с нами, и мы в кратчайшие сроки Вам ответим.
+                        <br /><br/><br />
+                        С уважением,<br/>
+                        Команда BetonFootball
 					</div>
 				</td>
 			</tr>
@@ -67,9 +72,9 @@
 				<td style="font-size: 13px;padding: 40px 30px;color: #000;">
 					<center>
 						<span style="color: #656d78;margin: 0px 40px 0px 0px;">SHARE</span>
-						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/twitter.png" />twitter</a>
-						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/'); ?>images/mail/facebook.png" />facebook</a>
-						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="<?php echo Yii::app()->createAbsoluteUrl('/guidline/default/contacts'); ?>/images/mail/hello.png" />Say hello</a>&rarr;
+						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/twitter.png" />twitter</a>
+						<a href="https://www.facebook.com/BetOnFootballBetOnFootball" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/facebook.png" />facebook</a>
+						<a href="" style="color: #656d78;margin: 0px 20px;"><img align="center" style="margin: 0px 10px 0px 0px;" src="http://www.betonfootball.eu/images/mail/hello.png" />Say hello</a>&rarr;
 					</center>
 					<div style="margin: 20px 0px; border-bottom: 3px solid #e6e9ed;"></div>
 					<div style="text-align: center;color: #aab2bd;">Copyright © 2011-<?php echo date("Y");?> BetonFootball, Inc, All rights reserved.<br/>You are receiving this email because you signed up on betonfootball.eu. We hope you love it!</div>
