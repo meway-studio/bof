@@ -374,13 +374,11 @@ class DefaultController extends Controller
                 'year'       => $y,
             ));
 
-            if($check==null){
-                $model = new Tipstats();
-                $model->attributes = $all;
-                $model->save();
-                if($model->hasErrors())
-                    print_r($model->getErrors());
-            }
+            $model = $check==null ? new Tipstats() : $check;
+
+            $model->attributes = $all;
+            if(!$model->save() OR $model->hasErrors())
+                print_r($model->getErrors());
 
             print_r($all);
             echo "ALL BOF - {$m}/{$y}\n";
