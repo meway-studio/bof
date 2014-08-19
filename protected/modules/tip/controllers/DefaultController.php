@@ -1047,7 +1047,7 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerMetaTag( Yii::app()->config->get( 'META_D_ALL_STATS' ), 'description' );
         $this->pageTitle = Yii::t( 'tips', 'Профиль команды BOF' );
 
-        $model = User::model()->byRole( User::ROLE_TIPSTER )->with( 'tipster' )->findAll();
+        $model = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with( 'tipster' )->findAll();
 
         $count = count( $model );
         $bof = array(
@@ -1079,10 +1079,24 @@ class DefaultController extends Controller
             $bof[ 'activeCount' ] += $item->tipster->activeCount;
         }
 
+        $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
+        foreach ($model2 as $item) {
+            $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
+                'tipster_id=:ID',
+                array( ':ID' => $item->id )
+            )->queryRow();
+
+            $bof[ 'stake' ] += $allStake[ 'sum' ];
+            $bof[ 'profit' ] += $item->tipster->profit;
+            $bof[ 'yield' ] += $item->tipster->yield;
+            $bof[ 'tips' ] += $item->tipster->tips;
+            $bof[ 'winrate' ] += $item->tipster->winrate;
+            $bof[ 'odds' ] += $item->tipster->odds;
+            $bof[ 'activeCount' ] += $item->tipster->activeCount;
+        }
         //echo '<!--BOF Stake: '.$bof['stake'].'; Bof Profit: '.$bof['profit'].'-->';
 
         $bof[ 'stake' ] = $bof[ 'stake' ] == 0 ? 1 : $bof[ 'stake' ];
-
         $bof[ 'odds' ] = (round( $bof[ 'odds' ] * 100 / $count )) / 100;
         //$bof['yield']   = round(Tips::BANK / $bof['profit'] * 100, 2);
         $bof[ 'yield' ] = round( $bof[ 'profit' ] / $bof[ 'stake' ] * 100, 2 );
@@ -1489,7 +1503,6 @@ class DefaultController extends Controller
 
         $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
         foreach ($model2 as $item) {
-
             $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
                 'tipster_id=:ID',
                 array( ':ID' => $item->id )
