@@ -20,6 +20,7 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="language" content="en"/>
     <meta name='yandex-verification' content='62cc5c68a8de19d0'/>
+    <meta name="google-site-verification" content="F0KJ4gJi1sKiFt8GBP5ZKmArjhGR_AhFqbaQVPfheUw" />
 
     <script type="text/javascript">var addthis_config = {"data_track_addressbar": false};</script>
     <script type="text/javascript" src="/js/addthis_widget.js#pubid=ra-520203bd03c67254"></script>
