@@ -4,7 +4,7 @@
  *
  * @author egoss <dev@egoss.ru>
  */
- 
+
 class GuidlineMenu extends CWidget
 {
 
@@ -15,6 +15,7 @@ class GuidlineMenu extends CWidget
 				array('label'=>Yii::t('GuidlineContent', '12 золотых правил'), 'url'=> array('/guidline/default/index'), 'linkOptions'=>array('class'=>'')),
 				array('label'=>Yii::t('GuidlineContent', 'Как это работает и как это использовать'), 'url'=> array('/site/page','view'=>'how'), 'linkOptions'=>array('class'=>'')),
 				array('label'=>Yii::t('GuidlineContent', 'Почему вы выбрали BOF'), 'url'=> array('/site/page','view'=>'choose'), 'linkOptions'=>array('class'=>'')),
+				array('label'=>Yii::t('GuidlineContent', 'Статьи'), 'url'=> array('/catalog/category/view','name'=>'articles'), 'linkOptions'=>array('class'=>'')),
 				//array('label'=>'F.A.Q.', 'url'=> array('/site/page','view'=>'faq'), 'linkOptions'=>array('class'=>'')),
 			),
 		));

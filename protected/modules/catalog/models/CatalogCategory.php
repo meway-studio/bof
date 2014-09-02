@@ -238,7 +238,7 @@ class CatalogCategory extends CatalogAR
             array_merge( $this->getChildrensId(), array( $this->id ) )
         );
         // Данная конструкция нужна для инициализации behaviors
-        $model = new CatalogElement('insert', array( 'category_id' => $this->id ));
+        $model = new CatalogElement('search', array( 'category_id' => $this->id ));
         $model->getDbCriteria()->mergeWith( $criteria );
         return $model;
     }

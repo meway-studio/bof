@@ -21,9 +21,10 @@ $this->pageTitle = $element->title;
 
             <div class="guidline-menu">
                 <ul>
-                    <?php foreach ($category->elements as $cat): ?>
+                    <?php foreach ($category->elements( array( 'scopes' => array( 'published' ) ) ) as $cat): ?>
                         <li class="<?php echo Yii::app()->request->requestUri == $cat->url ? 'active' : '' ?>">
-                            <a href="<?php echo $cat->getUrl() ?>"><?php echo $cat->title ?></a></li>
+                            <a href="<?php echo $cat->getUrl() ?>"><?php echo $cat->title ?></a>
+                        </li>
                     <?php endforeach ?>
                 </ul>
             </div>

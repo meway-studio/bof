@@ -1966,6 +1966,12 @@ p.grey_text {
 	padding: 20px;
 }
 
+.article .title {
+	color: #ccc;
+	font-size: 14px;
+	margin: 0;
+}
+
 /* Articles (Finish) */
 /* Profile */
 .profiles {

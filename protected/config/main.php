@@ -159,10 +159,10 @@ $config = array(
         ),
         'clientScript' => array(
             'scriptMap' => array(
-                'jquery.js'        => 'http://code.jquery.com/jquery-1.9.1.js',
+                'jquery.js'        => '/js/jquery-1.9.1.js',
                 'jquery.min.js'    => '/js/jquery-1.9.1.min.js',
-                'jquery-ui.min.js' => 'http://code.jquery.com/ui/1.10.0/jquery-ui.js',
-                'jquery-ui.css'    => 'http://code.jquery.com/ui/1.10.0/themes/smoothness/jquery-ui.css',
+                'jquery-ui.min.js' => '/js/jquery-ui.js',
+                'jquery-ui.css'    => '/css/jquery-ui.css',
             )
         ),
         'loid'         => array(
@@ -348,6 +348,11 @@ $config = array(
                                 'title',
                             ),
                         ),
+                        'Reviews'  => array(
+                            'translate' => array(
+                                'content',
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -361,11 +366,17 @@ $config = array(
                             'page' => array(
                                 'viewDir' => 'page'
                             ),
+                            'articles' => array(
+                                'viewDir' => 'articles'
+                            ),
                         ),
                     ),
                     'for' => array(
                         'page' => array(
                             'viewDir' => 'page'
+                        ),
+                        'articles' => array(
+                            'viewDir' => 'articles'
                         ),
                     ),
                 ),

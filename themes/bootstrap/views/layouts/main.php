@@ -131,12 +131,17 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
                             ),
                             array(
                                 'label'   => Yii::t( 'themes', 'Импорт/Экспорт переводов' ),
-                                'url'     => array( '/admin/messages', array( 'name' => 'pages' ) ),
+                                'url'     => array( '/admin/messages' ),
                                 'visible' => Yii::app()->user->isAdmin
                             ),
                             array(
                                 'label'   => Yii::t( 'themes', 'Страницы' ),
-                                'url'     => array( '/catalog/admin/category', array( 'name' => 'pages' ) ),
+                                'url'     => array( '/catalog/admin/category', 'name' => 'pages' ),
+                                'visible' => Yii::app()->user->isAdmin
+                            ),
+                            array(
+                                'label'   => Yii::t( 'themes', 'Статьи' ),
+                                'url'     => array( '/catalog/admin/category', 'name' => 'articles' ),
                                 'visible' => Yii::app()->user->isAdmin
                             ),
                             array(

@@ -75,22 +75,31 @@ class CatalogElement extends CatalogAR
     public function scopes()
     {
         return array(
-            'draft'     => array(
-                'condition' => 'draft = 1',
-            ),
             'notDraft'     => array(
                 'condition' => 'draft = 0',
-            ),
-            'published' => array(
-                'condition' => 'published = 1',
-            ),
-            'active'    => array(
-                'condition' => 'active = 1',
             ),
             'available' => array(
                 'condition' => 'draft = 0 AND published = 1 AND active = 1',
             ),
         );
+    }
+
+    /**
+     * @param bool $draft
+     * @return $this
+     */
+    public function draft( $draft = true )
+    {
+        return $this->booleanScope( 'draft', $draft );
+    }
+
+    /**
+     * @param bool $published
+     * @return $this
+     */
+    public function published( $published = true )
+    {
+        return $this->booleanScope( 'published', $published );
     }
 
     /**

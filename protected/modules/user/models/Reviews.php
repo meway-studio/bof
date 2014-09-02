@@ -12,7 +12,7 @@
  * @property integer $user_id
  * @property string $content
  */
-class Reviews extends CActiveRecord
+class Reviews extends ActiveRecord
 {
 
 	public $user_name;
