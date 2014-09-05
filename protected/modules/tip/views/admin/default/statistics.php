@@ -5,10 +5,13 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<input type="text" class="dp" name="Date[from]" id="from" />
-<br />
-<input type="text" class="dp" name="Date[to]"   id="to" />
-
+<div style="float: left;">
+    <input type="text" class="dp" name="Date[from]" id="from" />
+    <br />
+    <input type="text" class="dp" name="Date[to]"   id="to" />
+</div>
+<img src="/images/loader.gif" style="width: 75px; height: 75px; margin-left: 20px; display: none;" class="calc-preloader">
+<div>&nbsp;</div>
 <table class="detail-view table table-striped table-condensed" id="statistics"><tbody>
 <tr class="odd"><th><?php echo Yii::t('tips', 'Все'); ?></th><td id="count_all"></td></tr>
 <tr class="odd"><th><?php echo Yii::t('tips', 'Выиграли'); ?></th><td id="count_won"></td></tr>
@@ -35,12 +38,18 @@ $this->breadcrumbs=array(
 		if(from=='' || to=='')
 			return false;
 
+        $('.calc-preloader').show();
 		$.post('/admin/tip/default/calc', {from: from, to: to}, function(json){
 
 			for(i in json)
 				$("#"+i).text(json[i]);
 
-		}, 'json');
+            $('.calc-preloader').hide();
+		}, 'json').always(function(){
+            $('.calc-preloader').hide();
+        }).fail(function(){
+            alert('Error!');
+        });
 
 		return false;
 	});
