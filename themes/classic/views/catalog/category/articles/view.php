@@ -26,10 +26,13 @@ $this->breadcrumbs[ ] = $category->title;
                 <h2 style="color: #488BE2; font-size: 18px; margin: 40px 0 -30px 30px;"><?php echo $subCategory->title ?></h2>
                 <?php foreach ($subCategory->getAllElements()->findAll() as $element): ?>
                     <div class="article" style="overflow: hidden; background-color: #fff; position: relative;">
-                        <div style="display: inline-block; position: relative; float: left; margin:-20px 10px -20px -20px; height: 158px;">
+                        <div style="display: inline-block; position: relative; float: left; margin:-20px 10px -20px -20px; height: 158px; width: 158px;">
                             <?php echo CHtml::image(
                                 $element->getImageUrl( '158x158', 'resize' ),
-                                null
+                                null,
+                                array(
+                                    'style' => 'height: 158px; width: 158px;'
+                                )
                             ); ?>
                             <img class="img_pattern" style="position: absolute; top: 0; left: 0;" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/img_pattern_white.png">
                         </div>

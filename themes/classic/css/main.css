@@ -1984,6 +1984,7 @@ p.grey_text {
 .article .spoiler-text {
 	display: none;
 	margin-top: 10px;
+	float: left;
 }
 
 .articles {
