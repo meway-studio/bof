@@ -25,12 +25,14 @@ $this->breadcrumbs[ ] = $category->title;
             <?php foreach ($category->children()->findAll() as $subCategory): ?>
                 <h2 style="color: #488BE2; font-size: 18px; margin: 40px 0 -30px 30px;"><?php echo $subCategory->title ?></h2>
                 <?php foreach ($subCategory->getAllElements()->findAll() as $element): ?>
-                    <div class="article" style="overflow: hidden;">
-                        <?php echo CHtml::image(
-                            $element->getImageUrl( '100x100' ),
-                            null,
-                            array( 'style' => 'float:left; margin-right:20px;' )
-                        ); ?>
+                    <div class="article" style="overflow: hidden; background-color: #fff; position: relative;">
+                        <div style="display: inline-block; position: relative; float: left; margin:-20px 10px -20px -20px; height: 158px;">
+                            <?php echo CHtml::image(
+                                $element->getImageUrl( '158x158', 'resize' ),
+                                null
+                            ); ?>
+                            <img class="img_pattern" style="position: absolute; top: 0; left: 0;" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/img_pattern_white.png">
+                        </div>
                         <div class="title"><?=
                             Yii::app()->dateFormatter->formatDateTime(
                                 CDateTimeParser::parse( $element->publish_date, 'yyyy-MM-dd' ),
@@ -38,6 +40,8 @@ $this->breadcrumbs[ ] = $category->title;
                                 null
                             ); ?></div>
                         <div class="text" style="margin: 0;"><?= $element->short_description ?></div>
+                        <div class="text spoiler-text"><?= $element->full_description ?></div>
+                        <div class="spoiler"><b class="show">+</b><b class="hide">-</b></div>
                     </div>
                 <?php endforeach ?>
             <?php endforeach ?>

@@ -48,6 +48,23 @@ $(document).ready(function(){
 			banner.fadeIn(1000);
 		}, 2500);
 	}
+
+	$('.article .spoiler .show').click(function(){
+		var obj = $(this);
+		var article = obj.parents('.article');
+		article.find('.spoiler-text').show();
+		article.removeClass('spoiler-hidden').addClass('spoiler-visible');
+		article.find('.spoiler .hide').show();
+		obj.hide();
+	});
+	$('.article .spoiler .hide').click(function(){
+		var obj = $(this);
+		var article = obj.parents('.article');
+		article.find('.spoiler-text').hide();
+		article.removeClass('spoiler-visible').addClass('spoiler-hidden');
+		article.find('.spoiler .show').show();
+		obj.hide();
+	});
 });
 
 $(document).scroll(function(){

@@ -830,9 +830,11 @@ p.grey_text {
 	background-color: #fff;
 	border-radius: 0px 3px 3px 0px;
 }
+
 .personal .information form .language {
 	background-color: #fff;
 }
+
 .personal .information form .language input[type="radio"]:checked + label {
 	border: 1px solid #ccc;
 }
@@ -840,12 +842,14 @@ p.grey_text {
 .personal .information form .language .langradio {
 	display: none;
 }
+
 .personal .information form .language label {
 	font-size: 16px;
 	cursor: pointer;
 	padding: 5px 15px;
 	line-height: 35px;
 }
+
 .personal .information form .lang-title {
 	margin-bottom: 10px;
 	font-size: 18px;
@@ -1955,6 +1959,33 @@ p.grey_text {
 	vertical-align: super;
 }
 
+.article .spoiler {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	cursor: pointer;
+}
+
+.article .spoiler b {
+	font-weight: normal;
+	font-size: 30px;
+	padding: 10px;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+.article .spoiler . show {
+	display: block;
+}
+
+.article .spoiler .hide {
+	display: none;
+}
+
+.article .spoiler-text {
+	display: none;
+	margin-top: 10px;
+}
+
 .articles {
 	margin-bottom: 40px;
 }
@@ -1970,6 +2001,13 @@ p.grey_text {
 	color: #ccc;
 	font-size: 14px;
 	margin: 0;
+}
+.article.spoiler-visible {
+	border-color: #a0d468;
+}
+
+.article.spoiler-visible .spoiler {
+	color: #a0d468;
 }
 
 /* Articles (Finish) */
@@ -2972,15 +3010,18 @@ p.grey_text {
 	margin-bottom: 10px;
 	color: #656d78;
 }
+
 .row-float {
 	overflow: hidden;
 	margin-bottom: 10px;
 }
+
 .guidline-us .help form input.type-radio {
 	display: none;
 }
+
 .guidline-us .help form .type-radio-label {
-	background:url(images/contacts/type_icon.png) no-repeat 15px center #e6e9ed;
+	background: url(images/contacts/type_icon.png) no-repeat 15px center #e6e9ed;
 	padding: 5px 100px 5px 40px;
 	display: block;
 	float: left;
@@ -2990,8 +3031,9 @@ p.grey_text {
 	border: 1px solid #ccd1d9;
 	color: #aab2bd;
 }
-.guidline-us .help form .type-radio:checked+label {
-	background:url(images/contacts/type_checked_icon.png) no-repeat 15px center #5d9cec;
+
+.guidline-us .help form .type-radio:checked + label {
+	background: url(images/contacts/type_checked_icon.png) no-repeat 15px center #5d9cec;
 	color: #fff;
 	width: auto;
 	border: 1px solid #4a89dc;
