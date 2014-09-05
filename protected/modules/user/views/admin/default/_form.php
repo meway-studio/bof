@@ -116,6 +116,11 @@ $form = $this->beginWidget(
         'comment',
         array_merge( array( 'class' => 'span5', 'maxlength' => 250 ), $model->disabledForManager( 'comment' ) )
     ); ?>
+    <?php echo $form->textFieldRow(
+        $model->tipster,
+        'sort',
+        array_merge( array( 'class' => 'span5', 'maxlength' => 250 ), $model->disabledForManager( 'sort' ) )
+    ); ?>
     <?php echo $form->checkBoxRow( $model->tipster, 'editor', $model->disabledForManager( 'editor' ) ); ?>
     <?php echo $form->textAreaRow(
         $model->tipster,

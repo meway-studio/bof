@@ -156,4 +156,14 @@ class Tipsters extends CActiveRecord
             'criteria' => $criteria,
         ));
     }
+
+    public function sort( $direction = 'ASC' )
+    {
+        if ($direction) {
+            $cr = new CDbCriteria();
+            $cr->order = "tipster.sort {$direction}";
+            $this->dbCriteria->mergeWith( $cr );
+        }
+        return $this;
+    }
 }
