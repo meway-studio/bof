@@ -235,4 +235,5 @@
 	"Активные Советы" => "Active the Tips",
 	"Все советы на весь период" => "All the tips for the whole period",
 	"{n} won|{n} won|{n} won|{n} won" => "",
+    "Выберите аналитика" => "Choice analyst"
 );

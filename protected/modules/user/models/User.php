@@ -187,33 +187,45 @@ class User extends CActiveRecord
     {
         return array(
 
-            'active'          => array(
+            'active'           => array(
                 'condition' => 't.status = 1',
             ),
-            'tipsterRole'     => array(
+            'tipsterRole'      => array(
                 'condition' => 't.role = ' . self::ROLE_TIPSTER,
             ),
-            'spamer'          => array(
+            'spamer'           => array(
                 'condition' => 't.has_spam = 1 AND t.email!=""',
             ),
-            'fast'            => array(
+            'fast'             => array(
                 'condition' => 't.fast_notice = 1',
             ),
-            'free'            => array(
+            'free'             => array(
                 'with'      => array( 'sub' ),
                 'condition' => 'expiration_date <' . date( 'U' ),
             ),
-            'paid'            => array(
+            'paid'             => array(
                 'with'      => array( 'sub' ),
                 'condition' => 'expiration_date >' . date( 'U' ),
             ),
-            'showInStatistic' => array(
+            'showInStatistic'  => array(
                 'condition' => 't.show_in_statistic = 1',
             ),
             'showOutStatistic' => array(
                 'condition' => 't.show_in_statistic = 0',
             ),
         );
+    }
+
+    public function subExp( $date = false, $direction = '>' )
+    {
+        if ($date !== false) {
+            $cr = new CDbCriteria();
+            $cr->with = array( 'sub' );
+            $cr->condition = "expiration_date {$direction} :expiration_date";
+            $cr->params = array( ':expiration_date' => $date );
+            $this->dbCriteria->mergeWith( $cr );
+        }
+        return $this;
     }
 
     /**

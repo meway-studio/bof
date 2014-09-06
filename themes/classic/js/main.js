@@ -49,6 +49,16 @@ $(document).ready(function(){
 		}, 2500);
 	}
 
+	$('.spoiler_showhide').click(function(){
+		var obj = $(this);
+		var article = obj.parents('.article');
+
+		if (article.hasClass('spoiler-visible')) {
+			article.find('.spoiler .hide').click();
+		} else {
+			article.find('.spoiler .show').click();
+		}
+	});
 	$('.article .spoiler .show').click(function(){
 		var obj = $(this);
 		var article = obj.parents('.article');

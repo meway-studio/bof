@@ -121,7 +121,11 @@ class DefaultController extends Controller
         $cr->scopes = array( 'published', 'closed' );
         $cr->order = 'id';
 
-        $result[ 'count_all' ] = ($countAll = Tips::model()->count($cr));
+        $tips = Tips::model();
+        if ($tipsterId = Yii::app()->request->getParam('tipster_id')) {
+            $tips = $tips->byTipster($tipsterId);
+        }
+        $result[ 'count_all' ] = ($countAll = $tips->count($cr));
 
         $pageSize = 50;
         $countPages = ($countAll - ($countAll % $pageSize)) / $pageSize;

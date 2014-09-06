@@ -42,7 +42,7 @@ $this->breadcrumbs[ ] = $category->title;
                                 'long',
                                 null
                             ); ?></div>
-                        <div class="text" style="margin: 0;"><?= $element->short_description ?></div>
+                        <div class="text spoiler_showhide short_description" style="margin: 0;"><?= $element->short_description ?></div>
                         <div class="text spoiler-text"><?= $element->full_description ?></div>
                         <div class="spoiler"><b class="show">+</b><b class="hide">-</b></div>
                     </div>

@@ -2010,6 +2010,12 @@ p.grey_text {
 .article.spoiler-visible .spoiler {
 	color: #a0d468;
 }
+.article.spoiler-visible .short_description {
+	color: #a0d468;
+}
+.spoiler_showhide {
+	cursor: pointer;
+}
 
 /* Articles (Finish) */
 /* Profile */
