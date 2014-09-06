@@ -4,7 +4,7 @@
  *
 */
 
-// PHP Error[8]: Undefined index: SERVER_NAME in CHttpRequest.php at line 305
+// Fix: PHP Error[8]: Undefined index: SERVER_NAME in CHttpRequest.php at line 305
 $_SERVER['SERVER_NAME'] = 'betonfootball.eu';
 $_SERVER['HTTP_HOST']   = 'betonfootball.eu';
 
@@ -49,14 +49,17 @@ class MailCommand extends ConsoleCommand
 			if($item->user_id>0){
 				echo $item->user->email."\n";
 				$user = $item->user;
+
+				if ($user->language) {
+	                Yii::app()->language = $user->language;
+	            }
+				
 			}else{
 				echo $item->email."\n";
 				$user = $item->email;
 			}
 
-            if ($user->language) {
-                Yii::app()->language = $user->language;
-            }
+            
 
 			try{
 				$status = $this->sendMail($task, $user);
@@ -67,10 +70,11 @@ class MailCommand extends ConsoleCommand
 
             Yii::app()->language = $defaultLang;
 
-			if($status==true)
+			if($status==true){
 				$task->success++;
-			else
+			}else{
 				$task->errors++;
+			}
 				
 			$item->delete();
 			
@@ -224,6 +228,15 @@ class MailCommand extends ConsoleCommand
 		$ymessage->subject = $task->subject;
 		$ymessage->addTo($email);
 		$ymessage->setFrom( array( Yii::app()->config->get('EMAIL_NOREPLY') => Yii::app()->name ) );
+
+		file_put_contents('/var/www/mailerrors/mail_report_'.$task->id.'.txt', print_r(array(
+			'date'    => date('Y-m-d h:i:s'),
+			'task'    => $task->id,
+			'email'   => $email,
+			'uname'   => $uname,
+			'subject' => $task->subject,
+			'body'    => $body,
+		),1));
 		
 		return Yii::app()->mail->send($ymessage);
 	}
