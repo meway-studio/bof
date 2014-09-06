@@ -51,4 +51,5 @@
 	"Управление категориями FAQ" => "Managing categories FAQ",
 	"Черновик" => "Draft",
 	"Этот вид контента для действий {aid}. Действие относится к контроллеру {get} в {mid} модуль." => "This kind of content for action {aid}. Action refers to the controller {get} in {mid} module .",
+    "Статьи" => "Articles",
 );

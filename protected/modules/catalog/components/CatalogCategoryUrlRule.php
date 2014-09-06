@@ -10,8 +10,12 @@ class CatalogCategoryUrlRule extends CBaseUrlRule
     {
         $url = array();
 
-        if ($route == 'catalog/category/view') {
-            if (!empty($params[ 'id' ]) && ($category = CatalogCategory::model()->findByPk( $params[ 'id' ] ))) {
+        if ($route == 'catalog/category/view' || $route == '/catalog/element/view') {
+            if ((!empty($params[ 'id' ])
+                    && ($category = CatalogCategory::model()->findByPk( $params[ 'id' ] )))
+                || (!empty($params[ 'name' ])
+                    && ($category = CatalogCategory::model()->findByAttributes( array( 'name' => $params[ 'name' ] ) )))
+            ) {
                 foreach ($category->ancestors()->findAll() as $ancestor) {
                     $url[ ] = $ancestor->name;
                 }
@@ -19,7 +23,7 @@ class CatalogCategoryUrlRule extends CBaseUrlRule
             }
         }
 
-        if ($route == 'catalog/element/view') {
+        if ($route == 'catalog/element/view' || $route == '/catalog/element/view') {
             if (!empty($params[ 'id' ])
                 && ($element = CatalogElement::model()->findByPk( $params[ 'id' ] ))
                 && ($category = $element->category)

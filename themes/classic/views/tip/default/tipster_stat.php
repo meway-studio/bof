@@ -10,7 +10,7 @@
                 <div class="top">
                     <div style="display: inline-block; position: relative;">
                         <?php echo CHtml::image( $model->photoOriginal, '', array( 'class' => 'image' ) ); ?>
-                        <img class="img_pattern" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/tips/img_pattern_fff.png">
+                        <img class="img_pattern" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/img_pattern_white.png">
                     </div>
                     <div class="some-inf">
                         <span><?php echo Yii::t( 'themes', 'Общая прибыль' ); ?> </span>

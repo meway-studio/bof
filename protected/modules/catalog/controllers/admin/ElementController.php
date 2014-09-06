@@ -2,7 +2,7 @@
 
 class ElementController extends BackController
 {
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/column3';
     public $isRoot = false;
     public $category_id = 0;
     public $currentCategory = null;
@@ -85,6 +85,7 @@ class ElementController extends BackController
         } else {
             $model = CatalogElement::model()->findByPk( Yii::app()->request->getParam( 'id' ) );
             $this->currentCategory = $model->category;
+            $this->category_id = $model->category_id;
         }
 
         if (!$model) {

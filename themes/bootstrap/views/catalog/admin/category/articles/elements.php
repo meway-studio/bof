@@ -5,7 +5,7 @@
  */
 $this->menu = array();
 $this->menu[ ] = array(
-    'label' => Yii::t( 'CatalogModule.admin.category.main', 'Создать элемент' ),
+    'label' => Yii::t( 'CatalogModule.admin.category.main', 'Добавить статью' ),
     'url'   => Yii::app()->createUrl( 'catalog/admin/element/create', array( 'id' => $category->id ) )
 );
 $this->menu[ ] = array(
@@ -50,11 +50,11 @@ if ($category && !$category->isNewRecord) {
 
 ?>
 
-    <h2><?=
-        $root ? Yii::t( 'CatalogModule.admin.category.main', $root->title ) : Yii::t(
-            'CatalogModule.admin.category.main',
-            'Каталог'
-        ) ?></h2>
+<h2><?=
+    $root ? Yii::t( 'CatalogModule.admin.category.main', $root->title ) : Yii::t(
+        'CatalogModule.admin.category.main',
+        'Каталог'
+    ) ?></h2>
 
 <?php
 $this->widget(
@@ -78,11 +78,6 @@ $this->widget(
             array(
                 'name'  => 'author_search',
                 'value' => '$data->author->firstname." ".$data->author->lastname',
-            ),
-            array(
-                'name'   => 'draft',
-                'value'  => '$data->draft ? "Да" : "Нет"',
-                'filter' => array( 'Нет', 'Да' ),
             ),
             array(
                 'name'   => 'published',

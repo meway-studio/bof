@@ -609,7 +609,7 @@ class DefaultController extends Controller
 
         $model = NbTips::model()->published()->with( 'tipster' );
 
-        if (Yii::app()->request->getParam('in_running')) {
+        if (Yii::app()->request->getParam( 'in_running' )) {
             $model = $model->inRunning();
         }
 
@@ -1469,7 +1469,14 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerMetaTag( Yii::app()->config->get( 'META_D_STATS_ALL_TIME' ), 'description' );
         $this->pageTitle = Yii::t( 'tips', 'Статистика за все время' );
 
-        $model = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with( 'tipster' )->findAll();
+        $model = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with(
+            array(
+                'tipster' => array(
+                    'scopes' => array( 'sort' => array( 'DESC' ) )
+                )
+            )
+        )->findAll();
+
         $count = count( $model );
         $bof = array(
             'name'        => Yii::t( 'tips', 'Команда BOF' ),
@@ -1502,7 +1509,7 @@ class DefaultController extends Controller
         }
 
         $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
-        foreach ($model2 as $item) {
+        /*foreach ($model2 as $item) {
             $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
                 'tipster_id=:ID',
                 array( ':ID' => $item->id )
@@ -1515,7 +1522,7 @@ class DefaultController extends Controller
             $bof[ 'winrate' ] += isset($item->tipster) ? $item->tipster->winrate : 0;
             $bof[ 'odds' ] += isset($item->tipster) ? $item->tipster->odds : 0;
             $bof[ 'activeCount' ] += isset($item->tipster) ? $item->tipster->activeCount : 0;
-        }
+        }*/
 
         $bof[ 'odds' ] = (round( $bof[ 'odds' ] * 100 / $count )) / 100;
         //$bof['yield']   = round(Tips::BANK / $bof['profit'] * 100, 2);

@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
         /**
          * @var $category CatalogCategory
-         * @var $element CatalogElement
+         * @var $elements CatalogElement
          */
         $search = false;
 
@@ -26,19 +26,19 @@ class CategoryController extends Controller
             throw new HttpException('Каталог не найден', 404);
         }
 
-        $element = $category->getAllElements();
+        $elements = $category->getAllElements();
 
         if (!empty($_GET[ 'CatalogElement' ])) {
-            $element->attributes = $_GET[ 'CatalogElement' ];
+            $elements->attributes = $_GET[ 'CatalogElement' ];
             $search = true;
         }
 
         if (!empty($_POST[ 'CatalogElement' ])) {
-            $element->attributes = $_POST[ 'CatalogElement' ];
+            $elements->attributes = $_POST[ 'CatalogElement' ];
             $search = true;
         }
 
-        $dataProvider = $element->search();
+        $dataProvider = $elements->search();
         $dataProvider->pagination->pageSize = 20;
         $dataProvider->pagination->route = $category->getUrl();
 
@@ -52,7 +52,7 @@ class CategoryController extends Controller
             $viewPath,
             array(
                 'category'     => $category,
-                'element'      => $element,
+                'elements'     => $elements,
                 'dataProvider' => $dataProvider,
                 'search'       => $search,
             )
