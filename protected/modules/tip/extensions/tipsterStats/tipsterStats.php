@@ -20,7 +20,8 @@ class tipsterStats
 	
 		$d = '01-'.$this->month.'-'.$this->year.' 00:00:00';
 		$s = strtotime($d);
-		$f = strtotime('+1 month -1 day', $s);
+		//$f = strtotime('+1 month -1 day', $s);
+		$f = strtotime('+1 month', $s);
 		$r = array(
 			'tipster_id'   => $this->tipster_id,
 			'month'  => $this->month,

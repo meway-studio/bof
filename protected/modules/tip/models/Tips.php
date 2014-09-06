@@ -545,7 +545,7 @@ class Tips extends CActiveRecord
         $criteria->with = array( 'tipster' );
 
         $criteria->compare( 'id', $this->id );
-        $criteria->compare( 'status', $this->status );
+        $criteria->compare( 't.status', $this->status );
         $criteria->compare( 'type', $this->type );
         $criteria->compare( 'price', $this->price, true );
         $criteria->compare( 'create_date', $this->create_date );

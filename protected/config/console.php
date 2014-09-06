@@ -65,20 +65,7 @@ $config = array(
 			'class'          => 'WebUser',
 		),
 		
-		'mail' => array(
- 			'class'            => 'ext.mail.YiiMail',
-            'transportType'    => 'smtp',
-			'transportOptions' => array(
-				'host'       => 'email-smtp.us-east-1.amazonaws.com',
-				'username'   => 'AKIAISKSPP4QPGWDEIWA',
-				'password'   => 'AogNlzPOeBZrvlE1k1hANplF4mOvOIE7Hnv3ds7BSWWZ',
-				'port'       => '465',
-				'encryption' => 'tls', //'ssl' tls
-			),
-            'viewPath' => 'application.views.mail',
-            'logging'  => true,
-            'dryRun'   => false
- 		),
+		'mail'         => require('mail.php'),
 		
 		'config'=>array(
 			'class' => 'DConfig'
