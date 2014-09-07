@@ -30,7 +30,7 @@ class TrackRecord extends CWidget
 			->queryRow();*/
 		
 
-		$tipsters = User::model()->byRole(User::ROLE_TIPSTER)->showInStatistic()->with('tipster')->findAll();
+		$tipsters = User::model()->byRole(User::ROLE_TIPSTER)->with('tipster')->findAll();
 
 		foreach ($tipsters as $item)
 			$tips_cnt += $item->tipster->tips;
