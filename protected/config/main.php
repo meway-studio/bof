@@ -125,10 +125,7 @@ $config = array(
         'config'       => array(
             'class' => 'DConfig',
         ),
-
-	
         'mail'         => require('mail.php'),
-        
         'clientScript' => array(
             'scriptMap' => array(
                 'jquery.js'        => '/js/jquery-1.9.1.js',
@@ -315,12 +312,12 @@ $config = array(
                                 'meta_description',
                             ),
                         ),
-                        'CatalogCategory'  => array(
+                        'CatalogCategory' => array(
                             'translate' => array(
                                 'title',
                             ),
                         ),
-                        'Reviews'  => array(
+                        'Reviews'         => array(
                             'translate' => array(
                                 'content',
                             ),
@@ -335,7 +332,7 @@ $config = array(
                 'catalog' => array(
                     'admin' => array(
                         'for' => array(
-                            'page' => array(
+                            'page'     => array(
                                 'viewDir' => 'page'
                             ),
                             'articles' => array(
@@ -343,8 +340,8 @@ $config = array(
                             ),
                         ),
                     ),
-                    'for' => array(
-                        'page' => array(
+                    'for'   => array(
+                        'page'     => array(
                             'viewDir' => 'page'
                         ),
                         'articles' => array(

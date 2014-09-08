@@ -151,7 +151,12 @@ class UserCommand extends ConsoleCommand
 
     public function actionSubexp7()
     {
-        $this->subExp( 116 );
+        $this->subExp( 7 );
+    }
+
+    public function actionSubexp1()
+    {
+        $this->subExp( 1 );
     }
 
     protected function subExp( $day = 7 )
@@ -161,8 +166,8 @@ class UserCommand extends ConsoleCommand
         $cr->scopes = array(
             'active',
             'subExp' => array(
-                '-' . (60 * 60 * 24 * 7),
-                '>',
+                '(DATEDIFF(FROM_UNIXTIME( sub.expiration_date ), NOW()) - 1) = :day',
+                array( 'day' => $day ),
             )
         );
 
@@ -180,17 +185,17 @@ class UserCommand extends ConsoleCommand
 
             foreach ($dp->getData() as $user) {
                 echo "\n{$user->id}-|-{$user->ExpDays}";
-                /*$body = $this->renderFile(
+                $body = $this->renderFile(
                     '/var/www/themes/classic/views/user/mail/' . Yii::app()->language . '/subexp.php',
                     array( 'user' => $user ),
                     true
                 );
                 $message = new YiiMailMessage;
                 $message->setBody( $body, 'text/html' );
-                $message->subject = Yii::t( 'user', 'Registration on' ) . ' ' . Yii::app()->name;
+                $message->subject = Yii::t( 'user', 'Напоминание об истечении срока подписки' );
                 $message->addTo( $message->email );
                 $message->setFrom( array( Yii::app()->config->get( 'EMAIL_NOREPLY' ) => Yii::app()->name ) );
-                Yii::app()->mail->send( $message );*/
+                Yii::app()->mail->send( $message );
             }
         }
         echo "\n\nEnd mailing!\n";

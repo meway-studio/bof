@@ -216,13 +216,15 @@ class User extends CActiveRecord
         );
     }
 
-    public function subExp( $date = false, $direction = '>' )
+    public function subExp( $condition, $params = array() )
     {
-        if ($date !== false) {
+        if ($condition !== false) {
             $cr = new CDbCriteria();
             $cr->with = array( 'sub' );
-            $cr->condition = "expiration_date {$direction} :expiration_date";
-            $cr->params = array( ':expiration_date' => $date );
+            $cr->condition = $condition;
+            if (count( $params )) {
+                $cr->params = $params;
+            }
             $this->dbCriteria->mergeWith( $cr );
         }
         return $this;
