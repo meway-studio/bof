@@ -119,4 +119,5 @@
     "язык Английский" => "<b class=\"flag gb\"></b> English",
     "язык Русский" => "<b class=\"flag ru\"></b> Russian",
     "Добро пожаловать в команду BetonFootball!" => "Welcome to the team of BetonFootball!",
+    "Напоминание об истечении срока подписки" => "Reminder",
 );

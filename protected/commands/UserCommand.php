@@ -156,6 +156,7 @@ class UserCommand extends ConsoleCommand
 
     protected function subExp( $day = 7, $userId = 0 )
     {
+        $defaultLang = Yii::app()->language;
         $cr = new CDbCriteria();
         $cr->order = 't.id ASC';
 
@@ -184,6 +185,9 @@ class UserCommand extends ConsoleCommand
             $dp->pagination->currentPage = $page;
 
             foreach ($dp->getData() as $user) {
+                if ($user->language) {
+                    Yii::app()->language = $user->language;
+                }
                 echo "\n{$user->id}-|-{$user->ExpDays}";
                 $body = $this->renderFile(
                     '/var/www/themes/classic/views/user/mail/' . Yii::app()->language . '/subexp.php',
@@ -196,6 +200,7 @@ class UserCommand extends ConsoleCommand
                 $message->addTo( $user->email );
                 $message->setFrom( array( Yii::app()->config->get( 'EMAIL_NOREPLY' ) => Yii::app()->name ) );
                 Yii::app()->mail->send( $message );
+                Yii::app()->language = $defaultLang;
             }
         }
         echo "\n\nEnd mailing!\n";

@@ -27,8 +27,8 @@
 					<div style="font-size: 36px;font-weight: bold;">Напоминание об истечении срока подписки</div>
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
-                        Уважаемый, <?php echo $model->FullName;?>!<br/>
-                        Обращаем Ваше внимание, что до окончания срока действия подписки осталось <?php echo $model->ExpDays == 7 ? $model->ExpDays . ' дней' : ($model->ExpDays == 1 ? '24 часа' : '')?>.<br/>
+                        Уважаемый, <?php echo $user->FullName;?>!<br/>
+                        Обращаем Ваше внимание, что до окончания срока действия подписки осталось <?php echo $user->expDays == 7 ? $user->expDays . ' дней' : ($user->expDays == 1 ? '24 часа' : '')?>.<br/>
                         <br/>
                         С уважением,<br/>
                         Команда BetonFootball<br/>
@@ -70,7 +70,7 @@
 					<div style="margin: 20px 0px; border-bottom: 3px solid #e6e9ed;"></div>
 					<div style="text-align: center;color: #aab2bd;">Copyright © 2011-<?php echo date("Y");?> BetonFootball, Inc, All rights reserved.<br/>You are receiving this email because you signed up on betonfootball.eu. We hope you love it!</div>
 					<div style="text-align: center;color: #656d78;text-transform: uppercase;margin-top: 30px;line-height: 25px;">
-						<?php echo CHtml::link('unsubscribe from this list', Yii::app()->createAbsoluteUrl('/user/default/unscribe', array('id'=>$model->id, 'hash'=>$model->unscribeHash)), array('target'=>'_blank', 'style'=>'color: #656d78;')); ?>
+						<?php echo CHtml::link('unsubscribe from this list', Yii::app()->createAbsoluteUrl('/user/default/unscribe', array('id'=>$user->id, 'hash'=>$user->unscribeHash)), array('target'=>'_blank', 'style'=>'color: #656d78;')); ?>
 					</div>
 				</td>
 			</tr>
