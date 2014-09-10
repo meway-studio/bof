@@ -149,18 +149,18 @@ class UserCommand extends ConsoleCommand
         }
     }
 
-    public function actionSubexp( $day = 1, $userId = 0 )
+    public function actionSubexp( $day = 1, $userId = false )
     {
         $this->subExp( $day, $userId );
     }
 
-    protected function subExp( $day = 7, $userId = 0 )
+    protected function subExp( $day = 7, $userId = false )
     {
         $defaultLang = Yii::app()->language;
         $cr = new CDbCriteria();
         $cr->order = 't.id ASC';
 
-        if ($userId) {
+        if ($userId !== false) {
             $cr->compare( 't.id', $userId );
         } else {
             $cr->scopes = array(
