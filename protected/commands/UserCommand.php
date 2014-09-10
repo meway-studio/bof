@@ -156,7 +156,7 @@ class UserCommand extends ConsoleCommand
 
     protected function subExp( $day = 7, $userId = false, $lang = false )
     {
-        $defaultLang = $lang ? $lang : Yii::app()->language;
+        $defaultLang = $lang ? (Yii::app()->language = $lang) : Yii::app()->language;
         $cr = new CDbCriteria();
         $cr->order = 't.id ASC';
 
