@@ -28,7 +28,7 @@
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
                         Уважаемый, <?php echo $model->FullName;?>!<br/>
-                        Обращаем Ваше внимание, что до окончания срока действия подписки осталось <?php echo $this->ExpDays == 7 ? $this->ExpDays . ' дней' : ($this->ExpDays == 1 ? '24 часа' : '')?>.<br/>
+                        Обращаем Ваше внимание, что до окончания срока действия подписки осталось <?php echo $model->ExpDays == 7 ? $model->ExpDays . ' дней' : ($this->ExpDays == 1 ? '24 часа' : '')?>.<br/>
                         <br/>
                         С уважением,<br/>
                         Команда BetonFootball<br/>
