@@ -149,22 +149,27 @@ class UserCommand extends ConsoleCommand
         }
     }
 
-    public function actionSubexp( $day = 1 )
+    public function actionSubexp( $day = 1, $userId = 0 )
     {
-        $this->subExp( $day );
+        $this->subExp( $day, $userId );
     }
 
-    protected function subExp( $day = 7 )
+    protected function subExp( $day = 7, $userId = 0 )
     {
         $cr = new CDbCriteria();
         $cr->order = 't.id ASC';
-        $cr->scopes = array(
-            'active',
-            'subExp' => array(
-                '(DATEDIFF(FROM_UNIXTIME( sub.expiration_date ), NOW()) - 1) = :day',
-                array( 'day' => $day ),
-            )
-        );
+
+        if ($userId) {
+            $cr->compare( 't.id', $userId );
+        } else {
+            $cr->scopes = array(
+                'active',
+                'subExp' => array(
+                    '(DATEDIFF(FROM_UNIXTIME( sub.expiration_date ), NOW()) - 1) = :day',
+                    array( 'day' => $day ),
+                )
+            );
+        }
 
         $pageSize = 100;
         $countAll = User::model()->count( $cr );
