@@ -28,7 +28,7 @@
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
                         Dear, <?php echo $model->FullName;?>!<br/>
-                        Please note, your subscription will expire in <?php echo $model->expDays == 7 ? $model->expDays . ' days' : ($model->expDays == 1 ? '24 hours' : '')?>.<br/>
+                        Please note, your subscription will expire in <?php echo $model->ExpDays == 7 ? $model->ExpDays . ' days' : ($model->ExpDays == 1 ? '24 hours' : '')?>.<br/>
                         <br/>
                         Kind regards,<br/>
                         BetonFootball Team<br/>

@@ -193,7 +193,7 @@ class UserCommand extends ConsoleCommand
                 $message = new YiiMailMessage;
                 $message->setBody( $body, 'text/html' );
                 $message->subject = Yii::t( 'user', 'Напоминание об истечении срока подписки' );
-                $message->addTo( $message->email );
+                $message->addTo( $user->email );
                 $message->setFrom( array( Yii::app()->config->get( 'EMAIL_NOREPLY' ) => Yii::app()->name ) );
                 Yii::app()->mail->send( $message );
             }
