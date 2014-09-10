@@ -149,14 +149,14 @@ class UserCommand extends ConsoleCommand
         }
     }
 
-    public function actionSubexp( $day = 1, $userId = false )
+    public function actionSubexp( $day = 1, $userId = false, $lang = false )
     {
-        $this->subExp( $day, $userId );
+        $this->subExp( $day, $userId, $lang );
     }
 
-    protected function subExp( $day = 7, $userId = false )
+    protected function subExp( $day = 7, $userId = false, $lang = false )
     {
-        $defaultLang = Yii::app()->language;
+        $defaultLang = $lang ? $lang : Yii::app()->language;
         $cr = new CDbCriteria();
         $cr->order = 't.id ASC';
 
@@ -185,7 +185,7 @@ class UserCommand extends ConsoleCommand
             $dp->pagination->currentPage = $page;
 
             foreach ($dp->getData() as $user) {
-                if ($user->language) {
+                if (!$lang && $user->language) {
                     Yii::app()->language = $user->language;
                 }
                 echo "\n{$user->id}-|-{$user->ExpDays}";
