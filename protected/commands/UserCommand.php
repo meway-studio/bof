@@ -149,14 +149,9 @@ class UserCommand extends ConsoleCommand
         }
     }
 
-    public function actionSubexp7()
+    public function actionSubexp( $day = 1 )
     {
-        $this->subExp( 7 );
-    }
-
-    public function actionSubexp1()
-    {
-        $this->subExp( 1 );
+        $this->subExp( $day );
     }
 
     protected function subExp( $day = 7 )
