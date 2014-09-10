@@ -27,7 +27,8 @@
 					<div style="font-size: 36px;font-weight: bold;">Напоминание об истечении срока подписки</div>
 					<br/>
 					<div style="font-size: 18px;color: #434a54;">
-                        Уважаемый, <?php echo $user->FullName;?>!<br/>
+                        Уважаемый, <b><?php echo $user->FullName;?></b>!<br/>
+                        <br/>
                         Обращаем Ваше внимание, что до окончания срока действия подписки осталось <?php echo $user->ExpDays == 7 ? $user->ExpDays . ' дней' : ($user->ExpDays == 1 ? '24 часа' : $user->ExpDays . ' дней')?>.<br/>
                         <br/>
                         С уважением,<br/>
