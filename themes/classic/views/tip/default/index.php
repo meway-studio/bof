@@ -121,6 +121,7 @@ $this->widget( 'PlansSubscriptions' );
 $this->widget( 'TrackRecord' );
 ?>
 
+<!-- Опросы -->
 <?php echo $this->renderPartial( 'polls' ) ?>
 
 <?php

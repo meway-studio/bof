@@ -1,18 +1,18 @@
-<div style="border-bottom: 2px solid #fff;padding-bottom: 30px;">
-	<div class="site-width">
-		<div class="track-record">
-			<div class="title">
-				<span class="bold"><?php echo Yii::app()->config->get('POLLS_TITLE');?></span>
-				<span class="top"><?php echo Yii::app()->config->get('POLLS_TEXT');?></span>
-			</div>
-			
-			<div class="bottom">
-                <?php echo Yii::app()->config->get('POLLS_CODE');?>
-			</div>
-		</div>
-	</div>
-</div>
-<?php /*
+<?php if (trim( Yii::app()->config->get( 'POLLS_CODE' ) ) != ''): ?>
+    <div style="border-bottom: 2px solid #fff;padding-bottom: 30px;">
+        <div class="site-width">
+            <div class="track-record">
+                <div class="title">
+                    <span class="bold"><?php echo Yii::app()->config->get( 'POLLS_TITLE' ); ?></span>
+                    <span class="top"><?php echo Yii::app()->config->get( 'POLLS_TEXT' ); ?></span>
+                </div>
+                <div class="bottom">
+                    <?php echo Yii::app()->config->get( 'POLLS_CODE' ); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php /*
 <div style="border-bottom: 2px solid #fff;padding-bottom: 30px;">
 	<div class="site-width">
 		<div class="track-record">
@@ -51,4 +51,6 @@
 		</div>
 	</div>
 </div>
-*/ ?>
+*/
+    ?>
+<?php endif ?>

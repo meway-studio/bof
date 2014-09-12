@@ -12,8 +12,8 @@
             <div class="tipster-inf">
                 <div class="top">
                     <div style="display: inline-block; position: relative;">
-                        <img class="image" src="/themes/classic/css/images/menu/no_avatar.png" alt="">
-                        <img class="img_pattern" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/tips/img_pattern.png">
+                        <img class="image" src="/themes/classic/css/images/stats/bof_avalog.png" alt="">
+                        <img class="img_pattern" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/img_pattern_white.png">
                     </div>
                     <div class="some-inf">
                         <span><?php echo Yii::t( 'themes', 'Общая прибыль' ); ?></span>

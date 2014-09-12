@@ -2003,6 +2003,7 @@ p.grey_text {
 	font-size: 14px;
 	margin: 0;
 }
+
 .article.spoiler-visible {
 	border-color: #a0d468;
 }
@@ -2010,9 +2011,11 @@ p.grey_text {
 .article.spoiler-visible .spoiler {
 	color: #a0d468;
 }
+
 .article.spoiler-visible .short_description {
 	color: #a0d468;
 }
+
 .spoiler_showhide {
 	cursor: pointer;
 }
@@ -2313,6 +2316,12 @@ p.grey_text {
 
 .stats-all-time .profile .tipster-inf .top {
 	background: #fff;
+	height: 445px;
+	position: relative;
+}
+
+.stats-all-time .profile .tipster-inf .top ._top {
+	overflow: visible;
 }
 
 .stats-all-time .profile .tipster-inf .top img {
@@ -2344,6 +2353,7 @@ p.grey_text {
 	margin-right: -3px;
 	padding-right: 20px;
 	width: 174px;
+	position: relative;
 }
 
 .stats-all-time .profile .tipster-inf .some-inf span {
@@ -2395,6 +2405,8 @@ p.grey_text {
 	padding: 20px 0 20px 0;
 	text-align: center;
 	border-top: 1px solid #e6e9ed;
+	position: absolute;
+	bottom: 5px;
 }
 
 .stats-all-time .profile .some-inf-bottom a {
@@ -2410,13 +2422,14 @@ p.grey_text {
 	height: 70px;
 	display: block;
 	border-radius: 50px;
-	border: 0px solid #e6e9ed;
+	border: 1px solid #E6E9ED;
 }
 
 .stats-all-time .profile .some-inf-bottom span {
 	display: block;
 	text-align: center;
 	line-height: 30px;
+	font-size: 14px;
 }
 
 .stats-all-time .profile .some-inf-bottom .stats .pixel {
@@ -2426,12 +2439,13 @@ p.grey_text {
 .stats-all-time .profile .some-inf-bottom .stats:hover .pixel {
 	background: url(images/stats/stats_h.png) center center no-repeat;
 	background-color: #a0d468;
+	border-color: #e6e9ed;
 }
 
-.stats-all-time .profile .some-inf-bottom .stats .active {
+/*.stats-all-time .profile .some-inf-bottom .stats:hover {
 	background: url(images/stats/stats_h.png) center center no-repeat;
 	background-color: #a0d468;
-}
+}*/
 
 .stats-all-time .profile .some-inf-bottom .tips .pixel {
 	background: url(images/stats/case.png) center center no-repeat;
@@ -2442,10 +2456,10 @@ p.grey_text {
 	background-color: #a0d468;
 }
 
-.stats-all-time .profile .some-inf-bottom .tips .active {
+/*.stats-all-time .profile .some-inf-bottom .tips .active {
 	background: url(images/stats/case_h.png) center center no-repeat;
 	background-color: #a0d468;
-}
+}*/
 
 .stats-all-time .profile .some-inf-bottom .articles .pixel {
 	background: url(images/stats/articles.png) center center no-repeat;
@@ -2465,8 +2479,12 @@ p.grey_text {
 	color: #a0d468;
 }
 
-.stats-all-time .profile .some-inf-bottom .subscribe:hover span {
+.stats-all-time .profile .some-inf-bottom .subscribe:hover span.active {
 	color: #4fc1e9;
+}
+
+.stats-all-time .profile .some-inf-bottom .subscribe:hover span {
+	color: #A0D468;
 }
 
 .stats-all-time .profile .some-inf-bottom a:hover .how-mutch {

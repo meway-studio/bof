@@ -8,7 +8,7 @@
         <div class="profile">
             <div class="tipster-inf">
                 <div class="top">
-                    <div style="overflow: hidden;">
+                    <div class="_top">
                         <div style="display: inline-block; position: relative;">
                             <img class="image" src="/themes/classic/css/images/menu/no_avatar.png" alt="">
                             <img class="img_pattern" src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/img_pattern_white.png">
@@ -36,7 +36,7 @@
                         </a> <a class="subscribe" href="<?php echo Yii::app()->createUrl(
                             '/tip/default/subscription'
                         ); ?>" style="margin-right: 0px;">
-                            <span class="pixel active"></span>
+                            <span class="pixel"></span>
                             <span><?php echo Yii::t( 'themes', 'Подписки' ); ?></span>
                         </a>
                     </div>
@@ -57,7 +57,7 @@
             <?php foreach ($model AS $data): ?>
                 <div class="tipster-inf">
                     <div class="top">
-                        <div style="overflow: hidden;">
+                        <div class="_top">
                             <div style="display: inline-block; position: relative;">
                                 <?php echo CHtml::image( $data->photoOriginal, '', array( 'class' => 'image' ) ); ?>
                                 <img class="img_pattern" src="<?php echo Yii::app(
@@ -89,7 +89,7 @@
                             </a> <a class="subscribe" href="<?php echo Yii::app()->createUrl(
                                 '/tip/default/subscription'
                             ); ?>" style="margin-right: 0px;">
-                                <span class="pixel active"></span>
+                                <span class="pixel"></span>
                                 <span><?php echo Yii::t( 'themes', 'Подписки' ); ?></span>
                             </a>
                         </div>
@@ -120,7 +120,7 @@
                 <?php foreach ($model2 AS $data): ?>
                     <div class="tipster-inf">
                         <div class="top">
-                            <div style="overflow: hidden;">
+                            <div class="_top">
                                 <div style="display: inline-block; position: relative;">
                                     <?php echo CHtml::image( $data->photoOriginal, '', array( 'class' => 'image' ) ); ?>
                                     <img class="img_pattern" src="<?php echo Yii::app(
@@ -155,7 +155,7 @@
                                 </a> <a class="subscribe" href="<?php echo Yii::app()->createUrl(
                                     '/tip/default/subscription'
                                 ); ?>" style="margin-right: 0px;">
-                                    <span class="pixel active"></span>
+                                    <span class="pixel"></span>
                                     <span><?php echo Yii::t( 'themes', 'Подписки' ); ?></span>
                                 </a>
                             </div>
