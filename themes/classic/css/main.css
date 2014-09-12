@@ -1428,7 +1428,9 @@ p.grey_text {
 	font-size: 36px;
 	color: #fff;
 }
-
+.lang-ru .plans .frame .plans-count {
+	font-size: 28px;
+}
 .plans .frame .plans-save {
 	display: block;
 	font-size: 16px;
@@ -1437,7 +1439,10 @@ p.grey_text {
 	height: 19px;
 	margin-top: -60px;
 }
-
+.lang-ru .plans .frame .plans-save {
+	font-size: 14px;
+	margin-top: -56px;
+}
 .plans .frame .plans-info {
 	display: block;
 	font-size: 14px;
@@ -2283,7 +2288,7 @@ p.grey_text {
 	background: #fc6e51;
 	padding: 2px 4px;
 	border-radius: 3px;
-	width: 40px;
+	/*width: 40px;*/
 	display: block;
 	line-height: 20px;
 	text-align: center;
@@ -2293,7 +2298,7 @@ p.grey_text {
 	background: #a0d468;
 	padding: 2px 4px;
 	border-radius: 3px;
-	width: 40px;
+	/*width: 40px;*/
 	display: block;
 	line-height: 20px;
 	text-align: center;
