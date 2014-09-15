@@ -214,7 +214,6 @@ Yii::import( 'application.modules.tip.widgets.TrackRecord.TrackRecord' );
                $("#pay_icons li").removeClass("selected_icon");
                $(this).addClass("selected_icon");
                $("#processPay").find("form").submit();
-               alert("ddd");
            });
        });
    '
