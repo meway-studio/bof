@@ -208,7 +208,7 @@ Yii::import( 'application.modules.tip.widgets.TrackRecord.TrackRecord' );
     'pay_icons',
     '
        $(document).ready(function(){
-           $("#pay_icons li").click(function(){
+           $(document).on("click touchstart", "#pay_icons ul li", function(){
                var obj = $(this).data("id");
                $("#Purchase_payment_id").val(obj.data("id"));
                $("#pay_icons li").removeClass("selected_icon");
