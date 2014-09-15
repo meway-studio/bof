@@ -150,7 +150,7 @@
 <?php $this->widget('PlansSubscriptions');?>
 
 <?php Yii::app()->clientScript->registerScript('pay_icons', '
-	$("documen").ready(function(){
+	$(document).ready(function(){
 		$("#pay_icons li").click(function(){
 			$("#Purchase_payment_id").val($(this).data("id"));
 			$("#pay_icons li").removeClass("selected_icon");
