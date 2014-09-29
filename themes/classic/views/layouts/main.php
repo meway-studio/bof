@@ -15,12 +15,13 @@ Yii::app()->clientScript->registerScriptFile( Yii::app()->theme->baseUrl . '/js/
 Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jquery.toastmessage.css' );
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo Yii::app()->language ?>" lang="<?php echo Yii::app()->language ?>" class="lang-<?php echo Yii::app()->language ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo Yii::app()->language ?>" lang="<?php echo Yii::app(
+)->language ?>" class="lang-<?php echo Yii::app()->language ?>">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="language" content="en"/>
     <meta name='yandex-verification' content='62cc5c68a8de19d0'/>
-    <meta name="google-site-verification" content="F0KJ4gJi1sKiFt8GBP5ZKmArjhGR_AhFqbaQVPfheUw" />
+    <meta name="google-site-verification" content="F0KJ4gJi1sKiFt8GBP5ZKmArjhGR_AhFqbaQVPfheUw"/>
 
     <script type="text/javascript">var addthis_config = {"data_track_addressbar": false};</script>
     <script type="text/javascript" src="/js/addthis_widget.js#pubid=ra-520203bd03c67254"></script>
@@ -36,7 +37,8 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
 
 <div id="header">
     <div class="site-width">
-        <a class="logo" href="/<?php echo Yii::app()->language ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/css/images/logo.png"/></a>
+        <a class="logo" href="/<?php echo Yii::app()->language ?>"><img src="<?php echo Yii::app(
+            )->theme->baseUrl; ?>/css/images/logo.png"/></a>
         <!--div class="header_fifa"><img src="/images/header_fifa.png"/></div-->
         <div class="info">
             <div class="line"></div>
@@ -205,7 +207,8 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
             <tr>
                 <td class="f-left"><?php echo Yii::app()->config->get(
                         'COPYRIGHT'
-                    ); /*&copy; 2013 BetOnFootball. All rights reserved.*/ ?></td>
+                    ); /*&copy; 2013 BetOnFootball. All rights reserved.*/
+                    ?></td>
                 <td class="f-mid">
                     <?php echo CHtml::link(
                         Yii::t( 'themes', 'ТЕРМИНЫ &amp; УСЛОВИЯ РАБОТЫ' ),
@@ -261,8 +264,8 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
             }
         });
         var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function() {
-                n.parentNode.insertBefore(s, n);
-            };
+            n.parentNode.insertBefore(s, n);
+        };
         s.type = "text/javascript";
         s.async = true;
         s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
@@ -278,6 +281,7 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
     <div><img src="//mc.yandex.ru/watch/23890561" style="position:absolute; left:-9999px;" alt=""/></div>
 </noscript>
 <!-- /Yandex.Metrika counter -->
-
+<div id="offset-tl-fixed" style="position: fixed; width:1px; height:1px; top: 0; left: 0;"></div>
+<div id="offset-br-fixed" style="position: fixed; width:1px; height:1px; bottom: 0; right: 0;"></div>
 </body>
 </html>

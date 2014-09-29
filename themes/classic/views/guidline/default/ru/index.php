@@ -38,13 +38,13 @@
 				*/?>
 				<?php echo $index->content; ?>
 			</div>
-			
+
 			<div id="rules" class="question">
-				
+
 				<div  class="rules">
 
 					<div class="rules-column">
-					
+
 					<?php foreach($rules AS $k=>$rule): ?>
 						<?php if($k%2==1 OR $rule->is_index==1) continue; ?>
 						<div class="some-rule">
@@ -67,7 +67,7 @@
 
 				<!-- Start Form -->
 				<div id="support" class="help">
-					
+
 				<?php /*if(Yii::app()->user->hasFlash('GuidlineMessagesSuccess')):?>
 
 					<div class="submitted">
@@ -115,7 +115,7 @@
 					<?php $this->endWidget(); ?>
 
 				<?php endif;*/ ?>
-				
+
 				</div>
 				<!-- End Form -->
 
