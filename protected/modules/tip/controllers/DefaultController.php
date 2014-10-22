@@ -77,7 +77,8 @@ class DefaultController extends Controller
                     'ajaxmore',
                     'NoBetTips',
                     'NbView',
-                    'Robokassa'
+                    'Robokassa',
+                    'rss'
                 ),
                 'users'   => array( '*' ),
             ),
@@ -93,7 +94,7 @@ class DefaultController extends Controller
             ),
             array(
                 'allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array( 'test', 'MonthStat', 'PaypalConfirm', 'rss' ),
+                'actions' => array( 'test', 'MonthStat', 'PaypalConfirm' ),
                 'roles'   => array( 'admin' ),
             ),
             array(
