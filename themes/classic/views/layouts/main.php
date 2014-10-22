@@ -183,6 +183,7 @@ Yii::app()->clientScript->registerCssFile( Yii::app()->theme->baseUrl . '/css/jq
                         <span class="sheld"><?php echo Yii::t( 'themes', 'ТОЛЬКО С BOF' ); ?></span>
                     </li>
                     <li><?php echo CHtml::link( Yii::t( 'themes', 'План подписки' ), array( '/tip/default/subscription' ) ); ?></li>
+                    <li><?php echo CHtml::link( Yii::t( 'themes', 'RSS' ), array( '/tip/default/rss' ) ); ?></li>
                 </ul>
             </div>
             <div class="f-menu">
