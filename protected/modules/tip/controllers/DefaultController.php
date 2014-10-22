@@ -112,16 +112,20 @@ class DefaultController extends Controller
         echo '<?xml version="1.0"?>' . "\n";
         echo '<rss version="2.0">' . "\n";
         echo '<channel>' . "\n";
-        echo "<title></title>" . "\n";
-        echo "<link></link>" . "\n";
+        echo "<title>{$this->pageTitle}</title>" . "\n";
+        echo "<link>" . Yii::app()->createUrl( 'tip/default/rss' ) . "</link>" . "\n";
         echo "<description></description>" . "\n";
         echo "<language></language>" . "\n";
         echo "<pubDate>" . date( DATE_RFC822 ) . "</pubDate>" . "\n";
         foreach ($tips as $tip) {
+            $desc = strip_tags( $tip->description );
+            if (!$tip->isFree) {
+                $desc = substr( $desc, 0, round( strlen( $desc ) / 100 * 30 ) ) . '...';
+            }
             echo '<item>' . "\n";
             echo "<title>{$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
             echo "<link>{$tip->url}</link>" . "\n";
-            echo "<description>" . strip_tags( $tip->description ) . "</description>" . "\n";
+            echo "<description>{$desc}</description>" . "\n";
             echo "<pubDate>" . date( DATE_RFC822, $tip->event_date ) . "</pubDate>" . "\n";
             echo "<guid>{$tip->url}</guid>" . "\n";
             echo '</item>' . "\n" . "\n";
