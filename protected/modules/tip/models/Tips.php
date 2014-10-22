@@ -24,16 +24,19 @@
  * @property string $cover
  * @property string $selection
  * @property string $selection_num
- * @property string $odds
- * @property string $stake
+ * @property float $odds
+ * @property float $stake
  * @property string $c_profit
- * @property string $profit
- * @property string $yield
+ * @property float $profit
+ * @property float $yield
  * @property integer $tip_result
  * @property string $match_result
  * @property string $bank_was
  * @property string $meta_k
  * @property string $meta_d
+ * @property integer $calculated
+ * @property User $tipster
+ * @property float $tempProfit
  * @method Tips published()
  * @method Tips draft()
  * @method Tips bodtips()
@@ -428,74 +431,85 @@ class Tips extends CActiveRecord
 
     protected function calcStatistic()
     {
-
         if ($this->calculated == 1 OR $this->tip_result == self::TIP_RESULT_DRAW) {
             return false;
         }
 
+        $tipster = $this->tipster->tipster;
+
         // счетчик типсов по результатам
         SWITCH ($this->tip_result) {
-            CASE self::TIP_RESULT_VOID:
-                ++$this->tipster->tipster->count_void;
-                break;
-
-            CASE self::TIP_RESULT_LOST:
-                ++$this->tipster->tipster->count_lost;
-                break;
-
-            CASE self::TIP_RESULT_HALF_LOST:
-                ++$this->tipster->tipster->count_lost;
-                break;
-
+            // Победа
             CASE self::TIP_RESULT_WON:
-                ++$this->tipster->tipster->count_won;
+                ++$tipster->count_won;
+                $this->profit = $this->stake * $this->odds - $this->stake;
+                $this->c_profit = $this->tempProfit;
                 break;
-
+            // Половина победы
             CASE self::TIP_RESULT_HALF:
-                ++$this->tipster->tipster->count_won;
+                ++$tipster->count_won;
+                $this->profit = ($this->odds * $this->stake - $this->stake) / 2;
+                $this->c_profit = $this->tempProfit;
                 break;
+            // Поражение
+            CASE self::TIP_RESULT_LOST:
+                ++$tipster->count_lost;
+                $this->profit = $this->stake * -1;
+                $this->c_profit = $this->tempProfit;
+                break;
+            // Половина поражения
+            CASE self::TIP_RESULT_HALF_LOST:
+                ++$tipster->count_lost;
+                $this->profit = (($this->stake * -1) / 2);
+                $this->c_profit = $this->tempProfit;
+                break;
+            CASE self::TIP_RESULT_VOID:
+                ++$tipster->count_void;
+                break;
+            default:
+                $this->profit = 0;
         }
 
-        $this->bank_was = $this->tipster->tipster->bank - $this->stake;
+        $this->bank_was = $tipster->bank - $this->stake;
 
         // половина победы
         if ($this->tip_result == self::TIP_RESULT_HALF) {
 
-            $this->tipster->tipster->bank = $this->tipster->tipster->bank + ($this->stake * $this->odds - $this->stake) / 2;
-            //$this->yield                    = ($this->tipster->tipster->bank - self::BANK) / (self::BANK/100);
-            $this->profit += ($this->bank_was + (($this->stake * $this->odds - $this->stake) / 2) - self::BANK) + $this->stake;
-            $this->c_profit = $this->tempProfit;
+            $tipster->bank += ($this->stake * $this->odds - $this->stake) / 2;
+            //$this->yield                    = ($tipster->bank - self::BANK) / (self::BANK/100);
+            //$this->profit += ($this->bank_was + (($this->stake * $this->odds - $this->stake) / 2) - self::BANK) + $this->stake;
+            //$this->c_profit = $this->tempProfit;
 
             $this->yield = ($this->c_profit / 2) / $this->stake * 100;
             // победа
         } elseif ($this->tip_result == self::TIP_RESULT_WON) {
 
-            $this->tipster->tipster->bank = $this->tipster->tipster->bank + ($this->stake * $this->odds - $this->stake);
-            $this->profit += ($this->bank_was + ($this->stake * $this->odds) - self::BANK);
-            //$this->yield                    = ($this->tipster->tipster->bank - self::BANK) / (self::BANK/100);
-            $this->c_profit = $this->tempProfit;
+            $tipster->bank += ($this->stake * $this->odds - $this->stake);
+            //$this->profit += ($this->bank_was + ($this->stake * $this->odds) - self::BANK);
+            //$this->yield                    = ($tipster->bank - self::BANK) / (self::BANK/100);
+            //$this->c_profit = $this->tempProfit;
 
             $this->yield = $this->c_profit / $this->stake * 100;
             // поражение
         } elseif ($this->tip_result == self::TIP_RESULT_LOST) {
 
-            $this->tipster->tipster->bank -= $this->stake;
-            $this->profit = $this->tipster->tipster->bank - self::BANK;
+            $tipster->bank -= $this->stake;
+            //$this->profit = $tipster->bank - self::BANK;
             //$this->yield                   = $this->profit / (self::BANK/100);
-            $this->c_profit = $this->tempProfit;
+            //$this->c_profit = $this->tempProfit;
 
             $this->yield = $this->stake / 100;
             // Половина поражения
         } elseif ($this->tip_result == self::TIP_RESULT_HALF_LOST) {
 
-            $this->tipster->tipster->bank -= $this->stake / 2;
-            $this->profit = $this->tipster->tipster->bank - self::BANK;
+            $tipster->bank -= $this->stake / 2;
+            //$this->profit = $tipster->bank - self::BANK;
             //$this->yield                   = $this->profit / (self::BANK/100);
-            $this->c_profit = $this->tempProfit;
+            //$this->c_profit = $this->tempProfit;
 
             $this->yield = $this->stake / -2 / 100;
         } elseif ($this->tip_result == self::TIP_RESULT_VOID) {
-            //$this->tipster->tipster->bank += $this->stake;
+            //$tipster->bank += $this->stake;
         }
 
         $stakeSum = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
@@ -504,16 +518,16 @@ class Tips extends CActiveRecord
         )->queryRow();
         $stakeSum = $stakeSum ? $stakeSum[ 'sum' ] : 0;
 
-        $this->tipster->tipster->profit += $this->c_profit;
-        //$this->tipster->tipster->yield  =  $this->tipster->tipster->profit / self::BANK * 100;
-        $this->tipster->tipster->yield = $this->tipster->tipster->profit / $stakeSum * 100;
+        $tipster->profit += $this->c_profit;
+        //$tipster->yield  =  $tipster->profit / self::BANK * 100;
+        $tipster->yield = $tipster->profit / $stakeSum * 100;
 
         $this->calculated = 1;
 
-        $return = $this->tipster->tipster->save();
+        $return = $tipster->save();
         /*
-        if($this->tipster->tipster->hasErrors()){
-            print_r($this->tipster->tipster->getErrors());
+        if($tipster->hasErrors()){
+            print_r($tipster->getErrors());
             Yii::app()->end();
         }
         */
@@ -697,26 +711,25 @@ class Tips extends CActiveRecord
 
     public function getTipResultSpanTag()
     {
-
         SWITCH ($this->tip_result) {
-            CASE self::TIP_RESULT_VOID:
-                return CHtml::tag( 'span', array( 'class' => 'void' ), Yii::t( 'tips', 'расход' ) );
-                break;
-
             CASE self::TIP_RESULT_WON:
                 return CHtml::tag( 'span', array( 'class' => 'won' ), Yii::t( 'tips', 'прошел' ) );
-                break;
-
-            CASE self::TIP_RESULT_LOST:
-                return CHtml::tag( 'span', array( 'class' => 'lost' ), Yii::t( 'tips', 'не прошел' ) );
                 break;
 
             CASE self::TIP_RESULT_HALF:
                 return CHtml::tag( 'span', array( 'class' => 'won' ), Yii::t( 'tips', 'половина' ) );
                 break;
 
+            CASE self::TIP_RESULT_LOST:
+                return CHtml::tag( 'span', array( 'class' => 'lost' ), Yii::t( 'tips', 'не прошел' ) );
+                break;
+
             CASE self::TIP_RESULT_HALF_LOST:
                 return CHtml::tag( 'span', array( 'class' => 'lost' ), Yii::t( 'tips', 'половина' ) );
+                break;
+
+            CASE self::TIP_RESULT_VOID:
+                return CHtml::tag( 'span', array( 'class' => 'void' ), Yii::t( 'tips', 'расход' ) );
                 break;
         }
 
@@ -725,13 +738,12 @@ class Tips extends CActiveRecord
 
     public function getTipProfitSpanTag()
     {
-
         SWITCH ($this->tip_result) {
-            CASE self::TIP_RESULT_VOID:
-                return CHtml::tag( 'span', array( 'class' => 'void' ), $this->tempProfit );
+            CASE self::TIP_RESULT_WON:
+                return CHtml::tag( 'span', array( 'class' => 'won' ), $this->tempProfit );
                 break;
 
-            CASE self::TIP_RESULT_WON:
+            CASE self::TIP_RESULT_HALF:
                 return CHtml::tag( 'span', array( 'class' => 'won' ), $this->tempProfit );
                 break;
 
@@ -739,15 +751,14 @@ class Tips extends CActiveRecord
                 return CHtml::tag( 'span', array( 'class' => 'lost' ), $this->tempProfit );
                 break;
 
-            CASE self::TIP_RESULT_HALF:
-                return CHtml::tag( 'span', array( 'class' => 'won' ), $this->tempProfit );
-                break;
-
             CASE self::TIP_RESULT_HALF_LOST:
                 return CHtml::tag( 'span', array( 'class' => 'lost' ), $this->tempProfit );
                 break;
-        }
 
+            CASE self::TIP_RESULT_VOID:
+                return CHtml::tag( 'span', array( 'class' => 'void' ), $this->tempProfit );
+                break;
+        }
         return CHtml::tag( 'span', array( 'class' => 'unknow' ), $this->tempProfit );
     }
 
@@ -848,16 +859,21 @@ class Tips extends CActiveRecord
     public function getTempProfit()
     {
         SWITCH ($this->tip_result) {
+            // Победа
             CASE self::TIP_RESULT_WON:
                 return $this->odds * $this->stake - $this->stake;
-            CASE self::TIP_RESULT_LOST:
-                return $this->stake * -1;
-            CASE self::TIP_RESULT_HALF_LOST:
-                return (($this->stake * -1) / 2);
-            CASE self::TIP_RESULT_DRAW:
-                return 0;
+            // Пол победы
             CASE self::TIP_RESULT_HALF:
                 return ($this->odds * $this->stake - $this->stake) / 2;
+            // Поражение
+            CASE self::TIP_RESULT_LOST:
+                return $this->stake * -1;
+            // Половина поражения
+            CASE self::TIP_RESULT_HALF_LOST:
+                return (($this->stake * -1) / 2);
+            // ...
+            CASE self::TIP_RESULT_DRAW:
+                return 0;
             default:
                 return 0;
         }

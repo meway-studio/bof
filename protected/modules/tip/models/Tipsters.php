@@ -15,7 +15,7 @@
  * @property string $yield
  * @property string $winrate
  * @property string $odds
- * @property string $bank
+ * @property float $bank
  * @property string $count_active
  * @property string $count_won
  * @property string $count_void

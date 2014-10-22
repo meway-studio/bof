@@ -13,7 +13,7 @@ $this->breadcrumbs[ ] = $category->title;
 
 <?php foreach ($elements as $element): ?>
     <div>
-        <?php echo CHtml::image( $element->getImageUrl( '150x150' ) ); ?>
+        <?php //echo CHtml::image( $element->getImageUrl( '150x150' ) ); ?>
     </div>
     <p><?= $element->short_description ?></p>
     <p><?= $element->full_description ?></p>

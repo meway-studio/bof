@@ -29,6 +29,7 @@
  * @property string $fast_notice
  * @property string $last_mail
  * @property integer $show_in_statistic
+ * @property Tipsters $tipster
  * @method User showInStatistic()
  * @method User showOutStatistic()
  */

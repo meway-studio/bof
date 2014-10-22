@@ -23,12 +23,15 @@ class DefaultController extends Controller
     {
         return array(
             'upload'   => array(
-                'class'     => 'ext.blueimp.FileUploadAction',
-                'attribute' => 'cover',
-                'filepath'  => 'webroot.images.tips',
-                'allowMime' => array( 'image/jpeg', 'image/png', 'image/gif' ),
-                'minsize'   => 0,
-                'maxsize'   => 1024 * 1024,
+                'class'        => 'ext.blueimp.FileUploadAction',
+                'attribute'    => 'cover',
+                'filepath'     => 'webroot.images.tips',
+                'allowMime'    => array( 'image/jpeg', 'image/png', 'image/gif' ),
+                'minsize'      => 0,
+                'maxsize'      => 1024 * 1024,
+                'resize'       => true,
+                'resizeWidth'  => 140,
+                'resizeHeight' => 140,
             ),
             'redactor' => array(
                 'class'     => 'ext.blueimp.FileUploadAction',
@@ -90,7 +93,7 @@ class DefaultController extends Controller
             ),
             array(
                 'allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array( 'test', 'MonthStat', 'PaypalConfirm' ),
+                'actions' => array( 'test', 'MonthStat', 'PaypalConfirm', 'rss' ),
                 'roles'   => array( 'admin' ),
             ),
             array(
@@ -98,6 +101,43 @@ class DefaultController extends Controller
                 'users' => array( '*' ),
             ),
         );
+    }
+
+    public function actionRss()
+    {
+        $tips = Tips::model()->published()->closed()->findAll( new CDbCriteria(array( 'limit' => 40 )) );
+        $nbTips = NbTips::model()->published()->findAll( new CDbCriteria(array( 'limit' => 40 )) );
+
+        header( 'Content-type: text/xml' );
+        echo '<?xml version="1.0"?>' . "\n";
+        echo '<rss version="2.0">' . "\n";
+        echo '<channel>' . "\n";
+        echo "<title></title>" . "\n";
+        echo "<link></link>" . "\n";
+        echo "<description></description>" . "\n";
+        echo "<language></language>" . "\n";
+        echo "<pubDate>" . date( DATE_RFC822 ) . "</pubDate>" . "\n";
+        foreach ($tips as $tip) {
+            echo '<item>' . "\n";
+            echo "<title>{$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
+            echo "<link>{$tip->url}</link>" . "\n";
+            echo "<description>" . strip_tags( $tip->description ) . "</description>" . "\n";
+            echo "<pubDate>" . date( DATE_RFC822, $tip->event_date ) . "</pubDate>" . "\n";
+            echo "<guid>{$tip->url}</guid>" . "\n";
+            echo '</item>' . "\n" . "\n";
+        }
+        foreach ($nbTips as $tip) {
+            echo '<item>' . "\n";
+            echo "<title>{$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
+            echo "<link>{$tip->url}</link>" . "\n";
+            echo "<description>" . strip_tags( $tip->content ) . "</description>" . "\n";
+            echo "<pubDate>" . date( DATE_RFC822, $tip->event_date ) . "</pubDate>" . "\n";
+            echo "<guid>{$tip->url}</guid>" . "\n";
+            echo '</item>' . "\n" . "\n";
+        }
+        echo '</channel>' . "\n";
+        echo '</rss>';
+        die();
     }
 
     public function actionTest()
@@ -227,109 +267,112 @@ class DefaultController extends Controller
             ));
         }
         */
-/*
+        /*
 
-        // высчитать правильный профит и елд всем типстерам
-        // Получить всех типстеров
-        $tipsters = User::model()->active()->tipsterRole()->with( 'tipster' )->findAll();
+                // высчитать правильный профит и елд всем типстерам
+                // Получить всех типстеров
+                $tipsters = User::model()->active()->tipsterRole()->with( 'tipster' )->findAll();
 
-        foreach ($tipsters AS $t) {
+                foreach ($tipsters AS $t) {
 
-            $stat = array(
-                'stake'   => 0,
-                'profit'  => 0,
-                'yield'   => 0,
-                'winrate' => 0,
-                'odds'    => 0,
-            );
+                    $stat = array(
+                        'stake'   => 0,
+                        'profit'  => 0,
+                        'yield'   => 0,
+                        'winrate' => 0,
+                        'odds'    => 0,
+                    );
 
-            // Получить все закрытые посты
-            $posts = Tips::model()->byTipster( $t->id )->published()->closed()->findAll();
+                    // Получить все закрытые посты
+                    $posts = Tips::model()->byTipster( $t->id )->published()->closed()->findAll();
 
-            foreach ($posts AS $p) {
-                $stat[ 'stake' ] += $p->stake;
-                $stat[ 'profit' ] += $p->tempProfit;
-                $stat[ 'odds' ] += $p->odds;
+                    foreach ($posts AS $p) {
+                        $stat[ 'stake' ] += $p->stake;
+                        $stat[ 'profit' ] += $p->tempProfit;
+                        $stat[ 'odds' ] += $p->odds;
 
-                if ($p->tip_result == Tips::TIP_RESULT_WON OR $p->tip_result == Tips::TIP_RESULT_HALF) {
-                    $stat[ 'winrate' ]++;
+                        if ($p->tip_result == Tips::TIP_RESULT_WON OR $p->tip_result == Tips::TIP_RESULT_HALF) {
+                            $stat[ 'winrate' ]++;
+                        }
+                    }
+
+                    $count = (count( $posts ) == 0 ? 1 : count( $posts ));
+
+                    $stat[ 'winrate' ] = $stat[ 'winrate' ] == 0 ? 1 : $stat[ 'winrate' ];
+
+                    //$stat['winrate'] = round( $stat['winrate'] * 100 / ($count), 0);
+
+
+                    // new scheme winrate
+                    $stat[ 'winrate' ] = round( (($count - ($count - $stat[ 'winrate' ])) / $count) * 100, 0 );
+
+                    $stat[ 'odds' ] = round( $stat[ 'odds' ] / $count, 2 );
+                    //$stat['yield']   = round( ($stat['profit']==0 ? 1 : $stat['profit']) / Tips::BANK * 100 , 2);
+                    $stat[ 'yield' ] = round( ($stat[ 'profit' ] == 0 ? 1 : $stat[ 'profit' ]) / $stat[ 'stake' ] * 100, 2 );
+
+                    $t->tipster->profit = $stat[ 'profit' ];
+                    $t->tipster->yield = $stat[ 'yield' ];
+                    $t->tipster->odds = $stat[ 'odds' ];
+                    $t->tipster->winrate = $stat[ 'winrate' ];
+
+                    $status = $t->tipster->save();
+
+                    if ($t->tipster->hasErrors()) {
+                        print_r( $t->tipster->getErrors() );
+                    }
+
+                    echo $t->FullName . ": " . $stat[ 'profit' ] . "/" . $stat[ 'yield' ] . " (saved: " . (int)$status . ")" . "<br />\n";
                 }
-            }
-
-            $count = (count( $posts ) == 0 ? 1 : count( $posts ));
-
-            $stat[ 'winrate' ] = $stat[ 'winrate' ] == 0 ? 1 : $stat[ 'winrate' ];
-
-            //$stat['winrate'] = round( $stat['winrate'] * 100 / ($count), 0);
-
-
-            // new scheme winrate
-            $stat[ 'winrate' ] = round( (($count - ($count - $stat[ 'winrate' ])) / $count) * 100, 0 );
-
-            $stat[ 'odds' ] = round( $stat[ 'odds' ] / $count, 2 );
-            //$stat['yield']   = round( ($stat['profit']==0 ? 1 : $stat['profit']) / Tips::BANK * 100 , 2);
-            $stat[ 'yield' ] = round( ($stat[ 'profit' ] == 0 ? 1 : $stat[ 'profit' ]) / $stat[ 'stake' ] * 100, 2 );
-
-            $t->tipster->profit = $stat[ 'profit' ];
-            $t->tipster->yield = $stat[ 'yield' ];
-            $t->tipster->odds = $stat[ 'odds' ];
-            $t->tipster->winrate = $stat[ 'winrate' ];
-
-            $status = $t->tipster->save();
-
-            if ($t->tipster->hasErrors()) {
-                print_r( $t->tipster->getErrors() );
-            }
-
-            echo $t->FullName . ": " . $stat[ 'profit' ] . "/" . $stat[ 'yield' ] . " (saved: " . (int)$status . ")" . "<br />\n";
-        }
-*/
+        */
 
         //echo date('m');die();
 
-        
+
         // Статистика по месяцам
         $m = 1;
         $y = 2014;
 
-        Yii::import('application.modules.tip.extensions.tipsterStats.tipsterStats');
+        Yii::import( 'application.modules.tip.extensions.tipsterStats.tipsterStats' );
 
         // Получить всех типстеров
-        $tipsters = User::model()->active()->tipsterRole()->with('tipster')->findAll();
+        $tipsters = User::model()->active()->tipsterRole()->with( 'tipster' )->findAll();
 
         $pb = 6000;
 
-        for($m=1; $m<13; $m++){
+        for ($m = 1; $m < 13; $m++) {
 
             //if($m > date('m')-1 AND $y==date("Y"))
-            if($m > date('m') AND $y==date("Y"))
+            if ($m > date( 'm' ) AND $y == date( "Y" )) {
                 continue;
+            }
 
             $all = array(
-                'tipster_id'   => 0,
-                'month'        => $m,
-                'year'         => $y,
-                'stake'        => 0,
-                'profit'       => 0,
-                'yield'        => 0,
-                'bank'         => 0,
-                'count_won'    => 0,
-                'count_lost'   => 0,
-                'count_void'   => 0,
-                'tipscount'    => 0,
+                'tipster_id' => 0,
+                'month'      => $m,
+                'year'       => $y,
+                'stake'      => 0,
+                'profit'     => 0,
+                'yield'      => 0,
+                'bank'       => 0,
+                'count_won'  => 0,
+                'count_lost' => 0,
+                'count_void' => 0,
+                'tipscount'  => 0,
             );
 
-            foreach($tipsters AS $item){
+            foreach ($tipsters AS $item) {
 
                 // Проверить статистику на этот месяц
-                $check = Tipstats::model()->findByAttributes(array(
-                    'tipster_id' => $item->id,
-                    'month'      => $m,
-                    'year'       => $y,
-                ));
+                $check = Tipstats::model()->findByAttributes(
+                    array(
+                        'tipster_id' => $item->id,
+                        'month'      => $m,
+                        'year'       => $y,
+                    )
+                );
 
 
-                if($check!=null){
+                if ($check != null) {
                     //echo "\t Статистика за {$m}-{$y} для {$item->FullName} уже существует\n";
                     //continue;
                 }
@@ -337,55 +380,58 @@ class DefaultController extends Controller
 
                 // Если не было записей, добавляем
                 $stats = new tipsterStats($item->id, $m, $y);
-                $model = $check!=null ? $check : new Tipstats();
+                $model = $check != null ? $check : new Tipstats();
 
                 $model->attributes = $stats->calc();
 
-                $all['stake']      += $stats->AllStake;
-                $all['profit']     += $model->profit;
-                $all['yield']      += $model->yield;
-                $all['bank']       += $model->bank;
-                $all['count_won']  += $model->count_won;
-                $all['count_lost'] += $model->count_lost;
-                $all['count_void'] += $model->count_void;
-                $all['tipscount']  += $model->tipscount;
+                $all[ 'stake' ] += $stats->AllStake;
+                $all[ 'profit' ] += $model->profit;
+                $all[ 'yield' ] += $model->yield;
+                $all[ 'bank' ] += $model->bank;
+                $all[ 'count_won' ] += $model->count_won;
+                $all[ 'count_lost' ] += $model->count_lost;
+                $all[ 'count_void' ] += $model->count_void;
+                $all[ 'tipscount' ] += $model->tipscount;
 
-                print_r($model->attributes);
+                print_r( $model->attributes );
 
-                if($model->tipscount==0){
-                    echo "\tTipster ".$item->FullName." has not tips by {$m}/{$y}\n";
+                if ($model->tipscount == 0) {
+                    echo "\tTipster " . $item->FullName . " has not tips by {$m}/{$y}\n";
                     continue;
                 }
 
 
-                if(!$model->save())
-                    echo "Save Error: ".print_r($model->getErrors(),1);
+                if (!$model->save()) {
+                    echo "Save Error: " . print_r( $model->getErrors(), 1 );
+                }
 
-                echo $item->FullName." - {$m}/{$y}\n";
+                echo $item->FullName . " - {$m}/{$y}\n";
             }
 
-            $all['yield'] = round($all['profit'] / $all['stake'] * 100, 2);
-            $all['desc']  = $pb.'/'.$all['bank'];
+            $all[ 'yield' ] = round( $all[ 'profit' ] / $all[ 'stake' ] * 100, 2 );
+            $all[ 'desc' ] = $pb . '/' . $all[ 'bank' ];
 
             // Проверить статистику на этот месяц
-            $check = Tipstats::model()->findByAttributes(array(
-                'tipster_id' => 0,
-                'month'      => $m,
-                'year'       => $y,
-            ));
+            $check = Tipstats::model()->findByAttributes(
+                array(
+                    'tipster_id' => 0,
+                    'month'      => $m,
+                    'year'       => $y,
+                )
+            );
 
-            $model = $check==null ? new Tipstats() : $check;
+            $model = $check == null ? new Tipstats() : $check;
 
             $model->attributes = $all;
-            if(!$model->save() OR $model->hasErrors())
-                print_r($model->getErrors());
+            if (!$model->save() OR $model->hasErrors()) {
+                print_r( $model->getErrors() );
+            }
 
-            print_r($all);
+            print_r( $all );
             echo "ALL BOF - {$m}/{$y}\n";
 
-            $pb = $all['bank'];
+            $pb = $all[ 'bank' ];
         }
-        
     }
 
     public function actionRobokassa()
@@ -1024,7 +1070,7 @@ class DefaultController extends Controller
 
         foreach (array_reverse( $stats ) AS $item) {
             $chart[ 'months' ][ ] = $item->MonthX;
-            $chart[ 'profit' ][ ] = intval($item->profit);
+            $chart[ 'profit' ][ ] = intval( $item->profit );
         }
 
         $dataProvider = new CActiveDataProvider(Tipstats::model()->byTipster( $model->id )->toGrid(
@@ -1115,10 +1161,10 @@ class DefaultController extends Controller
             if (!isset($chart[ 'months' ][ $item->MonthX ])) {
 
                 $chart[ 'months' ][ $item->MonthX ] = $item->MonthX;
-                $chart[ 'profit' ][ $item->MonthX ] = intval($item->profit);//$item->profit;
+                $chart[ 'profit' ][ $item->MonthX ] = intval( $item->profit ); //$item->profit;
             } else {
 
-                $chart[ 'profit' ][ $item->MonthX ] += intval($item->profit);//$item->profit;$item->profit;
+                $chart[ 'profit' ][ $item->MonthX ] += intval( $item->profit ); //$item->profit;$item->profit;
             }
         }
 
@@ -1469,15 +1515,6 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerMetaTag( Yii::app()->config->get( 'META_D_STATS_ALL_TIME' ), 'description' );
         $this->pageTitle = Yii::t( 'tips', 'Статистика за все время' );
 
-        $model = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with(
-            array(
-                'tipster' => array(
-                    'scopes' => array( 'sort' => array( 'DESC' ) )
-                )
-            )
-        )->findAll();
-
-        $count = count( $model );
         $bof = array(
             'name'        => Yii::t( 'tips', 'Команда BOF' ),
             'rank'        => '',
@@ -1491,7 +1528,17 @@ class DefaultController extends Controller
             'activeCount' => 0,
         );
 
-        foreach ($model as $item) {
+        $tipstersInStatistic = User::model()->byRole( User::ROLE_TIPSTER )->showInStatistic()->with(
+            array(
+                'tipster' => array(
+                    'scopes' => array( 'sort' => array( 'DESC' ) )
+                )
+            )
+        )->findAll();
+
+        $count = count( $tipstersInStatistic );
+
+        foreach ($tipstersInStatistic as $item) {
 
             $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
                 'tipster_id=:ID',
@@ -1507,8 +1554,8 @@ class DefaultController extends Controller
             $bof[ 'activeCount' ] += isset($item->tipster) ? $item->tipster->activeCount : 0;
         }
 
-        $model2 = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
-        foreach ($model2 as $item) {
+        $tipstersOutStatistic = User::model()->byRole( User::ROLE_TIPSTER )->showOutStatistic()->with( 'tipster' )->findAll();
+        foreach ($tipstersOutStatistic as $item) {
             $allStake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
                 'tipster_id=:ID',
                 array( ':ID' => $item->id )
@@ -1528,7 +1575,14 @@ class DefaultController extends Controller
         $bof[ 'yield' ] = round( $bof[ 'profit' ] / $bof[ 'stake' ] * 100, 2 );
         $bof[ 'winrate' ] = (round( $bof[ 'winrate' ] * 100 / $count )) / 100;
 
-        $this->render( 'tipsters', array( 'model' => $model, 'model2' => $model2, 'bof' => $bof ) );
+        $this->render(
+            'tipsters',
+            array(
+                'tipstersInStatistic'  => $tipstersInStatistic,
+                'tipstersOutStatistic' => $tipstersOutStatistic,
+                'bofTeam'              => $bof
+            )
+        );
     }
 
     /**

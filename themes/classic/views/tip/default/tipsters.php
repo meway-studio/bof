@@ -1,5 +1,10 @@
+<?php
+/**
+ * @var array $tipstersInStatistic
+ * @var array $tipstersOutStatistic
+ */
+?>
 <div class="site-width">
-
     <div class="stats-all-time">
         <div class="title">
             <span class="bold"><?php echo Yii::t( 'themes', 'Статистика' ); ?></span>
@@ -15,23 +20,23 @@
                         </div>
                         <div class="some-inf">
                             <span><?php echo Yii::t( 'themes', 'Общий' ); ?></span>
-                            <span class="big"><?php echo $bof[ 'profit' ]; ?></span>
+                            <span class="big"><?php echo $bofTeam[ 'profit' ]; ?></span>
                             <span><?php echo Yii::t( 'themes', 'Прибыль' ); ?></span>
                             <span><?php echo Yii::t( 'themes', 'ROI (Доход)' ); ?>
-                                <span> <?php echo $bof[ 'yield' ]; ?>%</span>
+                                <span> <?php echo $bofTeam[ 'yield' ]; ?>%</span>
                             </span>
                         </div>
                     </div>
-                    <span class="name"><?php echo $bof[ 'name' ]; ?></span>
-                    <span class="status"><?php echo $bof[ 'rank' ]; ?></span>
-                    <span class="devis"><?php echo $bof[ 'comment' ]; ?></span>
+                    <span class="name"><?php echo $bofTeam[ 'name' ]; ?></span>
+                    <span class="status"><?php echo $bofTeam[ 'rank' ]; ?></span>
+                    <span class="devis"><?php echo $bofTeam[ 'comment' ]; ?></span>
                     <div class="some-inf-bottom">
                         <a class="stats" href="<?php echo Yii::app()->createUrl( '/tip/default/allstat' ); ?>">
                             <span class="pixel active"></span>
                             <span><?php echo Yii::t( 'tips', 'Статистика' ); ?></span>
                         </a> <a class="tips" href="<?php echo Yii::app()->createUrl( '/tip/default/list' ); ?>">
                             <span class="pixel active"></span>
-                            <span class="how-mutch"><?php echo $bof[ 'activeCount' ]; ?></span>
+                            <span class="how-mutch"><?php echo $bofTeam[ 'activeCount' ]; ?></span>
                             <span><?php echo Yii::t( 'themes', 'Советы' ); ?></span>
                         </a> <a class="subscribe" href="<?php echo Yii::app()->createUrl(
                             '/tip/default/subscription'
@@ -42,19 +47,19 @@
                     </div>
                 </div>
                 <div class="bottom">
-                    <span><?php echo $bof[ 'tips' ]; ?>
+                    <span><?php echo $bofTeam[ 'tips' ]; ?>
                         <span><?php echo Yii::t( 'themes', 'Количество советов' ); ?></span>
                     </span>
-                    <span><?php echo round( $bof[ 'winrate' ], 0 ); ?>%
+                    <span><?php echo round( $bofTeam[ 'winrate' ], 0 ); ?>%
                         <span><?php echo Yii::t( 'themes', 'Количество побед' ); ?></span>
                     </span>
-                    <span style="margin-right: 0;"><?php echo $bof[ 'odds' ]; ?>
+                    <span style="margin-right: 0;"><?php echo $bofTeam[ 'odds' ]; ?>
                         <span><?php echo Yii::t( 'themes', 'Средний коэффициент' ); ?></span>
                     </span>
                 </div>
             </div>
 
-            <?php foreach ($model AS $data): ?>
+            <?php foreach ($tipstersInStatistic AS $data): ?>
                 <div class="tipster-inf">
                     <div class="top">
                         <div class="_top">
@@ -110,14 +115,14 @@
         </div>
     </div>
 
-    <?php if (count( $model2 )): ?>
+    <?php if (count( $tipstersOutStatistic )): ?>
         <hr style="margin-right: 35px;">
         <div class="stats-all-time">
             <div class="title">
                 <span class="bold"><?php echo Yii::t( 'themes', 'Аналитики, покинувшие проект' ); ?></span>
             </div>
             <div class="profile">
-                <?php foreach ($model2 AS $data): ?>
+                <?php foreach ($tipstersOutStatistic AS $data): ?>
                     <div class="tipster-inf">
                         <div class="top">
                             <div class="_top">

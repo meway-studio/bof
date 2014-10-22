@@ -79,7 +79,7 @@ class CatalogCategoryUrlRule extends CBaseUrlRule
              * Проверяем последнюю часть URL /p1/p2/{p3} <---
              * Ищем элемент каталога по name == {p3}
              */
-            if ($element = CatalogElement::model()->find( 'name = :name', array( ':name' => $path ) )) {
+            if ($element = CatalogElement::model()->findByAttributes( array( 'name' => $path ) )) {
                 $_GET[ 'id' ] = $element->id;
                 return 'catalog/element/view';
             }

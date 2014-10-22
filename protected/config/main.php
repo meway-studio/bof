@@ -178,6 +178,7 @@ $config = array(
             'showScriptName' => false,
             'rules'          => array(
                 '/'                                                  => '/tip/default/index',
+                'rss'                                                => '/tip/default/rss',
                 'edit-tip/<id:\d+>'                                  => '/tip/default/update',
                 'edit-nb-tip/<id:\d+>'                               => '/tip/default/updateNb',
                 'delete-tip/<id:\d+>'                                => '/tip/default/delete',
