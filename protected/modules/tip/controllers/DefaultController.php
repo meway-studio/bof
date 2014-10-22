@@ -124,7 +124,7 @@ class DefaultController extends Controller
                 $desc = substr( $desc, 0, round( strlen( $desc ) / 100 * 30 ) ) . '...';
             }
             echo '<item>' . "\n";
-            echo "<title>{$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
+            echo "<title>[{$tip->format_event_date}] {$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
             echo "<link>{$tip->url}</link>" . "\n";
             echo "<description>{$desc}</description>" . "\n";
             echo "<pubDate>" . date( DATE_RFC822, $tip->event_date ) . "</pubDate>" . "\n";
@@ -133,7 +133,7 @@ class DefaultController extends Controller
         }
         foreach ($nbTips as $tip) {
             echo '<item>' . "\n";
-            echo "<title>{$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
+            echo "<title>[{$tip->format_event_date}] {$tip->club_1} vs {$tip->club_2} ({$tip->tipster->FullName})</title>" . "\n";
             echo "<link>{$tip->url}</link>" . "\n";
             echo "<description>" . strip_tags( $tip->content ) . "</description>" . "\n";
             echo "<pubDate>" . date( DATE_RFC822, $tip->event_date ) . "</pubDate>" . "\n";
