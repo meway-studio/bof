@@ -190,6 +190,10 @@ Yii::app()->clientScript->registerScript( 'tabs', '$("#tabs").tabs({});' );
         <?php echo $form->labelEx( $model, 'MASTERCLASS_EMAIL' ); ?>
         <?php echo $form->textField( $model, 'MASTERCLASS_EMAIL' ); ?>
         <?php echo $form->error( $model, 'MASTERCLASS_EMAIL' ); ?>
+
+        <?php echo $form->labelEx( $model, 'SHOW_COMMENTS' ); ?>
+        <?php echo $form->dropDownList( $model, 'SHOW_COMMENTS', array( 'Нет', 'Да' ) ); ?>
+        <?php echo $form->error( $model, 'SHOW_COMMENTS' ); ?>
     </div>
 
     <div id="tabs-5">

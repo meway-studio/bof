@@ -29,6 +29,12 @@ $inRunningTip = Yii::app()->request->getQuery('in_running', false);
 				<?php echo $form->error($model,'status'); ?>
 				
 			</div>
+
+            <div style="float:right;">
+                <?php echo $form->labelEx( $model, 'comments', array( "class" => "label", 'style' => 'vertical-align: middle; margin-right: 2px;' ) ); ?>
+                <?php echo $form->checkBox( $model, 'comments', array( 'style' => 'width: 20px;height: 20px;vertical-align: middle;' ) ); ?>
+                <?php echo $form->error( $model, 'comments' ); ?>
+            </div>
 		</div>
 		<div>
 			<div class="tip_form_block" style="float: none; width: auto;">

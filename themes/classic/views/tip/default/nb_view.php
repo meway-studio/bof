@@ -71,6 +71,13 @@
 		<span class="data"><?php echo Yii::t('themes', 'Советов опубликовано'); ?> <?php echo $model->format_create_date?></span>
 	</div>
 
+    <?php if ($model->comments && Yii::app()->config->get( 'SHOW_COMMENTS' )): ?>
+        <div class="game-preview" style="float: left;margin-top: 20px;margin-left: 20px; width: 765px;">
+            <span class="small-title" style="margin-bottom: 20px;"><?php echo Yii::t( 'themes', 'Комментарии' ); ?></span>
+            <?php $this->widget( 'application.widgets.disqus.Disqus', array( 'shortname' => 'wmsamolet' ) ) ?>
+        </div>
+    <?php endif ?>
+
 </div>
 
 </div>

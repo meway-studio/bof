@@ -37,6 +37,7 @@
  * @property integer $calculated
  * @property User $tipster
  * @property float $tempProfit
+ * @property integer $comments
  * @method Tips published()
  * @method Tips draft()
  * @method Tips bodtips()
@@ -113,7 +114,11 @@ class Tips extends CActiveRecord
             array('flag_1, flag_2, cover, stake', 'length', 'max'=>50),
             array('match_result', 'length', 'max'=>20),
             */
-
+            array(
+                'comments',
+                'numerical',
+                'integerOnly' => true
+            ),
             // create
             array(
                 'status, type, club_1, flag_1, club_2, flag_2, description, content, selection, odds, stake,tipster_id',
@@ -121,7 +126,7 @@ class Tips extends CActiveRecord
                 'on' => 'create'
             ),
             array(
-                'status, type, tip_result, bet_on, calculated, event_h, event_m, bod, bookmaker',
+                'status, type, tip_result, bet_on, calculated, event_h, event_m, bod, bookmaker, comments',
                 'numerical',
                 'integerOnly' => true,
                 'on'          => 'create'
@@ -155,7 +160,7 @@ class Tips extends CActiveRecord
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array(
-                'id, status, type, price, create_date, update_date, event_date, tipster_id, club_1, flag_1, club_2, flag_2, description, content, cover, selection, odds, stake, profit, tip_result, match_result',
+                'id, status, type, price, create_date, update_date, event_date, tipster_id, club_1, flag_1, club_2, flag_2, description, content, cover, selection, odds, stake, profit, tip_result, match_result, comments',
                 'safe',
                 'on' => 'search'
             ),
@@ -275,6 +280,7 @@ class Tips extends CActiveRecord
             'meta_k'            => Yii::t( 'tips', 'Meta Keywords' ),
             'meta_d'            => Yii::t( 'tips', 'Meta Description' ),
             'format_event_date' => Yii::t( 'tips', 'Дата события' ),
+            'comments'          => Yii::t( 'tips', 'Разрешить комментарии' ),
         );
     }
 
@@ -578,6 +584,7 @@ class Tips extends CActiveRecord
         $criteria->compare( 'profit', $this->profit, true );
         $criteria->compare( 'tip_result', $this->tip_result );
         $criteria->compare( 'match_result', $this->match_result, true );
+        $criteria->compare( 'comments', $this->comments );
 
         $criteria->compare( 'tipster.firstname', $this->tipster_id, true, 'OR' );
         $criteria->compare( 'tipster.email', $this->tipster_id, true, 'OR' );

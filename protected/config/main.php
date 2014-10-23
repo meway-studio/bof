@@ -273,10 +273,10 @@ $config = array(
         'eav'          => array(
             'class'  => 'application.modules.eav.components.EavComponent',
             'config' => array(
-                'translate' => array(
+                'translate'  => array(
                     'languages' => array( 'ru' ),
                 ),
-                'entities'  => array(
+                'entities'   => array(
                     'model' => array(
                         'Tips'            => array(
                             'translate' => array(

@@ -19,6 +19,7 @@
  * @property string $meta_k
  * @property string $meta_d
  * @property integer $in_running
+ * @property integer $comments
  */
 class NbTips extends CActiveRecord
 {
@@ -64,10 +65,15 @@ class NbTips extends CActiveRecord
             array('flag_1, flag_2, cover', 'length', 'max'=>50),
             array('league, meta_k, meta_d', 'length', 'max'=>250),
             */
+            array(
+                'comments',
+                'numerical',
+                'integerOnly' => true
+            ),
 
             // create
             array( 'status, club_1, flag_1, club_2, flag_2, content, tipster_id', 'required', 'on' => 'create' ),
-            array( 'status, event_h, event_m, in_running', 'numerical', 'integerOnly' => true, 'on' => 'create' ),
+            array( 'status, event_h, event_m, in_running, comments', 'numerical', 'integerOnly' => true, 'on' => 'create' ),
             array( 'format_event_date', 'date', 'allowEmpty' => false, 'format' => 'dd/MM/yyyy', 'on' => 'create' ),
             array( 'club_1, club_2', 'length', 'max' => 100, 'on' => 'create' ),
             array( 'flag_1, flag_2, cover', 'length', 'max' => 50, 'on' => 'create' ),
@@ -177,6 +183,7 @@ class NbTips extends CActiveRecord
             'event_h'           => Yii::t( 'tips', 'Часы' ),
             'event_m'           => Yii::t( 'tips', 'Минуты' ),
             'in_running'        => Yii::t( 'tips', 'Совет по ходу игры' ),
+            'comments'          => Yii::t( 'tips', 'Разрешить комментарии' ),
         );
     }
 
@@ -208,6 +215,7 @@ class NbTips extends CActiveRecord
         $criteria->compare( 'cover', $this->cover, true );
         $criteria->compare( 'meta_k', $this->meta_k, true );
         $criteria->compare( 'meta_d', $this->meta_d, true );
+        $criteria->compare( 'comments', $this->comments, true );
 
         $criteria->compare( 'tipster.firstname', $this->tipster_id, true, 'OR' );
         $criteria->compare( 'tipster.email', $this->tipster_id, true, 'OR' );

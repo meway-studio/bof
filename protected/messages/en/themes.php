@@ -227,4 +227,6 @@
 	"Страницы" => "Pages",
     "Аналитики, покинувшие проект" => "Analysts who have left the project",
     "Статьи" => "Articles",
+    "Комментарии" => "Comments",
+    "Разрешить комментарии" => "Enable comments",
 );

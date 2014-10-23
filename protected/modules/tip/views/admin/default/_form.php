@@ -381,6 +381,18 @@ foreach (Yii::app()->urlManager->languages as $lang) {
         </div>
     <?php endforeach ?>
 
+    <?= $form->labelEx( $model, 'comments' ); ?>
+    <?=
+    $form->dropDownList(
+        $model,
+        'comments',
+        array(
+            Yii::t('tips', 'Нет'),
+            Yii::t('tips', 'Да'),
+        ),
+        array( 'class' => 'span5' )
+    ); ?>
+
     <div class="form-actions">
         <?php $this->widget(
             'bootstrap.widgets.TbButton',
