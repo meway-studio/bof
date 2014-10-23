@@ -27,9 +27,28 @@
                     <?php endif ?>
                 <?php endif; ?>
             </span>
+            <span style="float: right;">
+                <?php echo CHtml::form(); ?>
+                <?php echo CHtml::textField(
+                    'searchValue',
+                    $searchValue,
+                    array(
+                        'style'       => 'padding: 10px 20px; margin: 8px 0 8px 8px; width:200px; font-size:16px;',
+                        'placeholder' => Yii::t( 'tips', 'Поиск' ),
+                    )
+                ) ?>
+                <?php echo CHtml::submitButton(
+                    Yii::t( 'tips', 'Искать' ),
+                    array(
+                        'style' => 'padding: 7px 20px; font-size: 16px; cursor: pointer;'
+                    )
+                ) ?>
+                <?php echo CHtml::endForm(); ?>
+            </span>
         </div>
         <div class="last-tips">
-            <div class="title">
+            <?php ob_start() ?>
+            <div class="title listType">
                 <?php echo CHtml::link(
                     Yii::t( 'tips', 'Кратко' ),
                     Yii::app()->getRequest()->getPathInfo() . '?' . http_build_query( array_merge( $_GET, array( 'table' => 1 ) ) ),
@@ -41,6 +60,7 @@
                     array( 'class' => 'top right' )
                 ); ?>
             </div>
+            <?php $listType = ob_get_clean() ?>
             <?php $viewTable = Yii::app()->request->getParam( 'table' ) ? true : false; ?>
             <?php $viewTableStart = "" ?>
             <?php $viewTableEnd = "" ?>
@@ -67,7 +87,14 @@
                     array(
                         'dataProvider'    => $dataProvider,
                         'itemView'        => $viewTable ? '_table' : '_tip',
-                        'template'        => '{pager}<br />' . $viewTableStart . '{items}' . $viewTableEnd . '{pager}',
+                        'template'        =>
+                            '<div style="overflow:hidden;">'
+                            . $listType
+                            . '{pager}</div>'
+                            . $viewTableStart
+                            . '{items}'
+                            . $viewTableEnd
+                            . '{pager}',
                         'afterAjaxUpdate' => 'function(id,data){scroll(0,150);}',
                         'pager'           => array(
                             'header'         => '<span></span>',

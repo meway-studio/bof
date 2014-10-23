@@ -78,7 +78,7 @@ class DefaultController extends Controller
                     'NoBetTips',
                     'NbView',
                     'Robokassa',
-                    'rss'
+                    'rss',
                 ),
                 'users'   => array( '*' ),
             ),
@@ -666,10 +666,15 @@ class DefaultController extends Controller
 
         $dataProvider = new CActiveDataProvider($model);
 
+        if ($searchValue = Yii::app()->request->getParam( 'searchValue' )) {
+            $dataProvider = $this->search( $model, $searchValue );
+        }
+
         $this->render(
             'nobettips',
             array(
                 'dataProvider' => $dataProvider,
+                'searchValue'  => $searchValue,
             )
         );
     }
@@ -1222,14 +1227,41 @@ class DefaultController extends Controller
 
         $dataProvider = new CActiveDataProvider($model);
 
+        if ($searchValue = Yii::app()->request->getParam( 'searchValue' )) {
+            $dataProvider = $this->search( $model, $searchValue );
+        }
+
         $this->render(
             'list',
             array(
                 'dataProvider' => $dataProvider,
+                'searchValue'  => $searchValue,
                 'active'       => $active,
                 'user'         => $user,
             )
         );
+    }
+
+    /**
+     * Lists all published models models.
+     */
+    public function search( $model, $searchValue )
+    {
+        $criteria = new CDbCriteria();
+        $criteria->with = array( 'tipster' );
+        $criteria->scopes = array( 'published' );
+
+        $criteria->compare( 'tipster.firstname', $searchValue, true, 'OR' );
+        $criteria->compare( 'tipster.lastname', $searchValue, true, 'OR' );
+        $criteria->compare( 'club_1', $searchValue, true, 'OR' );
+        $criteria->compare( 't.club_1', $searchValue, true, 'OR' );
+        $criteria->compare( 't.club_2', $searchValue, true, 'OR' );
+        $criteria->compare( 't.content', $searchValue, true, 'OR' );
+        if ($model instanceof Tips) {
+            $criteria->compare( 't.description', $searchValue, true, 'OR' );
+        }
+
+        return new CActiveDataProvider($model, array( 'criteria' => $criteria ));
     }
 
     public function actionDrafts()

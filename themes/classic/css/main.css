@@ -948,6 +948,15 @@ p.grey_text {
 	margin: 40px 0 40px 0;
 }
 
+.content .title.listType {
+	margin: 0 0 20px;
+	float: left;
+}
+
+.content .title.listType .top {
+	margin: 0 40px 7px 0;
+}
+
 .content .title span {
 	font-size: 36px;
 	color: #aab2bd;
