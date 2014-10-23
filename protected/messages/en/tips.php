@@ -239,4 +239,5 @@
     "Выберите аналитика"                                                                              => "Choice analyst",
     "Все советы от <b>{FullName}</b> за весь период"                                                  => "All the tips from <b>{FullName}</b> for the whole period",
     "Все советы от <b>{FullName}</b>"                                                                 => "All the tips from <b>{FullName}</b>",
+    "Разрешить комментарии" => "Enable comments",
 );
