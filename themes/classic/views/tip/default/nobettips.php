@@ -20,7 +20,7 @@ $inRunningTip = Yii::app()->request->getQuery( 'in_running', false );
                     'searchValue',
                     $searchValue,
                     array(
-                        'style'       => 'padding: 12px 20px; margin: 8px 0 8px 8px; width:200px; font-size:16px; float:left;',
+                        'style'       => 'padding: 10px 20px; margin: 8px 0 8px 8px; width:200px; font-size:20px; float:left;',
                         'placeholder' => Yii::t( 'tips', 'Поиск' ),
                     )
                 ) ?>
