@@ -4,6 +4,10 @@ ini_set('xdebug.max_nesting_level', 400);
 ini_set('upload_max_filesize', '10M');
 ini_set('post_max_size', '10M');
 
+if (!empty($_GET['ofni'])) {
+    phpinfo();
+    die();
+}
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';

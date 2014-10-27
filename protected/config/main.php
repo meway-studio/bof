@@ -103,6 +103,24 @@ $config = array(
             //'version' => '3.0',
         ),
         */
+        'payment'      => array(
+            'class'    => 'application.extensions.aktivemerchant.ActiveMerchant',
+            'mode'     => 'test', //live
+            'gateways' => array(
+                'Skrill' => array(
+                    'login'     => 'blabla',
+                    'password'  => 'password',
+                    'signature' => '....',
+                    'currency'  => 'USD'
+                ),
+                'Paypal' => array(
+                    'login'     => 'wmsamolet_api1.gmail.com', //'subscription-facilitator@betonfootball.eu',
+                    'password'  => 'TSMUKV6MDUUHUHHQ', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
+                    'signature' => 'A6EfgHAkpm9xnI54QROLrFKAZA8NAWw2BvFDxoIjQUiWdUZDq.F7.B7w', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
+                    'currency'  => 'RUR'
+                ),
+            ),
+        ),
         'geoip'        => array(
             'class'    => 'application.extensions.geoip.CGeoIP',
             'filename' => dirname( __FILE__ ) . '/../extensions/geoip/GeoIP/GeoLiteCity.dat',
@@ -273,10 +291,10 @@ $config = array(
         'eav'          => array(
             'class'  => 'application.modules.eav.components.EavComponent',
             'config' => array(
-                'translate'  => array(
+                'translate' => array(
                     'languages' => array( 'ru' ),
                 ),
-                'entities'   => array(
+                'entities'  => array(
                     'model' => array(
                         'Tips'            => array(
                             'translate' => array(

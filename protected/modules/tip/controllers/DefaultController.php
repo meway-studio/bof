@@ -1027,8 +1027,9 @@ class DefaultController extends Controller
                         $model->IncCurrLabel
                     );
                 } elseif ($model->isPaypall AND Yii::app()->user->isAdmin) {
-
                     $this->paypalBuy( $model );
+                } elseif ($model->isSkrill AND Yii::app()->user->isAdmin) {
+                    $this->skrillBuy( $model );
                 }
             } else {
 
@@ -1049,6 +1050,47 @@ class DefaultController extends Controller
     }
 
     protected function paypalBuy( $oder )
+    {
+        /**
+         * @var ActiveMerchant $payment
+         * @var Paypal $gateway
+         */
+        $payment = Yii::app()->getComponent( 'payment' );
+        $gateway = $payment->getGateway( 'Paypal' );
+        $creditCard = $payment->getCreditCard(
+            array(
+                "first_name"         => "VITALY",
+                "last_name"          => "SAMOLET",
+                "number"             => "4890494050818137",
+                "month"              => "10",
+                "year"               => "2015",
+                "verification_value" => "627"
+            )
+        );
+
+        $creditCard->isValid(); // Returns true or false
+
+        $options = array(
+            'order_id'    => 'REF' . $gateway->generateUniqueId(),
+            'description' => 'Test Transaction',
+            'address'     => array(
+                'address1' => '1234 Street',
+                'zip'      => '98004',
+                'state'    => 'WA'
+            )
+        );
+
+        # Authorize transaction
+        $response = $gateway->authorize( '10', $creditCard, $options );
+        if ($response->success()) {
+            die('Success Authorize');
+        } else {
+            CVarDumper::dump( $response->message() );
+            Yii::app()->end();
+        }
+    }
+
+    protected function skrillBuy( $oder )
     {
     }
 
