@@ -28,21 +28,16 @@
                 <?php endif; ?>
             </span>
             <span style="float: right;">
-                <?php echo CHtml::form(); ?>
+                <?php echo CHtml::form( Yii::app()->createUrl( 'tip/default/list', array( 'active' => 0 ) ), 'GET' ); ?>
                 <?php echo CHtml::textField(
                     'searchValue',
                     $searchValue,
                     array(
-                        'style'       => 'padding: 10px 20px; margin: 8px 0 8px 8px; width:200px; font-size:16px;',
+                        'style'       => 'padding: 12px 20px; margin: 8px 0 8px 8px; width:200px; font-size:16px; float:left;',
                         'placeholder' => Yii::t( 'tips', 'Поиск' ),
                     )
                 ) ?>
-                <?php echo CHtml::submitButton(
-                    Yii::t( 'tips', 'Искать' ),
-                    array(
-                        'style' => 'padding: 7px 20px; font-size: 16px; cursor: pointer;'
-                    )
-                ) ?>
+                <button type="submit" class="search button green"><?php echo Yii::t( 'tips', 'Искать' ) ?></button>
                 <?php echo CHtml::endForm(); ?>
             </span>
         </div>
@@ -50,14 +45,14 @@
             <?php ob_start() ?>
             <div class="title listType">
                 <?php echo CHtml::link(
-                    Yii::t( 'tips', 'Кратко' ),
-                    Yii::app()->getRequest()->getPathInfo() . '?' . http_build_query( array_merge( $_GET, array( 'table' => 1 ) ) ),
-                    array( 'class' => 'top' )
+                    '',
+                    Yii::app()->getRequest()->getPathInfo() . '?' . http_build_query( array_merge( $_GET, array( 'table' => 0 ) ) ),
+                    array( 'class' => 'list_view_ list_view_list ' . (Yii::app()->request->getParam( 'table', false ) ? '' : 'active') )
                 ); ?>
                 <?php echo CHtml::link(
-                    Yii::t( 'tips', 'Подробно' ),
-                    Yii::app()->getRequest()->getPathInfo() . '?' . http_build_query( array_merge( $_GET, array( 'table' => 0 ) ) ),
-                    array( 'class' => 'top right' )
+                    '',
+                    Yii::app()->getRequest()->getPathInfo() . '?' . http_build_query( array_merge( $_GET, array( 'table' => 1 ) ) ),
+                    array( 'class' => 'list_view_ list_view_grid ' . (Yii::app()->request->getParam( 'table', false ) ? 'active' : '') )
                 ); ?>
             </div>
             <?php $listType = ob_get_clean() ?>

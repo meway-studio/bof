@@ -1118,7 +1118,7 @@ p.grey_text {
 	line-height: 100px;
 }
 
-.active-tips .second-column .button {
+.active-tips .second-column .button, .search.button {
 	display: block;
 	width: 184px;
 	line-height: 43px;
@@ -1132,7 +1132,16 @@ p.grey_text {
 	text-align: center;
 }
 
-.active-tips .second-column .green {
+.search.button {
+	border-radius: 3px;
+	border-width: 0;
+	float: left;
+	cursor: pointer;
+	margin: 8px 0 0 10px;
+	width: 110px;
+	font-size: 20px !important;
+}
+.active-tips .second-column .green, .search.button.green {
 	background: #a0d468;
 }
 
@@ -4460,4 +4469,23 @@ ul.yiiPager li.next, ul.yiiPager li.previous {
 	display: none;
 	text-align: center;
 	margin: 40px auto 20px;
+}
+
+.list_view_ {
+	display: block;
+	width: 64px;
+	height: 64px;
+	float: left;
+}
+
+.list_view_grid {
+	background: url(images/list_view_grid.png) no-repeat 16px 16px transparent;
+}
+
+.list_view_list {
+	background: url(images/list_view_list.png) no-repeat 0 0 transparent;
+}
+
+.list_view_grid.active, .list_view_list.active {
+	background-color: #ccd1d9;
 }

@@ -1289,18 +1289,29 @@ class DefaultController extends Controller
      */
     public function search( $model, $searchValue )
     {
+        $searchValue = preg_replace( array( '/^\s+/', '/\s+$/' ), array( '', '' ), $searchValue );
+
+        list($club1, $club2) = explode( 'vs', strtolower( $searchValue ) );
+        $club1 = preg_replace( array( '/^\s+/', '/\s+$/' ), array( '', '' ), $club1 );
+        $club2 = preg_replace( array( '/^\s+/', '/\s+$/' ), array( '', '' ), $club2 );
+
         $criteria = new CDbCriteria();
-        $criteria->with = array( 'tipster' );
         $criteria->scopes = array( 'published' );
 
-        $criteria->compare( 'tipster.firstname', $searchValue, true, 'OR' );
-        $criteria->compare( 'tipster.lastname', $searchValue, true, 'OR' );
-        $criteria->compare( 'club_1', $searchValue, true, 'OR' );
-        $criteria->compare( 't.club_1', $searchValue, true, 'OR' );
-        $criteria->compare( 't.club_2', $searchValue, true, 'OR' );
-        $criteria->compare( 't.content', $searchValue, true, 'OR' );
-        if ($model instanceof Tips) {
-            $criteria->compare( 't.description', $searchValue, true, 'OR' );
+        if (strlen( $club1 ) || strlen( $club2 )) {
+            $criteria->compare( 't.club_1', $club1, true );
+            $criteria->compare( 't.club_2', $club2, true );
+        } else {
+            $criteria->with = array( 'tipster' );
+            $criteria->compare( 'tipster.firstname', $searchValue, true, 'OR' );
+            $criteria->compare( 'tipster.lastname', $searchValue, true, 'OR' );
+            $criteria->compare( 'club_1', $searchValue, true, 'OR' );
+            $criteria->compare( 't.club_1', $searchValue . $club1, true, 'OR' );
+            $criteria->compare( 't.club_2', $searchValue . $club2, true, 'OR' );
+            $criteria->compare( 't.content', $searchValue, true, 'OR' );
+            if ($model instanceof Tips) {
+                $criteria->compare( 't.description', $searchValue, true, 'OR' );
+            }
         }
 
         return new CActiveDataProvider($model, array( 'criteria' => $criteria ));
