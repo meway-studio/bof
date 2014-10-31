@@ -159,7 +159,7 @@
         <?php if ($model->comments && Yii::app()->config->get( 'SHOW_COMMENTS' )): ?>
             <div class="game-preview">
                 <span class="small-title" style="margin-bottom: 20px;"><?php echo Yii::t( 'themes', 'Комментарии' ); ?></span>
-                <?php $this->widget( 'application.widgets.disqus.Disqus', array( 'shortname' => 'wmsamolet' ) ) ?>
+                <?php $this->widget( 'application.widgets.disqus.Disqus', array( 'shortname' => 'betonfootball' ) ) ?>
             </div>
         <?php endif ?>
 
