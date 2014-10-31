@@ -16,7 +16,7 @@ $config = array(
     ),
     // preloading 'log' component
     'preload'           => array(
-        'log',
+        //'log',
         'config',
         'eav',
         'catalog',
