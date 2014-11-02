@@ -13,11 +13,12 @@ class EavComponent extends CApplicationComponent
             Yii::app()->setModules( array( 'eav' ) );
 
             $configHash = md5( serialize( $this->config ) );
-            $configCacheKey = 'eav_config';
+            $configCacheKey = 'eav_config_hash';
             $configCachedHash = Yii::app()->cache->get( $configCacheKey );
 
             if (!$configCachedHash || ($configCachedHash != $configHash)) {
                 Yii::app()->cache->set( $configCacheKey, $configHash );
+                Yii::app()->cache->delete( 'eav_translate_attributes' );
                 $this->configure();
             }
         }

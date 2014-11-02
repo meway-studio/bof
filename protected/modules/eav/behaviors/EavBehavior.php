@@ -1,6 +1,10 @@
 <?php
 Yii::import( 'application.modules.eav.models.*' );
 
+/**
+ * Class EavBehavior
+ * @property CModel $owner
+ */
 class EavBehavior extends CModelBehavior
 {
     const EAV_FORM = 'form';
@@ -10,6 +14,7 @@ class EavBehavior extends CModelBehavior
     protected $eav_translate_attributes = array();
     protected $eav_rules = array();
     protected $entity_type = null;
+    private static $eavTranslateAttributesCache = null;
 
     public function getEntityType()
     {
@@ -88,15 +93,27 @@ class EavBehavior extends CModelBehavior
      */
     public function getEavTranslateAttributes()
     {
-
         $owner = $this->owner;
         $entityName = get_class( $owner );
         $entityType = $this->getEntityType();
         $currentLanguage = Yii::app()->language;
-        $cacheId = "eav_translate_attributes_{$entityType}_{$entityName}_{$currentLanguage}";
 
-        if ($cacheData = Yii::app()->cache->get( $cacheId )) {
-            return ($this->eav_translate_attributes = $cacheData);
+        if (self::$eavTranslateAttributesCache === null
+            && !is_array( self::$eavTranslateAttributesCache = Yii::app()->cache->get( 'eav_translate_attributes' ) )
+        ) {
+            self::$eavTranslateAttributesCache = array();
+        }
+        $currentCacheData = &self::$eavTranslateAttributesCache;
+
+        foreach (array( $entityType, $entityName, $currentLanguage ) as $k) {
+            if (!isset($currentCacheData[ $k ]) || !is_array( $currentCacheData[ $k ] )) {
+                $currentCacheData[ $k ] = $k === $currentLanguage ? null : array();
+            }
+            $currentCacheData = &$currentCacheData[ $k ];
+        }
+
+        if ($currentCacheData !== null) {
+            return ($this->eav_translate_attributes = $currentCacheData);
         }
 
         if (!is_array( $languages = EavComponent::config( 'translate.languages' ) )
@@ -112,7 +129,7 @@ class EavBehavior extends CModelBehavior
             ) {
                 $translateAttributes = $entities[ $entityType ][ $entityName ][ 'translate' ];
                 if (!is_array( $translateAttributes ) && $translateAttributes === '*') {
-                    $translateAttributes = array_keys($owner->attributes);
+                    $translateAttributes = array_keys( $owner->attributes );
                 }
                 foreach ($translateAttributes as $translateAttribute) {
                     $this->eav_translate_attributes[ $translateAttribute ] = implode(
@@ -123,10 +140,16 @@ class EavBehavior extends CModelBehavior
                         )
                     );
                 }
+                $currentCacheData = $this->eav_translate_attributes;
             }
         }
 
-        Yii::app()->cache->set( $cacheId, $this->eav_translate_attributes, 60 * 60 * 24 * 7 );
+        Yii::app()->cache->set(
+            'eav_translate_attributes',
+            self::$eavTranslateAttributesCache,
+            60 * 60 * 24 * 7
+        );
+
         return $this->eav_translate_attributes;
     }
 

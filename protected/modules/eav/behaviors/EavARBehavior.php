@@ -1,6 +1,10 @@
 <?php
 Yii::import( 'application.modules.eav.behaviors.EavBehavior' );
 
+/**
+ * Class EavARBehavior
+ * @property CActiveRecord $owner
+ */
 class EavARBehavior extends EavBehavior
 {
     public function events()
