@@ -83,7 +83,7 @@ class SiteController extends Controller
     {
         Yii::import( 'application.components.DSitemap' );
 
-        if (!$xml = Yii::app()->cache->get( 'sitemap' )) {
+        if (!($xml = Yii::app()->cache->get( 'sitemap' ))) {
             $classes = array(
                 'Tips'   => array( DSitemap::DAILY, 0.8 ),
                 'NbTips' => array( DSitemap::DAILY, 0.8 ),
@@ -159,10 +159,10 @@ class SiteController extends Controller
             while (($data = fgetcsv( $handle, 1000, "," )) !== false) {
                 list($file, $originMessage, $enMessage, $ruMessage) = $data;
 
-                $originMessage = str_replace('"', '\"', $originMessage);
+                $originMessage = str_replace( '"', '\"', $originMessage );
 
                 foreach (array( 'en' => $enMessage, 'ru' => $ruMessage ) as $lang => $message) {
-                    $message = str_replace('"', '\"', $message);
+                    $message = str_replace( '"', '\"', $message );
                     $row = str_replace(
                         array( '{key}', '{value}' ),
                         array( $originMessage, $message ),

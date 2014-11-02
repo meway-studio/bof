@@ -114,7 +114,7 @@ class CatalogCategoryUrlRule extends CBaseUrlRule
             foreach ($data as $row) {
                 $allPaths[ $row[ 'level' ] ][ $row[ 'name' ] ] = $row[ 'id' ];
             }
-            Yii::app()->cache->set( 'CatalogCategoryUrlRule', $allPaths );
+            //Yii::app()->cache->set( 'CatalogCategoryUrlRule', $allPaths );
         }
 
         return $allPaths;

@@ -8,13 +8,16 @@ class EavComponent extends CApplicationComponent
     public function init()
     {
         if (!$this->getIsInitialized()) {
-            self::$_config = & $this->config;
+            self::$_config = &$this->config;
 
             Yii::app()->setModules( array( 'eav' ) );
 
-            $configCache = "eav_config_" . md5( serialize( $this->config ) );
-            if (!Yii::app()->cache->get( $configCache )) {
-                Yii::app()->cache->set( $configCache, 1, 60 * 60 * 24 * 7 );
+            $configHash = md5( serialize( $this->config ) );
+            $configCacheKey = 'eav_config';
+            $configCachedHash = Yii::app()->cache->get( $configCacheKey );
+
+            if (!$configCachedHash || ($configCachedHash != $configHash)) {
+                Yii::app()->cache->set( $configCacheKey, $configHash );
                 $this->configure();
             }
         }
@@ -24,11 +27,11 @@ class EavComponent extends CApplicationComponent
     public static function config( $path = '', $data = 'EAV_CONFIG_DATA_NULL' )
     {
         $paths = explode( '.', $path );
-        $config = & self::$_config;
+        $config = &self::$_config;
 
         foreach ($paths as $p) {
             if (is_array( $config ) && array_key_exists( $p, $config )) {
-                $config = & $config[ $p ];
+                $config = &$config[ $p ];
                 continue;
             }
             return null;
