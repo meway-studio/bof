@@ -242,4 +242,5 @@
     "Разрешить комментарии"                                                                           => "Enable comments",
     "Поиск"                                                                                           => "Search",
     "Искать"                                                                                          => "Find",
+    "Заказ с таким ID не найден"                                                                      => "Check with this ID is not found",
 );
