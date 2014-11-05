@@ -78,6 +78,7 @@ class DefaultController extends Controller
                     'NoBetTips',
                     'NbView',
                     'Robokassa',
+                    'Paypal',
                     'rss',
                 ),
                 'users'   => array( '*' ),
@@ -106,8 +107,8 @@ class DefaultController extends Controller
 
     public function actionRss()
     {
-        $tips = Tips::model()->published()->closed()->findAll( new CDbCriteria(array( 'limit' => 40 )) );
-        $nbTips = NbTips::model()->published()->findAll( new CDbCriteria(array( 'limit' => 40 )) );
+        $tips = Tips::model()->published()->closed()->findAll( new CDbCriteria( array( 'limit' => 40 ) ) );
+        $nbTips = NbTips::model()->published()->findAll( new CDbCriteria( array( 'limit' => 40 ) ) );
 
         header( 'Content-type: text/xml' );
         echo '<?xml version="1.0"?>' . "\n";
@@ -384,7 +385,7 @@ class DefaultController extends Controller
 
 
                 // Если не было записей, добавляем
-                $stats = new tipsterStats($item->id, $m, $y);
+                $stats = new tipsterStats( $item->id, $m, $y );
                 $model = $check != null ? $check : new Tipstats();
 
                 $model->attributes = $stats->calc();
@@ -495,6 +496,70 @@ class DefaultController extends Controller
         Yii::app()->robokassa->result();
     }
 
+    public function actionPaypal()
+    {
+        /**
+         * @var ActiveMerchant $payment
+         * @var \AktiveMerchant\Billing\Response $response
+         * @var \AktiveMerchant\Billing\Gateways\PaypalExpress $gateway
+         */
+        $orderId = Yii::app()->request->getParam( 'orderId' );
+        $success = Yii::app()->request->getParam( 'success' );
+        $token = Yii::app()->request->getParam( 'token' );
+        $playerId = Yii::app()->request->getParam( 'PayerID' );
+
+        if (!$orderId || !($model = Purchase::model()->findByPk( $orderId ))) {
+            throw new CHttpException( 400, Yii::t( 'tips', 'Заказ с таким ID не найден' ) );
+        }
+
+        if ($success && $token && $playerId && $model->status == Purchase::STATUS_NEW) {
+            $payment = Yii::app()->getComponent( 'payment' );
+            $gateway = $payment->getGateway( 'PaypalExpress' );
+            $gateway::$default_currency = Yii::app()->language == 'ru' ? 'RUB' : 'EUR';
+
+            $response = $gateway->get_details_for( $token, $playerId );
+            $response = $gateway->purchase( $response->amount() );
+
+            if ($response->success()) {
+                $model->status = Purchase::STATUS_PAID;
+                $model->save();
+
+                // открыть доступ к типсам
+                if ($model->type == Purchase::TYPE_ONCE) {
+
+                    foreach ($model->tips AS $item) {
+                        $ptip = new PaidTips();
+                        $ptip->tip_id = $item->tips_id;
+                        $ptip->user_id = $model->user_id;
+                        $ptip->save();
+                    }
+                    // или увеличить время
+                } else {
+                    if ($model->type == Purchase::TYPE_DATE) {
+
+                        $user = $model->user;
+
+                        if ($user->sub == null) {
+
+                            $sub = new UsersSubscription();
+                            $sub->user_id = $user->id;
+                            $sub->expiration_date = date( 'U' );
+                            $sub->save();
+
+                            $user = User::model()->with( 'sub' )->findByPk( $user->id );
+                        }
+
+                        $user->sub->expiration_date = (($user->sub->expiration_date > date( 'U' )) ? ($user->sub->expiration_date
+                            + $model->days) : (date( 'U' ) + $model->days));
+                        $user->sub->save();
+                    }
+                }
+                Yii::app()->request->redirect( Yii::app()->createUrl( '/site/page', array( 'view' => 'success_pay' ) ) );
+            }
+        };
+        Yii::app()->request->redirect( Yii::app()->createUrl( '/site/page', array( 'view' => 'fail_pay' ) ) );
+    }
+
     public function actionMonthStat()
     {
         // Статистика по месяцам
@@ -550,7 +615,7 @@ class DefaultController extends Controller
 
 
                 // Если не было записей, добавляем
-                $stats = new tipsterStats($item->id, $m, $y);
+                $stats = new tipsterStats( $item->id, $m, $y );
                 $model = $check != null ? $check : new Tipstats();
 
                 $model->attributes = $stats->calc();
@@ -621,7 +686,7 @@ class DefaultController extends Controller
     {
 
         if (!Yii::app()->request->isAjaxRequest) {
-            throw new CHttpException(400, Yii::t( 'tips', 'Неправильный запрос.' ));
+            throw new CHttpException( 400, Yii::t( 'tips', 'Неправильный запрос.' ) );
         }
 
         $this->renderPartial( 'ajax_more', array( 'offset' => $offset, 'tipster' => $tipster ) );
@@ -642,7 +707,7 @@ class DefaultController extends Controller
         $this->pageTitle = Yii::t( 'tips', 'Советы' );
 
         $model = Tips::model()->published()->allActive()->with( 'tipster' );
-        $dataProvider = new CActiveDataProvider($model, array( 'pagination' => array( 'pageSize' => 100 ) ));
+        $dataProvider = new CActiveDataProvider( $model, array( 'pagination' => array( 'pageSize' => 100 ) ) );
 
         $this->render(
             'table',
@@ -664,7 +729,7 @@ class DefaultController extends Controller
             $model = $model->inRunning();
         }
 
-        $dataProvider = new CActiveDataProvider($model);
+        $dataProvider = new CActiveDataProvider( $model );
 
         if ($searchValue = Yii::app()->request->getParam( 'searchValue' )) {
             $dataProvider = $this->search( $model, $searchValue );
@@ -812,7 +877,7 @@ class DefaultController extends Controller
                         $user = User::model()->findByPk( Yii::app()->user->id );
                         $model_p = Purchase::model()->findByPk( $model_p->id );
 
-                        $message = new YiiMailMessage(Yii::t( 'user', 'Новый заказ' ) . ' #' . $model_p->id . ' - ' . Yii::app()->name);
+                        $message = new YiiMailMessage( Yii::t( 'user', 'Новый заказ' ) . ' #' . $model_p->id . ' - ' . Yii::app()->name );
                         $message->view = 'new_payment';
                         $message->setBody( array( 'user' => $user, 'model' => $model_p ), 'text/html' );
                         $message->addTo( Yii::app()->config->get( 'EMAIL_PAYMENT' ) );
@@ -837,8 +902,8 @@ class DefaultController extends Controller
                 }
             }
 
-            $result[ 'totalPrice' ] =
-                Yii::app()->language == 'ru' ? $result[ 'totalPrice' ] * Yii::app()->params->rur_eur : $result[ 'totalPrice' ];
+            $result[ 'totalPrice' ] = Yii::app()->language == 'ru' ?
+                $result[ 'totalPrice' ] * Yii::app()->params->rur_eur : $result[ 'totalPrice' ];
 
             $this->render(
                 'buy_subscription',
@@ -847,10 +912,10 @@ class DefaultController extends Controller
                     'price'    => $result[ 'totalPrice' ],
                     'status'   => $status,
                     'termDesc' => Yii::t(
-                            'tips',
-                            Yii::t( 'tips', '{cm} Совет|{cm} Советa|{cm} Советов|{cm} Совета', count( $model ) ),
-                            array( '{cm}' => count( $model ) )
-                        ),
+                        'tips',
+                        Yii::t( 'tips', '{cm} Совет|{cm} Советa|{cm} Советов|{cm} Совета', count( $model ) ),
+                        array( '{cm}' => count( $model ) )
+                    ),
                 )
             );
         } else {
@@ -951,7 +1016,6 @@ class DefaultController extends Controller
     // страница Subscription
     public function actionBuySubscription( $term, $success = false )
     {
-
         $date = 0;
         $price = 0;
         $status = null;
@@ -982,7 +1046,7 @@ class DefaultController extends Controller
         }
 
         if ($date == 0) {
-            throw new CHttpException(400, Yii::t( 'tips', 'Неправильный запрос.' ));
+            throw new CHttpException( 400, Yii::t( 'tips', 'Неправильный запрос.' ) );
         }
 
         $model = new Purchase();
@@ -1009,7 +1073,7 @@ class DefaultController extends Controller
                 $user = User::model()->findByPk( Yii::app()->user->id );
                 $model = Purchase::model()->findByPk( $model->id );
 
-                $message = new YiiMailMessage(Yii::t( 'user', 'Новый заказ' ) . ' #' . $model->id . ' - ' . Yii::app()->name);
+                $message = new YiiMailMessage( Yii::t( 'user', 'Новый заказ' ) . ' #' . $model->id . ' - ' . Yii::app()->name );
                 $message->view = 'new_payment';
                 $message->setBody( array( 'user' => $user, 'model' => $model ), 'text/html' );
                 $message->addTo( Yii::app()->config->get( 'EMAIL_PAYMENT' ) );
@@ -1027,7 +1091,7 @@ class DefaultController extends Controller
                         $model->IncCurrLabel
                     );
                 } elseif ($model->isPaypall AND Yii::app()->user->isAdmin) {
-                    $this->paypalBuy( $model );
+                    $this->paypalBuy( $model, $termDesc );
                 } elseif ($model->isSkrill AND Yii::app()->user->isAdmin) {
                     $this->skrillBuy( $model );
                 }
@@ -1049,44 +1113,45 @@ class DefaultController extends Controller
         );
     }
 
-    protected function paypalBuy( $oder )
+    protected function paypalBuy( Purchase $purchase, $termDesc = '' )
     {
         /**
          * @var ActiveMerchant $payment
-         * @var Paypal $gateway
+         * @var \AktiveMerchant\Billing\Response $response
+         * @var \AktiveMerchant\Billing\Gateways\PaypalExpress $gateway
          */
+        $lang = Yii::app()->language;
         $payment = Yii::app()->getComponent( 'payment' );
-        $gateway = $payment->getGateway( 'Paypal' );
-        $creditCard = $payment->getCreditCard(
+        $price = Yii::app()->language == 'ru' ? $purchase->PriceRUR : $purchase->price;
+        $gateway = $payment->getGateway( 'PaypalExpress' );
+        $gateway::$default_currency = $lang == 'ru' ? 'RUB' : 'EUR';
+
+        $response = $gateway->setupPurchase(
+            $price,
             array(
-                "first_name"         => "VITALY",
-                "last_name"          => "SAMOLET",
-                "number"             => "4890494050818137",
-                "month"              => "10",
-                "year"               => "2015",
-                "verification_value" => "627"
+                'return_url'        => $this->createAbsoluteUrl(
+                    "/tip/default/paypal",
+                    array( 'success' => 1, 'orderId' => $purchase->id )
+                ),
+                'cancel_return_url' => $this->createAbsoluteUrl(
+                    "/tip/default/paypal",
+                    array( 'failed' => 1, 'orderId' => $purchase->id )
+                ),
+                'items'             => array(
+                    array(
+                        'description' => $termDesc,
+                        'unit_price'  => $price,
+                        'quantity'    => 1,
+                        'id'          => $purchase->id,
+                    )
+                )
             )
         );
 
-        $creditCard->isValid(); // Returns true or false
-
-        $options = array(
-            'order_id'    => 'REF' . $gateway->generateUniqueId(),
-            'description' => 'Test Transaction',
-            'address'     => array(
-                'address1' => '1234 Street',
-                'zip'      => '98004',
-                'state'    => 'WA'
-            )
-        );
-
-        # Authorize transaction
-        $response = $gateway->authorize( '10', $creditCard, $options );
         if ($response->success()) {
-            die('Success Authorize');
+            $this->redirect( $gateway->urlForToken( $response->token() ) );
         } else {
-            CVarDumper::dump( $response->message() );
-            Yii::app()->end();
+            throw new CHttpException( 400, $response->message() );
         }
     }
 
@@ -1105,7 +1170,7 @@ class DefaultController extends Controller
         $model = User::model()->with( 'tipster' )->active()->tipsterRole()->findByPk( $id );
 
         if ($model == null) {
-            throw new CHttpException(404, Yii::t( 'tips', 'Совет не найден' ));
+            throw new CHttpException( 404, Yii::t( 'tips', 'Совет не найден' ) );
         }
 
         $stats = Tipstats::model()->byTipster( $model->id )->toView()->findAll();
@@ -1125,8 +1190,9 @@ class DefaultController extends Controller
             $chart[ 'profit' ][ ] = intval( $item->profit );
         }
 
-        $dataProvider = new CActiveDataProvider(Tipstats::model()->byTipster( $model->id )->toGrid(
-        ), array( 'pagination' => array( 'pageSize' => Tips::TIP_LAST_COUNT ) ));
+        $dataProvider = new CActiveDataProvider(
+            Tipstats::model()->byTipster( $model->id )->toGrid(), array( 'pagination' => array( 'pageSize' => Tips::TIP_LAST_COUNT ) )
+        );
 
         $this->render(
             'tipster_stat',
@@ -1224,8 +1290,9 @@ class DefaultController extends Controller
         $chart[ 'profit' ] = array_values( $chart[ 'profit' ] );
 
 
-        $dataProvider = new CActiveDataProvider(Tipstats::model()->byTipster( 0 )->toGrid(
-        ), array( 'pagination' => array( 'pageSize' => Tips::TIP_LAST_COUNT ) ));
+        $dataProvider = new CActiveDataProvider(
+            Tipstats::model()->byTipster( 0 )->toGrid(), array( 'pagination' => array( 'pageSize' => Tips::TIP_LAST_COUNT ) )
+        );
 
         $this->render(
             'all_stat',
@@ -1256,7 +1323,7 @@ class DefaultController extends Controller
             $user = User::model()->with( 'tipster' )->byRole( User::ROLE_TIPSTER )->findByPk( $tipster );
 
             if (!$user) {
-                throw new CHttpException(404, Yii::t( 'tips', 'Запрашиваемая страница не существует.' ));
+                throw new CHttpException( 404, Yii::t( 'tips', 'Запрашиваемая страница не существует.' ) );
             }
         }
 
@@ -1267,7 +1334,7 @@ class DefaultController extends Controller
             $model = $active == 1 ? $model->active() : $model->last();
         }
 
-        $dataProvider = new CActiveDataProvider($model);
+        $dataProvider = new CActiveDataProvider( $model );
 
         if ($searchValue = Yii::app()->request->getParam( 'searchValue' )) {
             $dataProvider = $this->search( $model, $searchValue );
@@ -1314,7 +1381,7 @@ class DefaultController extends Controller
             }
         }
 
-        return new CActiveDataProvider($model, array( 'criteria' => $criteria ));
+        return new CActiveDataProvider( $model, array( 'criteria' => $criteria ) );
     }
 
     public function actionDrafts()
@@ -1325,10 +1392,10 @@ class DefaultController extends Controller
         $this->pageTitle = Yii::t( 'tips', 'Мои черновики' );
 
         $model1 = Tips::model()->byTipster( Yii::app()->user->id )->draft()->with( 'tipster' );
-        $dataProvider1 = new CActiveDataProvider($model1);
+        $dataProvider1 = new CActiveDataProvider( $model1 );
 
         $model2 = NbTips::model()->byTipster( Yii::app()->user->id )->draft()->with( 'tipster' );
-        $dataProvider2 = new CActiveDataProvider($model2);
+        $dataProvider2 = new CActiveDataProvider( $model2 );
 
         $this->render(
             'drafts',
@@ -1429,7 +1496,7 @@ class DefaultController extends Controller
         Yii::app()->clientScript->registerMetaTag( Yii::app()->config->get( 'META_D_ADD_TIP' ), 'description' );
         $this->pageTitle = Yii::t( 'tips', 'Добавить совет' );
 
-        $model = new Tips('create');
+        $model = new Tips( 'create' );
 
         if (isset($_POST[ 'Tips' ])) {
             $model->attributes = $_POST[ 'Tips' ];
@@ -1475,7 +1542,7 @@ class DefaultController extends Controller
         }
 
 
-        $model = new NbTips('create');
+        $model = new NbTips( 'create' );
 
         if (isset($_POST[ 'NbTips' ])) {
             $model->attributes = $_POST[ 'NbTips' ];
@@ -1686,7 +1753,7 @@ class DefaultController extends Controller
     {
         $model = Tips::model()->findByPk( $id );
         if ($model === null) {
-            throw new CHttpException(404, Yii::t( 'tips', 'Запрошенная страница не существует.' ));
+            throw new CHttpException( 404, Yii::t( 'tips', 'Запрошенная страница не существует.' ) );
         }
         return $model;
     }
@@ -1695,7 +1762,7 @@ class DefaultController extends Controller
     {
         $model = NbTips::model()->findByPk( $id );
         if ($model === null) {
-            throw new CHttpException(404, Yii::t( 'tips', 'Запрошенная страница не существует.' ));
+            throw new CHttpException( 404, Yii::t( 'tips', 'Запрошенная страница не существует.' ) );
         }
         return $model;
     }

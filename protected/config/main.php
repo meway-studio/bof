@@ -16,7 +16,7 @@ $config = array(
     ),
     // preloading 'log' component
     'preload'           => array(
-        //'log',
+        'log',
         'config',
         'eav',
         'catalog',
@@ -111,13 +111,13 @@ $config = array(
                     'login'     => 'blabla',
                     'password'  => 'password',
                     'signature' => '....',
-                    'currency'  => 'USD'
+                    'currency'  => 'EUR'
                 ),
-                'Paypal' => array(
+                'PaypalExpress' => array(
                     'login'     => 'wmsamolet_api1.gmail.com', //'subscription-facilitator@betonfootball.eu',
-                    'password'  => 'TSMUKV6MDUUHUHHQ', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
-                    'signature' => 'A6EfgHAkpm9xnI54QROLrFKAZA8NAWw2BvFDxoIjQUiWdUZDq.F7.B7w', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
-                    'currency'  => 'RUR'
+                    'password'  => 'H4WW5ATR7U28SFUN', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
+                    'signature' => 'AzbrIRpoL-0G2kRpQKUb-UB4q46TAx.swLgBsme0bZUEZi7mq5vW-uoB', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
+                    'currency'  => 'EUR'
                 ),
             ),
         ),

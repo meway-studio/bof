@@ -57,6 +57,8 @@ class cUrl implements AdapterInterface
         curl_setopt( $this->ch, CURLOPT_CAINFO, dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'cacert.pem' );
 
         if ($request->getMethod() == Request::METHOD_POST) {
+            curl_setopt( $this->ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1 );
+            curl_setopt( $this->ch, CURLOPT_SSL_CIPHER_LIST, 'SSLv3' );
             curl_setopt( $this->ch, CURLOPT_POST, 1 );
             curl_setopt( $this->ch, CURLOPT_POSTFIELDS, $request->getBody() );
         } elseif ($request->getMethod() == Request::METHOD_GET) {
@@ -67,7 +69,7 @@ class cUrl implements AdapterInterface
 
         // Check for outright failure
         if ($response === false) {
-            $ex = new Exception(curl_error( $this->ch ), curl_errno( $this->ch ));
+            $ex = new Exception( curl_error( $this->ch ), curl_errno( $this->ch ) );
             curl_close( $this->ch );
             throw $ex;
         }
@@ -78,7 +80,7 @@ class cUrl implements AdapterInterface
         curl_close( $this->ch );
 
         if ($curl_info[ 'http_code' ] != 200) {
-            $ex = new Exception("HTTP Status #" . $curl_info[ 'http_code' ] . "\n" . "CurlInfo:\n" . print_r( $curl_info, true ));
+            $ex = new Exception( "HTTP Status #" . $curl_info[ 'http_code' ] . "\n" . "CurlInfo:\n" . print_r( $curl_info, true ) );
             throw $ex;
         }
 
