@@ -27,6 +27,8 @@
  * @property float $odds
  * @property float $stake
  * @property string $c_profit
+ * @property string $money_before
+ * @property string $money_after
  * @property float $profit
  * @property float $yield
  * @property integer $tip_result
@@ -69,7 +71,7 @@ class Tips extends CActiveRecord
     const BOOKMAKER_BET365 = 3;
     const BOOKMAKER_PINNACLE = 4;
     const TIP_LAST_COUNT = 7;
-    const BANK = 1000;
+    const BANK = 0;
     public $format_event_date;
     public $format_event_date_only;
     public $format_create_date;
@@ -106,14 +108,6 @@ class Tips extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            /*
-            array('status, type, price, create_date, update_date, event_date, tipster_id, club_1, flag_1, club_2, flag_2, description, content, cover, selection, selection_num, odds, stake, profit, tip_result, match_result', 'required'),
-            array('status, type, create_date, update_date, event_date, tipster_id, tip_result', 'numerical', 'integerOnly'=>true),
-            array('price, selection, odds, profit', 'length', 'max'=>10),
-            array('club_1, club_2', 'length', 'max'=>100),
-            array('flag_1, flag_2, cover, stake', 'length', 'max'=>50),
-            array('match_result', 'length', 'max'=>20),
-            */
             array(
                 'comments',
                 'numerical',
@@ -132,7 +126,7 @@ class Tips extends CActiveRecord
                 'on'          => 'create'
             ),
             array( 'format_event_date', 'date', 'allowEmpty' => false, 'format' => 'dd/MM/yyyy', 'on' => 'create' ),
-            array( 'price, odds, c_profit, profit, bank_was, yield', 'length', 'max' => 10, 'on' => 'create' ),
+            array( 'price, odds, c_profit, profit, bank_was, yield, money_after, money_before', 'length', 'max' => 10, 'on' => 'create' ),
             array( 'club_1, club_2, selection', 'length', 'max' => 100, 'on' => 'create' ),
             array( 'flag_1, flag_2, stake, cover', 'length', 'max' => 50, 'on' => 'create' ),
             array( 'league, meta_k, meta_d', 'length', 'max' => 250, 'on' => 'create' ),
@@ -148,7 +142,7 @@ class Tips extends CActiveRecord
                 'integerOnly' => true,
                 'on'          => 'import'
             ),
-            array( 'price, odds, profit, bank_was, yield', 'length', 'max' => 10, 'on' => 'import' ),
+            array( 'price, odds, profit, bank_was, yield, money_after, money_before', 'length', 'max' => 10, 'on' => 'import' ),
             array( 'club_1, club_2, selection', 'length', 'max' => 100, 'on' => 'import' ),
             array( 'flag_1, flag_2, stake, cover', 'length', 'max' => 50, 'on' => 'import' ),
             array( 'league', 'length', 'max' => 250, 'on' => 'import' ),
@@ -367,177 +361,64 @@ class Tips extends CActiveRecord
     protected function beforeSave()
     {
 
-        if (parent::beforeSave()) {
+        if (parent::beforeSave())
+        {
 
-            if ($this->isNewRecord) {
-
-                // пересчитать банк типстера
-                $tipster = Tipsters::model()->findByAttributes( array( 'user_id' => $this->tipster_id ) );
-
-                if ($tipster == null) {
-                    $tipster = new Tipsters();
-                    $tipster->user_id = $this->tipster_id;
-                    $tipster->bank = self::BANK;
-                    $tipster->save();
+            if ($this->isNewRecord)
+            {
+                
+                //типс может быть черновиком. выполнять действия только при публикации
+                if($this->status == self::STATUS_ACTIVE)
+                {
+                    $this->eventStarted();
                 }
 
-                $tipster->tips = $tipster->tips + 1;
-                $tipster->save();
-            } else {
+            }else{
 
-                $this->calcStatistic();
+                // Если типс не закрыт
+                if (!$this->getIsClosed()) {
+
+                    // Если выставлен результат матча
+                    if($this->tip_result != self::TIP_RESULT_DRAW)
+                    {
+                        $this->eventEnded();
+                    }
+                }
+
             }
 
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
+        
     }
 
     protected function afterSave()
     {
         parent::afterSave();
 
-        if ($this->calculated == 1) {
+        // Обновить статистку за месяц
+        $this->updateTipsterStatByMonth();
 
-            $allCount = Tips::model()->byTipster( $this->tipster_id )->count();
-            $wonCount = Tips::model()->byTipster( $this->tipster_id )->count(
-                'tip_result=:R1 OR tip_result=:R2',
-                array( ':R1' => Tips::TIP_RESULT_WON, ':R2' => Tips::TIP_RESULT_HALF )
-            );
 
-            $allCount = $allCount == 0 ? 1 : $allCount;
-            $wonCount = $wonCount == 0 ? 1 : $wonCount;
-
-            $winrate = round( $wonCount * 100 / $allCount, 0 );
-
-            $this->tipster->tipster->winrate = round( $wonCount * 100 / $allCount, 0 );
-
-            // Сумма всех старовок этого типстера
-            $odds = Yii::app()->db->createCommand()->select( 'SUM(`odds`) AS `sum`' )->from( '{{tips}}' )->where(
-                'tipster_id=:id',
-                array( ':id' => $this->tipster_id )
-            )->queryRow();
-
-            // Среднее арифметическое значение ставки
-            if ($odds[ 'sum' ] != 0) {
-                $this->tipster->tipster->odds = round( $odds[ 'sum' ] / $allCount, 2 );
-            }
-
+        // Если выставлен результат матча
+        if($this->tip_result != self::TIP_RESULT_DRAW)
+        {
+             // Обновить процент побед
+            $this->tipster->tipster->winrate = $this->getTipterWinrate();
             $this->tipster->tipster->save();
         }
+
     }
 
     protected function afterDelete()
     {
         parent::afterDelete();
+
+        // изменям общее кол-во типсов данного типстера
         --$this->tipster->tipster->tips;
         $this->tipster->tipster->save();
-    }
-
-    protected function calcStatistic()
-    {
-        if ($this->calculated == 1 OR $this->tip_result == self::TIP_RESULT_DRAW) {
-            return false;
-        }
-
-        $tipster = $this->tipster->tipster;
-
-        // счетчик типсов по результатам
-        SWITCH ($this->tip_result) {
-            // Победа
-            CASE self::TIP_RESULT_WON:
-                ++$tipster->count_won;
-                $this->profit = $this->stake * $this->odds - $this->stake;
-                $this->c_profit = $this->tempProfit;
-                break;
-            // Половина победы
-            CASE self::TIP_RESULT_HALF:
-                ++$tipster->count_won;
-                $this->profit = ($this->odds * $this->stake - $this->stake) / 2;
-                $this->c_profit = $this->tempProfit;
-                break;
-            // Поражение
-            CASE self::TIP_RESULT_LOST:
-                ++$tipster->count_lost;
-                $this->profit = $this->stake * -1;
-                $this->c_profit = $this->tempProfit;
-                break;
-            // Половина поражения
-            CASE self::TIP_RESULT_HALF_LOST:
-                ++$tipster->count_lost;
-                $this->profit = (($this->stake * -1) / 2);
-                $this->c_profit = $this->tempProfit;
-                break;
-            CASE self::TIP_RESULT_VOID:
-                ++$tipster->count_void;
-                break;
-            default:
-                $this->profit = 0;
-        }
-
-        $this->bank_was = $tipster->bank - $this->stake;
-
-        // половина победы
-        if ($this->tip_result == self::TIP_RESULT_HALF) {
-
-            $tipster->bank += ($this->stake * $this->odds - $this->stake) / 2;
-            //$this->yield                    = ($tipster->bank - self::BANK) / (self::BANK/100);
-            //$this->profit += ($this->bank_was + (($this->stake * $this->odds - $this->stake) / 2) - self::BANK) + $this->stake;
-            //$this->c_profit = $this->tempProfit;
-
-            $this->yield = ($this->c_profit / 2) / $this->stake * 100;
-            // победа
-        } elseif ($this->tip_result == self::TIP_RESULT_WON) {
-
-            $tipster->bank += ($this->stake * $this->odds - $this->stake);
-            //$this->profit += ($this->bank_was + ($this->stake * $this->odds) - self::BANK);
-            //$this->yield                    = ($tipster->bank - self::BANK) / (self::BANK/100);
-            //$this->c_profit = $this->tempProfit;
-
-            $this->yield = $this->c_profit / $this->stake * 100;
-            // поражение
-        } elseif ($this->tip_result == self::TIP_RESULT_LOST) {
-
-            $tipster->bank -= $this->stake;
-            //$this->profit = $tipster->bank - self::BANK;
-            //$this->yield                   = $this->profit / (self::BANK/100);
-            //$this->c_profit = $this->tempProfit;
-
-            $this->yield = $this->stake / 100;
-            // Половина поражения
-        } elseif ($this->tip_result == self::TIP_RESULT_HALF_LOST) {
-
-            $tipster->bank -= $this->stake / 2;
-            //$this->profit = $tipster->bank - self::BANK;
-            //$this->yield                   = $this->profit / (self::BANK/100);
-            //$this->c_profit = $this->tempProfit;
-
-            $this->yield = $this->stake / -2 / 100;
-        } elseif ($this->tip_result == self::TIP_RESULT_VOID) {
-            //$tipster->bank += $this->stake;
-        }
-
-        $stakeSum = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
-            'tipster_id=:ID',
-            array( ':ID' => $this->tipster_id )
-        )->queryRow();
-        $stakeSum = $stakeSum ? $stakeSum[ 'sum' ] : 0;
-
-        $tipster->profit += $this->c_profit;
-        //$tipster->yield  =  $tipster->profit / self::BANK * 100;
-        $tipster->yield = $tipster->profit / $stakeSum * 100;
-
-        $this->calculated = 1;
-
-        $return = $tipster->save();
-        /*
-        if($tipster->hasErrors()){
-            print_r($tipster->getErrors());
-            Yii::app()->end();
-        }
-        */
-        return $return;
     }
 
     protected function afterFind()
@@ -877,10 +758,35 @@ class Tips extends CActiveRecord
                 return $this->stake * -1;
             // Половина поражения
             CASE self::TIP_RESULT_HALF_LOST:
-                return (($this->stake * -1) / 2);
-            // ...
+                return ($this->odds * $this->stake - $this->stake) / -2;
+            // Расход
             CASE self::TIP_RESULT_DRAW:
                 return 0;
+
+            default:
+                return 0;
+        }
+    }
+
+    public function getTempMoney()
+    {
+        SWITCH ($this->tip_result) {
+            // Победа
+            CASE self::TIP_RESULT_WON:
+                return $this->odds * $this->stake;
+            // Пол победы
+            CASE self::TIP_RESULT_HALF:
+                return (($this->odds * $this->stake - $this->stake) / 2) + $this->stake;
+            // Поражение
+            CASE self::TIP_RESULT_LOST:
+                return 0;
+            // Половина поражения
+            CASE self::TIP_RESULT_HALF_LOST:
+                return $this->stake / -2;
+            // Расход
+            CASE self::TIP_RESULT_DRAW:
+                return $this->stake;
+
             default:
                 return 0;
         }
@@ -1012,4 +918,203 @@ class Tips extends CActiveRecord
                 return '/css/images/logo.png';
         }
     }
+
+    public function loadTipster($id = null)
+    {
+        $id = $id==null ? $this->tipster_id : $id;
+
+        // Получаем типстера
+        $tipster = Tipsters::model()->findByAttributes( array( 'user_id' => $id ) );
+
+        // Если вдруг типстер не найден, создаем его
+        if ($tipster == null) {
+            $tipster = new Tipsters();
+            $tipster->user_id = $id;
+            $tipster->bank    = 0;
+            $tipster->save();
+        }
+
+        return $tipster;
+    }
+
+    public function getTipsterAvgOdds($id = null)
+    {
+        $id = $id==null ? $this->tipster_id : $id;
+
+        $odds = Yii::app()->db->createCommand()->select( 'AVG(`odds`) AS `sum`' )->from( '{{tips}}' )->where(
+            'tipster_id=:id',
+            array( ':id' => $id )
+        )->queryRow();
+
+        return isset($odds['sum']) ? $odds['sum'] : $this->odds ;
+    }
+
+    public function getTipterWinrate($id = null)
+    {
+        $id = $id==null ? $this->tipster_id : $id;
+
+        $allCount = Tips::model()->byTipster( $id )->count();
+        $wonCount = Tips::model()->byTipster( $id )->count(
+            'tip_result=:R1 OR tip_result=:R2',
+            array( ':R1' => Tips::TIP_RESULT_WON, ':R2' => Tips::TIP_RESULT_HALF )
+        );
+
+        if($allCount ==0 OR $wonCount == 0)
+            return 0;
+
+        $winrate = round( $wonCount * 100 / $allCount, 0 );
+
+        return $winrate;
+    }
+
+    public function getTipsterSumStake($id = null)
+    {
+        $id = $id==null ? $this->tipster_id : $id;
+
+        $stake = Yii::app()->db->createCommand()->select( 'SUM(`stake`) AS `sum`' )->from( '{{tips}}' )->where(
+            'tipster_id=:id',
+            array( ':id' => $id )
+        )->queryRow();
+
+        if(!isset($stake['sum']) OR $stake['sum']==0)
+            return 0;
+
+        return $stake['sum'];
+    }
+
+    public function eventStarted()
+    {
+
+        // Проверяем, если событие опубликовано
+
+        // Получаем типстера
+        $tipster = $this->loadTipster();
+
+        // Увеличиваем общее кол-во типсов данного типстера
+        $tipster->tips++;
+
+        // Изменить кол-во только активных типсов
+        $tipster->count_active++;
+
+        // Изменим среднюю ставку
+        $tipster->odds = $this->getTipsterAvgOdds();
+
+        // Запомним сколько денег было у типстера
+        $this->money_before = $tipster->bank;
+
+        // Изменить кол-во реальных денег типстера
+        $tipster->bank -= $this->stake;
+
+        // Запомним сколько денег стало у типстера
+        $this->money_after = $tipster->bank;
+        
+        // Сохраняем изменения типстера
+        $tipster->save();
+    }
+
+    public function eventEnded()
+    {
+
+        // Проверяем, если событие закрыто
+
+        // Получаем типстера
+        $tipster = $this->loadTipster();
+
+        // считаем профит этого типса
+        $this->profit = $this->getTempProfit();
+
+        // Изменить кол-во реальных денег типстера
+        $tipster->bank += $this->getTempMoney();
+
+        // Изменить профит типстера
+        $tipster->profit += $this->profit;
+
+        // Изменить win rate типстера
+        $tipster->winrate = $this->getTipterWinrate();
+
+        // Изменить yield типстера
+        $tipster->yield = round( $tipster->profit / $this->getTipsterSumStake() * 100, 2);
+
+        // Сохраняем изменения типстера
+        $tipster->save();
+
+        // Отмечаем типс как подсчитанный
+        $this->calculated = 1;
+
+    }
+
+    public function updateTipsterStatByMonth($id = null, $month = null, $year = null)
+    {
+        $id = $id==null ? $this->tipster_id : $id;
+
+        $month = $month == null ? date('m') : $month;
+        $year  = $year  == null ? date('Y') : $year;
+
+        $r = array(
+            'tipster_id' => $id,
+            'month'      => $month,
+            'year'       => $year,
+            'profit'     => 0,
+            'yield'      => 0,
+            'stake'      => 0,
+            'tipscount'  => 0,
+            'count_won'  => 0,
+            'count_lost' => 0,
+            'count_void' => 0,
+        );
+
+        // Получить все типсы за этот месяц
+        $s = strtotime( '01-' . $month . '-' . $year . ' 00:00:00' );
+        $f = strtotime( '+1 month', $s );
+
+        $c = new CDbCriteria();
+        $c->addBetweenCondition( 'event_date', $s, $f );
+
+        $model = Tips::model()->published()->closed()->byTipster( $id )->findAll( $c );
+
+        $r[ 'tipscount' ] = count( $model );
+
+        foreach ($model AS $item) {
+
+            $r[ 'profit' ] += $item->getTempProfit();
+            $r[ 'stake' ]  += $item->stake;
+
+            SWITCH ($item->tip_result) {
+                CASE Tips::TIP_RESULT_WON:
+                    $r[ 'count_won' ]++;
+                    break;
+                CASE Tips::TIP_RESULT_HALF:
+                    $r[ 'count_won' ]++;
+                    break;
+                CASE Tips::TIP_RESULT_LOST:
+                    $r[ 'count_lost' ]++;
+                    break;
+                CASE Tips::TIP_RESULT_VOID:
+                    $r[ 'count_void' ]++;
+                    break;
+                CASE Tips::TIP_RESULT_HALF_LOST:
+                    $r[ 'count_lost' ]++;
+                    break;
+            }
+        }
+
+        if($r[ 'profit' ]==0 OR $r[ 'stake' ]==0)
+            $r[ 'yield' ] = 0;
+        else
+            $r[ 'yield' ] = round( $r[ 'profit' ] / $r[ 'stake' ] * 100, 2 );
+
+        $Tipstats = Tipstats::model()->findByAttributes(
+            array(
+                'tipster_id' => $id,
+                'month'      => $month,
+                'year'       => $year,
+            )
+        );
+
+        $Tipstats = $Tipstats != null ? $Tipstats : new Tipstats();
+
+        $Tipstats->attributes = $r;
+        return $Tipstats->save();
+    }
+       
 }
