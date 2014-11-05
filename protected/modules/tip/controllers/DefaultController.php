@@ -1091,9 +1091,9 @@ class DefaultController extends Controller
                         $model->IncCurrLabel
                     );
                 } elseif ($model->isPaypall AND Yii::app()->user->isAdmin) {
-                    $this->paypalBuy( $model, $termDesc );
+                    //$this->paypalBuy( $model, $termDesc );
                 } elseif ($model->isSkrill AND Yii::app()->user->isAdmin) {
-                    $this->skrillBuy( $model );
+                    //$this->skrillBuy( $model );
                 }
             } else {
 

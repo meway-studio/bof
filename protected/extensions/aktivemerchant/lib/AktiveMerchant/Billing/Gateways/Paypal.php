@@ -234,7 +234,6 @@ class Paypal extends PaypalCommon implements
     }
 
     /**
-     *
      * @param CreditCard $creditcard
      */
     private function add_creditcard(CreditCard $creditcard)
@@ -261,7 +260,6 @@ class Paypal extends PaypalCommon implements
     }
 
     /**
-     *
      * @param array $options
      */
     private function add_invoice($options)
@@ -271,10 +269,8 @@ class Paypal extends PaypalCommon implements
     }
 
     /**
-     *
      * Add final parameters to post data and
      * build $this->post to the format that your payment gateway understands
-     *
      * @param string $action
      * @param array  $parameters
      */
@@ -295,7 +291,6 @@ class Paypal extends PaypalCommon implements
      * @param string  $message
      * @param array   $response
      * @param array   $options
-     *
      * @return Response
      */
     protected function build_response($success, $message, $response, $options=array())
