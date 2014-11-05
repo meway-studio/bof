@@ -4479,11 +4479,11 @@ ul.yiiPager li.next, ul.yiiPager li.previous {
 }
 
 .list_view_grid {
-	background: url(images/list_view_grid.png) no-repeat 16px 16px transparent;
+	background: url(images/list_view_grid.png) no-repeat 8px 8px transparent;
 }
 
 .list_view_list {
-	background: url(images/list_view_list.png) no-repeat 0 0 transparent;
+	background: url(images/list_view_list.png) no-repeat 16px 16px transparent;
 }
 
 .list_view_grid.active, .list_view_list.active {
