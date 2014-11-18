@@ -114,9 +114,9 @@ $config = array(
                     'currency'  => 'EUR'
                 ),
                 'PaypalExpress' => array(
-                    'login'     => 'wmsamolet_api1.gmail.com', //'subscription-facilitator@betonfootball.eu',
-                    'password'  => 'H4WW5ATR7U28SFUN', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
-                    'signature' => 'AzbrIRpoL-0G2kRpQKUb-UB4q46TAx.swLgBsme0bZUEZi7mq5vW-uoB', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
+                    'login'     => 'subscription_api1.betonfootball.eu', //'subscription-facilitator@betonfootball.eu',
+                    'password'  => 'BR7ZMY5D9VLGV934', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
+                    'signature' => '203BAB5F947E50B767BAABF26109FFCC', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
                     'currency'  => 'EUR'
                 ),
             ),
