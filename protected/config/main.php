@@ -105,7 +105,7 @@ $config = array(
         */
         'payment'      => array(
             'class'    => 'application.extensions.aktivemerchant.ActiveMerchant',
-            'mode'     => 'test', //live
+            'mode'     => 'live', //live
             'gateways' => array(
                 'Skrill' => array(
                     'login'     => 'blabla',
@@ -115,8 +115,8 @@ $config = array(
                 ),
                 'PaypalExpress' => array(
                     'login'     => 'subscription_api1.betonfootball.eu', //'subscription-facilitator@betonfootball.eu',
-                    'password'  => 'BR7ZMY5D9VLGV934', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
-                    'signature' => '203BAB5F947E50B767BAABF26109FFCC', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
+                    'password'  => '22MX58D7FCMNVJ5W', //'ARdiSRBcWTgbGxXSTujybwW3YXuMtaijkXlsijnBRRTq8FKZmSqLbz3JOvqa',
+                    'signature' => 'AYmgXxQ0Ax0YEVJOu1AP7CEUGlerADf8GnB30MbUIw7EpAc3sEmUDeaO', //'EPWsWBD3K8WGVoIl685H_CrUpTsJvQ1cIUNSxLf8rKsnHqMQNUDlEn9l2Brx',
                     'currency'  => 'EUR'
                 ),
             ),
